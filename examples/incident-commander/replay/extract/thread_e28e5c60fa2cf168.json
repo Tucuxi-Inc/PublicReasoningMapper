@@ -1,0 +1,36 @@
+{
+ "no_reasoning": false,
+ "situation": "During a vendor outage a colleague wanted to pass the vendor's fix estimate to customers as a resolution time.",
+ "decision": "Give customers a next-update time and the honest vendor estimate, not a promised resolution time.",
+ "moves": [
+  {
+   "name": "promise next update time, not an ETA",
+   "step": "Commit to when customers will next hear from you rather than when it will be fixed.",
+   "cue": "pressure to give customers an ETA",
+   "evidence": "we will update them by 12:00 whether or not it is fixed",
+   "ref": "2"
+  },
+  {
+   "name": "never relay another party's ETA as ours",
+   "step": "Do not adopt an estimate you do not control as your own commitment.",
+   "cue": "a vendor-supplied fix estimate",
+   "evidence": "if we pass it on as ours and they miss it, we're the ones who missed it",
+   "ref": "4"
+  },
+  {
+   "name": "protect credibility of future updates",
+   "step": "Prefer commitments you can keep, because a missed one discounts every later update.",
+   "cue": "an update that might be broken",
+   "evidence": "every update after that is discounted",
+   "ref": "4"
+  }
+ ],
+ "considerations": [
+  {
+   "what": "trust in later updates",
+   "evidence": "every update after that is discounted"
+  }
+ ],
+ "explained_why": true,
+ "trust_state": "explaining"
+}

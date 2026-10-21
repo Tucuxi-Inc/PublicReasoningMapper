@@ -1,0 +1,36 @@
+{
+ "no_reasoning": false,
+ "situation": "An engineer started a full postmortem for a three-minute, low-impact blip.",
+ "decision": "Do a half-page review focused on what changed before each recurrence, and escalate only if a common cause appears.",
+ "moves": [
+  {
+   "name": "size review to blast radius and reversibility",
+   "step": "Scale the review effort to how many were hurt and whether the harm could be undone.",
+   "cue": "a small, fully recoverable incident",
+   "evidence": "not every incident gets the same size of review",
+   "ref": "4"
+  },
+  {
+   "name": "treat three small events as a pattern",
+   "step": "Look harder at a trivial event when it has recurred.",
+   "cue": "the third occurrence of a similar blip",
+   "evidence": "One small blip is noise; three is a pattern.",
+   "ref": "4"
+  },
+  {
+   "name": "check what changed before each event",
+   "step": "Compare the changes that preceded each occurrence to find a common cause.",
+   "cue": "recurring incidents",
+   "evidence": "what changed before each of the three?",
+   "ref": "4"
+  }
+ ],
+ "considerations": [
+  {
+   "what": "team time cost of process",
+   "evidence": "would cost the team more than the incident did"
+  }
+ ],
+ "explained_why": true,
+ "trust_state": "explaining"
+}

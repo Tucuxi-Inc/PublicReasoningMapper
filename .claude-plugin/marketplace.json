@@ -1,0 +1,16 @@
+{
+  "name": "tucuxi-reasoning-mapper",
+  "owner": {
+    "name": "Tucuxi, Inc."
+  },
+  "metadata": {
+    "description": "ReasoningMapper: turn an expert's own record of their work into orchestrated Claude skills."
+  },
+  "plugins": [
+    {
+      "name": "reasoning-mapper",
+      "source": "./plugin",
+      "description": "Guide a ReasoningMapper project from raw archive to orchestrated Claude skills, and facilitate think-aloud sessions."
+    }
+  ]
+}

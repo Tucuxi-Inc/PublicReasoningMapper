@@ -1,0 +1,590 @@
+{
+ "kind": "move",
+ "k": 14,
+ "distinct": 29,
+ "mentions": 29,
+ "embedder": "hashing shortlist + model judge",
+ "clusters": [
+  {
+   "members": [
+    "ask what changed before digging",
+    "ask what changed recently",
+    "check what changed before each event",
+    "look at what changed, not the symptom"
+   ],
+   "episodes": [
+    "doc:1:0",
+    "session:1:0",
+    "thread:43abbd5daa8a5df4",
+    "thread:c0b104983120c180"
+   ],
+   "mentions": 4,
+   "coherence": 0.71,
+   "core": [
+    "ask what changed recently",
+    "ask what changed before digging",
+    "check what changed before each event",
+    "look at what changed, not the symptom"
+   ],
+   "sample": [
+    "look at what changed, not the symptom",
+    "ask what changed recently",
+    "ask what changed before digging",
+    "check what changed before each event"
+   ],
+   "sources": {
+    "document": 1,
+    "adjustment": 2,
+    "think_aloud": 1
+   },
+   "evidence": [
+    {
+     "episode": "doc:1:0",
+     "move": "ask what changed before digging",
+     "step": "Pull up the change log before opening diagnostic tools.",
+     "cue": "the start of any incident",
+     "quote": "The first question is not \"what is broken\" but \"what changed\"."
+    },
+    {
+     "episode": "thread:c0b104983120c180",
+     "move": "ask what changed recently",
+     "step": "Before investigating symptoms, list what changed in the last hour and suspect it first.",
+     "cue": "a sudden regression shortly after a deploy",
+     "quote": "before anyone opens a profiler: what changed this morning?"
+    },
+    {
+     "episode": "thread:43abbd5daa8a5df4",
+     "move": "check what changed before each event",
+     "step": "Compare the changes that preceded each occurrence to find a common cause.",
+     "cue": "recurring incidents",
+     "quote": "what changed before each of the three?"
+    },
+    {
+     "episode": "session:1:0",
+     "move": "look at what changed, not the symptom",
+     "step": "Ask what started writing rather than examining the full disk.",
+     "cue": "a growing resource at an odd hour",
+     "quote": "I'd look at what's writing, not at the disk."
+    }
+   ],
+   "id": "m01"
+  },
+  {
+   "members": [
+    "ask who carries the cost of saying yes",
+    "identify who carries the cost",
+    "who carries the cost if it fails"
+   ],
+   "episodes": [
+    "session:1:1",
+    "thread:949bbe35647d7fb4",
+    "thread:c0b104983120c180"
+   ],
+   "mentions": 3,
+   "coherence": 0.803,
+   "core": [
+    "identify who carries the cost",
+    "ask who carries the cost of saying yes",
+    "who carries the cost if it fails"
+   ],
+   "sample": [
+    "ask who carries the cost of saying yes",
+    "who carries the cost if it fails",
+    "identify who carries the cost"
+   ],
+   "sources": {
+    "think_aloud": 1,
+    "adjustment": 2
+   },
+   "evidence": [
+    {
+     "episode": "session:1:1",
+     "move": "ask who carries the cost of saying yes",
+     "step": "Look past the requester to everyone else who bears the risk of an exception.",
+     "cue": "a request for an exception to a protective rule",
+     "quote": "who else carries the cost if I say yes"
+    },
+    {
+     "episode": "thread:c0b104983120c180",
+     "move": "identify who carries the cost",
+     "step": "Name who bears the cost of each option, especially of delay.",
+     "cue": "a proposal to keep the fault live while investigating",
+     "quote": "they are the ones carrying the cost of our investigation, not us"
+    },
+    {
+     "episode": "thread:949bbe35647d7fb4",
+     "move": "who carries the cost if it fails",
+     "step": "For a risky launch, trace who absorbs the failure and when it lands.",
+     "cue": "a launch scheduled before a weekend",
+     "quote": "those hours land on whoever is on call over the weekend, and the carriers ... absorb the failed routes"
+    }
+   ],
+   "id": "m02"
+  },
+  {
+   "members": [
+    "avoid the irreversible move at 2am",
+    "check whether the change is reversible",
+    "choose the reversible action first"
+   ],
+   "episodes": [
+    "session:1:0",
+    "session:1:1",
+    "thread:c0b104983120c180"
+   ],
+   "mentions": 3,
+   "coherence": 0.724,
+   "core": [
+    "choose the reversible action first",
+    "avoid the irreversible move at 2am",
+    "check whether the change is reversible"
+   ],
+   "sample": [
+    "avoid the irreversible move at 2am",
+    "choose the reversible action first",
+    "check whether the change is reversible"
+   ],
+   "sources": {
+    "think_aloud": 2,
+    "adjustment": 1
+   },
+   "evidence": [
+    {
+     "episode": "session:1:0",
+     "move": "avoid the irreversible move at 2am",
+     "step": "Refuse actions you cannot undo when tired and under pressure; pause rather than kill.",
+     "cue": "temptation to delete files to buy space",
+     "quote": "What I would not do at 2am is start deleting files on the primary"
+    },
+    {
+     "episode": "session:1:1",
+     "move": "check whether the change is reversible",
+     "step": "Let reversibility decide how much risk an exception can carry.",
+     "cue": "a change requested on short notice",
+     "quote": "If we can roll the database back in minutes, the risk to everyone else is small"
+    },
+    {
+     "episode": "thread:c0b104983120c180",
+     "move": "choose the reversible action first",
+     "step": "Prefer the action you can undo in minutes over the one you cannot.",
+     "cue": "a candidate fix that is a small config rollback",
+     "quote": "The rollback is a two-minute change we can undo, so it costs us almost nothing to try it first."
+    }
+   ],
+   "id": "m03"
+  },
+  {
+   "members": [
+    "commit to next update time",
+    "give next update time instead of eta",
+    "promise next update time, not an eta"
+   ],
+   "episodes": [
+    "doc:1:0",
+    "thread:c0b104983120c180",
+    "thread:e28e5c60fa2cf168"
+   ],
+   "mentions": 3,
+   "coherence": 0.793,
+   "core": [
+    "promise next update time, not an eta",
+    "commit to next update time",
+    "give next update time instead of eta"
+   ],
+   "sample": [
+    "commit to next update time",
+    "give next update time instead of eta",
+    "promise next update time, not an eta"
+   ],
+   "sources": {
+    "adjustment": 2,
+    "document": 1
+   },
+   "evidence": [
+    {
+     "episode": "thread:c0b104983120c180",
+     "move": "commit to next update time",
+     "step": "Tell affected customers when they will next hear from you, regardless of progress.",
+     "cue": "customers calling support during an incident",
+     "quote": "they will hear from us again at 09:40 whether or not it is fixed"
+    },
+    {
+     "episode": "doc:1:0",
+     "move": "give next update time instead of ETA",
+     "step": "Promise the time of the next update and keep it even if nothing changed.",
+     "cue": "communicating during an incident",
+     "quote": "Give a time for the next update instead, and keep it even if the update is \"no change\"."
+    },
+    {
+     "episode": "thread:e28e5c60fa2cf168",
+     "move": "promise next update time, not an ETA",
+     "step": "Commit to when customers will next hear from you rather than when it will be fixed.",
+     "cue": "pressure to give customers an ETA",
+     "quote": "we will update them by 12:00 whether or not it is fixed"
+    }
+   ],
+   "id": "m04"
+  },
+  {
+   "members": [
+    "match process size to harm and reversibility",
+    "size review to blast radius and reversibility",
+    "size the escalation to who is affected"
+   ],
+   "episodes": [
+    "doc:1:0",
+    "session:1:0",
+    "thread:43abbd5daa8a5df4"
+   ],
+   "mentions": 3,
+   "coherence": 0.733,
+   "core": [
+    "size review to blast radius and reversibility",
+    "match process size to harm and reversibility",
+    "size the escalation to who is affected"
+   ],
+   "sample": [
+    "match process size to harm and reversibility",
+    "size review to blast radius and reversibility",
+    "size the escalation to who is affected"
+   ],
+   "sources": {
+    "document": 1,
+    "adjustment": 1,
+    "think_aloud": 1
+   },
+   "evidence": [
+    {
+     "episode": "doc:1:0",
+     "move": "match process size to harm and reversibility",
+     "step": "Choose ticket, short review or full process from blast radius and reversibility.",
+     "cue": "deciding how much incident machinery to use",
+     "quote": "I size the response on two things: how many people are being hurt right now (blast radius), and whether what is happening can be undone"
+    },
+    {
+     "episode": "thread:43abbd5daa8a5df4",
+     "move": "size review to blast radius and reversibility",
+     "step": "Scale the review effort to how many were hurt and whether the harm could be undone.",
+     "cue": "a small, fully recoverable incident",
+     "quote": "not every incident gets the same size of review"
+    },
+    {
+     "episode": "session:1:0",
+     "move": "size the escalation to who is affected",
+     "step": "Page more people only as the number affected or the threshold rises.",
+     "cue": "no users affected yet",
+     "quote": "So this is not a wake-everyone-up incident."
+    }
+   ],
+   "id": "m05"
+  },
+  {
+   "members": [
+    "offer a smaller version of the request",
+    "offer a smaller version that keeps the date"
+   ],
+   "episodes": [
+    "session:1:1",
+    "thread:949bbe35647d7fb4"
+   ],
+   "mentions": 2,
+   "coherence": 0.842,
+   "core": [
+    "offer a smaller version that keeps the date",
+    "offer a smaller version of the request"
+   ],
+   "sample": [
+    "offer a smaller version of the request",
+    "offer a smaller version that keeps the date"
+   ],
+   "sources": {
+    "think_aloud": 1,
+    "adjustment": 1
+   },
+   "evidence": [
+    {
+     "episode": "session:1:1",
+     "move": "offer a smaller version of the request",
+     "step": "Find a narrower action that gives the requester most of what they need.",
+     "cue": "a request that would spend others' trust",
+     "quote": "Can we hotfix just the bug for them"
+    },
+    {
+     "episode": "thread:949bbe35647d7fb4",
+     "move": "offer a smaller version that keeps the date",
+     "step": "Shrink the change (percentage, scope) so the promise is kept at lower risk.",
+     "cue": "a fixed external commitment",
+     "quote": "ship Friday at 5% of traffic behind the flag"
+    }
+   ],
+   "id": "m06"
+  },
+  {
+   "members": [
+    "price the risk and offer a cheaper path",
+    "price the risk and offer a lower-cost path"
+   ],
+   "episodes": [
+    "doc:1:0",
+    "thread:949bbe35647d7fb4"
+   ],
+   "mentions": 2,
+   "coherence": 0.917,
+   "core": [
+    "price the risk and offer a cheaper path",
+    "price the risk and offer a lower-cost path"
+   ],
+   "sample": [
+    "price the risk and offer a lower-cost path",
+    "price the risk and offer a cheaper path"
+   ],
+   "sources": {
+    "adjustment": 1,
+    "document": 1
+   },
+   "evidence": [
+    {
+     "episode": "thread:949bbe35647d7fb4",
+     "move": "price the risk and offer a cheaper path",
+     "step": "Instead of refusing, state the cost of the risky plan and offer lower-cost alternatives that keep the goal.",
+     "cue": "pressure to skip a safeguard to hold a date",
+     "quote": "let me put a price on it instead of just saying no"
+    },
+    {
+     "episode": "doc:1:0",
+     "move": "price the risk and offer a lower-cost path",
+     "step": "State who carries the cost of a risky date and offer a way to keep it more cheaply.",
+     "cue": "a request to ship on a risky date",
+     "quote": "Put a price on it: who carries the cost if it goes wrong, and when."
+    }
+   ],
+   "id": "m07"
+  },
+  {
+   "members": [
+    "stabilise first, diagnose second",
+    "stabilise now, diagnose tomorrow"
+   ],
+   "episodes": [
+    "doc:1:0",
+    "thread:c0b104983120c180"
+   ],
+   "mentions": 2,
+   "coherence": 0.802,
+   "core": [
+    "stabilise now, diagnose tomorrow",
+    "stabilise first, diagnose second"
+   ],
+   "sample": [
+    "stabilise now, diagnose tomorrow",
+    "stabilise first, diagnose second"
+   ],
+   "sources": {
+    "adjustment": 1,
+    "document": 1
+   },
+   "evidence": [
+    {
+     "episode": "thread:c0b104983120c180",
+     "move": "stabilise first, diagnose second",
+     "step": "Stop the customer harm with a cheap mitigation before spending time on root cause.",
+     "cue": "customers failing while engineers want to investigate",
+     "quote": "Stabilise first, diagnose second."
+    },
+    {
+     "episode": "doc:1:0",
+     "move": "stabilise now, diagnose tomorrow",
+     "step": "Mitigate first; schedule diagnosis for when customers are no longer hurting.",
+     "cue": "customers hurting during an incident",
+     "quote": "Diagnosis can happen tomorrow; the customer's failed label run cannot be un-failed."
+    }
+   ],
+   "id": "m08"
+  },
+  {
+   "members": [
+    "never relay another party's eta as ours",
+    "protect credibility of future updates"
+   ],
+   "episodes": [
+    "thread:e28e5c60fa2cf168"
+   ],
+   "mentions": 2,
+   "coherence": 0.761,
+   "core": [
+    "never relay another party's eta as ours",
+    "protect credibility of future updates"
+   ],
+   "sample": [
+    "protect credibility of future updates",
+    "never relay another party's eta as ours"
+   ],
+   "sources": {
+    "adjustment": 2
+   },
+   "evidence": [
+    {
+     "episode": "thread:e28e5c60fa2cf168",
+     "move": "never relay another party's ETA as ours",
+     "step": "Do not adopt an estimate you do not control as your own commitment.",
+     "cue": "a vendor-supplied fix estimate",
+     "quote": "if we pass it on as ours and they miss it, we're the ones who missed it"
+    },
+    {
+     "episode": "thread:e28e5c60fa2cf168",
+     "move": "protect credibility of future updates",
+     "step": "Prefer commitments you can keep, because a missed one discounts every later update.",
+     "cue": "an update that might be broken",
+     "quote": "every update after that is discounted"
+    }
+   ],
+   "id": "m09"
+  },
+  {
+   "members": [
+    "capture evidence before the rollback"
+   ],
+   "episodes": [
+    "thread:c0b104983120c180"
+   ],
+   "mentions": 1,
+   "coherence": 1.0,
+   "core": [
+    "capture evidence before the rollback"
+   ],
+   "sample": [
+    "capture evidence before the rollback"
+   ],
+   "sources": {
+    "adjustment": 1
+   },
+   "evidence": [
+    {
+     "episode": "thread:c0b104983120c180",
+     "move": "capture evidence before the rollback",
+     "step": "Snapshot dumps, metrics and diffs before mitigating so diagnosis can happen later.",
+     "cue": "fear of losing the state needed for root cause",
+     "quote": "grab a heap dump and the limiter metrics ... that is your evidence and it will still be there this afternoon"
+    }
+   ],
+   "id": "m10"
+  },
+  {
+   "members": [
+    "estimate time available before acting"
+   ],
+   "episodes": [
+    "session:1:0"
+   ],
+   "mentions": 1,
+   "coherence": 1.0,
+   "core": [
+    "estimate time available before acting"
+   ],
+   "sample": [
+    "estimate time available before acting"
+   ],
+   "sources": {
+    "think_aloud": 1
+   },
+   "evidence": [
+    {
+     "episode": "session:1:0",
+     "move": "estimate time available before acting",
+     "step": "Work out how long until the failure lands to decide how fast you must move.",
+     "cue": "a resource filling at a steady rate",
+     "quote": "I have roughly an hour and a half before it's full"
+    }
+   ],
+   "id": "m11"
+  },
+  {
+   "members": [
+    "explain the why so it travels"
+   ],
+   "episodes": [
+    "session:1:1"
+   ],
+   "mentions": 1,
+   "coherence": 1.0,
+   "core": [
+    "explain the why so it travels"
+   ],
+   "sample": [
+    "explain the why so it travels"
+   ],
+   "sources": {
+    "think_aloud": 1
+   },
+   "evidence": [
+    {
+     "episode": "session:1:1",
+     "move": "explain the why so it travels",
+     "step": "Give the reason with the answer so an intermediary can carry it.",
+     "cue": "a decision relayed through an account manager",
+     "quote": "I'd say why, so the account manager can take that back to the partner"
+    }
+   ],
+   "id": "m12"
+  },
+  {
+   "members": [
+    "make the rollback the tested part"
+   ],
+   "episodes": [
+    "thread:949bbe35647d7fb4"
+   ],
+   "mentions": 1,
+   "coherence": 1.0,
+   "core": [
+    "make the rollback the tested part"
+   ],
+   "sample": [
+    "make the rollback the tested part"
+   ],
+   "sources": {
+    "adjustment": 1
+   },
+   "evidence": [
+    {
+     "episode": "thread:949bbe35647d7fb4",
+     "move": "make the rollback the tested part",
+     "step": "Rehearse the undo path before relying on it; treat an untested rollback as the real risk.",
+     "cue": "a rollback nobody has run",
+     "quote": "the rollback is the untested part - that is where the hours go"
+    }
+   ],
+   "id": "m13"
+  },
+  {
+   "members": [
+    "treat three small events as a pattern"
+   ],
+   "episodes": [
+    "thread:43abbd5daa8a5df4"
+   ],
+   "mentions": 1,
+   "coherence": 1.0,
+   "core": [
+    "treat three small events as a pattern"
+   ],
+   "sample": [
+    "treat three small events as a pattern"
+   ],
+   "sources": {
+    "adjustment": 1
+   },
+   "evidence": [
+    {
+     "episode": "thread:43abbd5daa8a5df4",
+     "move": "treat three small events as a pattern",
+     "step": "Look harder at a trivial event when it has recurred.",
+     "cue": "the third occurrence of a similar blip",
+     "quote": "One small blip is noise; three is a pattern."
+    }
+   ],
+   "id": "m14"
+  }
+ ],
+ "warning": null
+}

@@ -1,0 +1,43 @@
+{
+ "no_reasoning": false,
+ "situation": "A large partner asked to skip the standard maintenance notice to get a fix sooner.",
+ "decision": "Decline the full upgrade tomorrow, offer a narrower fix for that partner, and explain why.",
+ "moves": [
+  {
+   "name": "ask who carries the cost of saying yes",
+   "step": "Look past the requester to everyone else who bears the risk of an exception.",
+   "cue": "a request for an exception to a protective rule",
+   "evidence": "who else carries the cost if I say yes",
+   "ref": null
+  },
+  {
+   "name": "check whether the change is reversible",
+   "step": "Let reversibility decide how much risk an exception can carry.",
+   "cue": "a change requested on short notice",
+   "evidence": "If we can roll the database back in minutes, the risk to everyone else is small",
+   "ref": null
+  },
+  {
+   "name": "offer a smaller version of the request",
+   "step": "Find a narrower action that gives the requester most of what they need.",
+   "cue": "a request that would spend others' trust",
+   "evidence": "Can we hotfix just the bug for them",
+   "ref": null
+  },
+  {
+   "name": "explain the why so it travels",
+   "step": "Give the reason with the answer so an intermediary can carry it.",
+   "cue": "a decision relayed through an account manager",
+   "evidence": "I'd say why, so the account manager can take that back to the partner",
+   "ref": null
+  }
+ ],
+ "considerations": [
+  {
+   "what": "other customers' planning",
+   "evidence": "it's there for every other customer who plans around our windows"
+  }
+ ],
+ "explained_why": true,
+ "trust_state": "explaining"
+}

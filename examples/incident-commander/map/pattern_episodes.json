@@ -1,0 +1,178 @@
+{
+ "incident-commander-ask-what-changed": {
+  "episodes": [
+   "doc:1:0",
+   "session:1:0",
+   "thread:43abbd5daa8a5df4",
+   "thread:c0b104983120c180"
+  ],
+  "evidence": [
+   {
+    "episode": "doc:1:0",
+    "quote": "The first question is not \"what is broken\" but \"what changed\"."
+   },
+   {
+    "episode": "thread:c0b104983120c180",
+    "quote": "before anyone opens a profiler: what changed this morning?"
+   },
+   {
+    "episode": "thread:43abbd5daa8a5df4",
+    "quote": "what changed before each of the three?"
+   },
+   {
+    "episode": "session:1:0",
+    "quote": "I'd look at what's writing, not at the disk."
+   }
+  ]
+ },
+ "incident-commander-find-who-carries-the-cost": {
+  "episodes": [
+   "session:1:1",
+   "thread:949bbe35647d7fb4",
+   "thread:c0b104983120c180"
+  ],
+  "evidence": [
+   {
+    "episode": "session:1:1",
+    "quote": "who else carries the cost if I say yes"
+   },
+   {
+    "episode": "thread:c0b104983120c180",
+    "quote": "they are the ones carrying the cost of our investigation, not us"
+   },
+   {
+    "episode": "thread:949bbe35647d7fb4",
+    "quote": "those hours land on whoever is on call over the weekend, and the carriers ... absorb the failed routes"
+   }
+  ]
+ },
+ "incident-commander-prefer-the-move-you-can-undo": {
+  "episodes": [
+   "session:1:0",
+   "session:1:1",
+   "thread:949bbe35647d7fb4",
+   "thread:c0b104983120c180"
+  ],
+  "evidence": [
+   {
+    "episode": "session:1:0",
+    "quote": "What I would not do at 2am is start deleting files on the primary"
+   },
+   {
+    "episode": "session:1:1",
+    "quote": "If we can roll the database back in minutes, the risk to everyone else is small"
+   },
+   {
+    "episode": "thread:c0b104983120c180",
+    "quote": "The rollback is a two-minute change we can undo, so it costs us almost nothing to try it first."
+   },
+   {
+    "episode": "thread:c0b104983120c180",
+    "quote": "grab a heap dump and the limiter metrics ... that is your evidence and it will still be there this afternoon"
+   },
+   {
+    "episode": "thread:949bbe35647d7fb4",
+    "quote": "the rollback is the untested part - that is where the hours go"
+   }
+  ]
+ },
+ "incident-commander-promise-the-next-update-not-the-fix": {
+  "episodes": [
+   "doc:1:0",
+   "thread:c0b104983120c180",
+   "thread:e28e5c60fa2cf168"
+  ],
+  "evidence": [
+   {
+    "episode": "thread:c0b104983120c180",
+    "quote": "they will hear from us again at 09:40 whether or not it is fixed"
+   },
+   {
+    "episode": "doc:1:0",
+    "quote": "Give a time for the next update instead, and keep it even if the update is \"no change\"."
+   },
+   {
+    "episode": "thread:e28e5c60fa2cf168",
+    "quote": "we will update them by 12:00 whether or not it is fixed"
+   },
+   {
+    "episode": "thread:e28e5c60fa2cf168",
+    "quote": "if we pass it on as ours and they miss it, we're the ones who missed it"
+   },
+   {
+    "episode": "thread:e28e5c60fa2cf168",
+    "quote": "every update after that is discounted"
+   }
+  ]
+ },
+ "incident-commander-size-the-response-to-harm-and-reversibility": {
+  "episodes": [
+   "doc:1:0",
+   "session:1:0",
+   "thread:43abbd5daa8a5df4"
+  ],
+  "evidence": [
+   {
+    "episode": "doc:1:0",
+    "quote": "I size the response on two things: how many people are being hurt right now (blast radius), and whether what is happening can be undone"
+   },
+   {
+    "episode": "thread:43abbd5daa8a5df4",
+    "quote": "not every incident gets the same size of review"
+   },
+   {
+    "episode": "session:1:0",
+    "quote": "So this is not a wake-everyone-up incident."
+   },
+   {
+    "episode": "session:1:0",
+    "quote": "I have roughly an hour and a half before it's full"
+   },
+   {
+    "episode": "thread:43abbd5daa8a5df4",
+    "quote": "One small blip is noise; three is a pattern."
+   }
+  ]
+ },
+ "incident-commander-price-the-risk-offer-a-cheaper-path": {
+  "episodes": [
+   "doc:1:0",
+   "session:1:1",
+   "thread:949bbe35647d7fb4"
+  ],
+  "evidence": [
+   {
+    "episode": "thread:949bbe35647d7fb4",
+    "quote": "let me put a price on it instead of just saying no"
+   },
+   {
+    "episode": "doc:1:0",
+    "quote": "Put a price on it: who carries the cost if it goes wrong, and when."
+   },
+   {
+    "episode": "session:1:1",
+    "quote": "Can we hotfix just the bug for them"
+   },
+   {
+    "episode": "thread:949bbe35647d7fb4",
+    "quote": "ship Friday at 5% of traffic behind the flag"
+   }
+  ]
+ },
+ "incident-commander-stabilise-first-diagnose-second": {
+  "episodes": [
+   "doc:1:0",
+   "thread:c0b104983120c180"
+  ],
+  "evidence": [
+   {
+    "episode": "thread:c0b104983120c180",
+    "quote": "Stabilise first, diagnose second."
+   },
+   {
+    "episode": "doc:1:0",
+    "quote": "Diagnosis can happen tomorrow; the customer's failed label run cannot be un-failed."
+   }
+  ]
+ }
+}

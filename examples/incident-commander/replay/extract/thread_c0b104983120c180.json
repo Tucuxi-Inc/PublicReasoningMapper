@@ -1,0 +1,61 @@
+{
+ "no_reasoning": false,
+ "situation": "Checkout latency spiked and enterprise customers were failing mid-task; an engineer wanted to root-cause live before rolling back.",
+ "decision": "Capture evidence, roll back the morning's config change immediately, and analyse the cause in a review the next day.",
+ "moves": [
+  {
+   "name": "ask what changed recently",
+   "step": "Before investigating symptoms, list what changed in the last hour and suspect it first.",
+   "cue": "a sudden regression shortly after a deploy",
+   "evidence": "before anyone opens a profiler: what changed this morning?",
+   "ref": "2"
+  },
+  {
+   "name": "stabilise first, diagnose second",
+   "step": "Stop the customer harm with a cheap mitigation before spending time on root cause.",
+   "cue": "customers failing while engineers want to investigate",
+   "evidence": "Stabilise first, diagnose second.",
+   "ref": "4"
+  },
+  {
+   "name": "identify who carries the cost",
+   "step": "Name who bears the cost of each option, especially of delay.",
+   "cue": "a proposal to keep the fault live while investigating",
+   "evidence": "they are the ones carrying the cost of our investigation, not us",
+   "ref": "4"
+  },
+  {
+   "name": "choose the reversible action first",
+   "step": "Prefer the action you can undo in minutes over the one you cannot.",
+   "cue": "a candidate fix that is a small config rollback",
+   "evidence": "The rollback is a two-minute change we can undo, so it costs us almost nothing to try it first.",
+   "ref": "4"
+  },
+  {
+   "name": "capture evidence before the rollback",
+   "step": "Snapshot dumps, metrics and diffs before mitigating so diagnosis can happen later.",
+   "cue": "fear of losing the state needed for root cause",
+   "evidence": "grab a heap dump and the limiter metrics ... that is your evidence and it will still be there this afternoon",
+   "ref": "4"
+  },
+  {
+   "name": "commit to next update time",
+   "step": "Tell affected customers when they will next hear from you, regardless of progress.",
+   "cue": "customers calling support during an incident",
+   "evidence": "they will hear from us again at 09:40 whether or not it is fixed",
+   "ref": "2"
+  }
+ ],
+ "considerations": [
+  {
+   "what": "customers' failed work in progress",
+   "evidence": "three enterprise label runs failing"
+  },
+  {
+   "what": "evidence preservation",
+   "evidence": "it will still be there this afternoon"
+  }
+ ],
+ "explained_why": true,
+ "trust_state": "explaining"
+}

@@ -1,0 +1,7 @@
+{
+  "name": "reasoning-mapper",
+  "version": "0.1.0",
+  "description": "Guide a ReasoningMapper project from raw archive to orchestrated Claude skills, and facilitate think-aloud sessions.",
+  "author": { "name": "Tucuxi, Inc." },
+  "license": "Apache-2.0"
+}

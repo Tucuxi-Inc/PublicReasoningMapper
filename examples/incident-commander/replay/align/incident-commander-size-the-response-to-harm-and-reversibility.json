@@ -1,0 +1,9 @@
+{
+"aligns_with": [
+    {
+        "id": "reversibility-assessment",
+        "step": "Ask whether the harm can be undone; treat irreversible harm as large regardless of reach."
+    }
+    ],
+    "beyond_general": "The habit incorporates specific domain-specific heuristics for incident management, such as identifying patterns in recurring small events and calculating the 'blast radius' to determine the appropriate level of organizational process."
+}

@@ -1,0 +1,24 @@
+{
+ "description": "When choosing between actions under pressure, prefer the one that can be undone quickly, and do what is needed beforehand (capturing evidence, rehearsing the rollback) so that undoing stays cheap.",
+ "when_to_apply": [
+  "a mitigation is available and the cause is not yet known",
+  "a tempting action cannot be reversed, such as deleting data",
+  "a launch relies on a rollback nobody has run"
+ ],
+ "steps": [
+  "For each candidate action, ask how quickly and completely it can be undone.",
+  "Capture the evidence you will need later before acting.",
+  "Take the reversible action first and watch what it tells you.",
+  "Treat an untested rollback as the riskiest part of a plan and rehearse it."
+ ],
+ "quality_indicators": [
+  "the first action taken could have been reversed within minutes",
+  "evidence survived the mitigation",
+  "the rollback had been exercised before it was needed"
+ ],
+ "failure_modes": [
+  "making an irreversible change when tired or rushed",
+  "rolling back without capturing the state needed for diagnosis"
+ ],
+ "example": "Paged at night for a disk filling up, the incident commander lowers a log level or pauses a batch job - both undoable - and refuses to delete files on the primary to buy space."
+}

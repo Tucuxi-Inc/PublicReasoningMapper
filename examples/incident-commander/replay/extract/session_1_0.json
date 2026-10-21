@@ -1,0 +1,43 @@
+{
+ "no_reasoning": false,
+ "situation": "Paged at night for a database disk filling steadily, with no users affected yet.",
+ "decision": "Find and reverse what is writing (lower log level or pause the job), avoid deleting files, and escalate only past a threshold.",
+ "moves": [
+  {
+   "name": "estimate time available before acting",
+   "step": "Work out how long until the failure lands to decide how fast you must move.",
+   "cue": "a resource filling at a steady rate",
+   "evidence": "I have roughly an hour and a half before it's full",
+   "ref": null
+  },
+  {
+   "name": "look at what changed, not the symptom",
+   "step": "Ask what started writing rather than examining the full disk.",
+   "cue": "a growing resource at an odd hour",
+   "evidence": "I'd look at what's writing, not at the disk.",
+   "ref": null
+  },
+  {
+   "name": "avoid the irreversible move at 2am",
+   "step": "Refuse actions you cannot undo when tired and under pressure; pause rather than kill.",
+   "cue": "temptation to delete files to buy space",
+   "evidence": "What I would not do at 2am is start deleting files on the primary",
+   "ref": null
+  },
+  {
+   "name": "size the escalation to who is affected",
+   "step": "Page more people only as the number affected or the threshold rises.",
+   "cue": "no users affected yet",
+   "evidence": "So this is not a wake-everyone-up incident.",
+   "ref": null
+  }
+ ],
+ "considerations": [
+  {
+   "what": "fatigue and error at night",
+   "evidence": "2am is exactly when people make irreversible mistakes"
+  }
+ ],
+ "explained_why": true,
+ "trust_state": "explaining"
+}

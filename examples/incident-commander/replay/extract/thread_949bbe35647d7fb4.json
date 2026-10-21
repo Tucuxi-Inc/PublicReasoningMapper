@@ -1,0 +1,47 @@
+{
+ "no_reasoning": false,
+ "situation": "A product lead wanted to ship a major change on a Friday without rehearsing the rollback, to keep a date promised to customers.",
+ "decision": "Ship Friday at 5% behind a flag and ramp the following Tuesday.",
+ "moves": [
+  {
+   "name": "who carries the cost if it fails",
+   "step": "For a risky launch, trace who absorbs the failure and when it lands.",
+   "cue": "a launch scheduled before a weekend",
+   "evidence": "those hours land on whoever is on call over the weekend, and the carriers ... absorb the failed routes",
+   "ref": "4"
+  },
+  {
+   "name": "price the risk and offer a cheaper path",
+   "step": "Instead of refusing, state the cost of the risky plan and offer lower-cost alternatives that keep the goal.",
+   "cue": "pressure to skip a safeguard to hold a date",
+   "evidence": "let me put a price on it instead of just saying no",
+   "ref": "4"
+  },
+  {
+   "name": "offer a smaller version that keeps the date",
+   "step": "Shrink the change (percentage, scope) so the promise is kept at lower risk.",
+   "cue": "a fixed external commitment",
+   "evidence": "ship Friday at 5% of traffic behind the flag",
+   "ref": "4"
+  },
+  {
+   "name": "make the rollback the tested part",
+   "step": "Rehearse the undo path before relying on it; treat an untested rollback as the real risk.",
+   "cue": "a rollback nobody has run",
+   "evidence": "the rollback is the untested part - that is where the hours go",
+   "ref": "4"
+  }
+ ],
+ "considerations": [
+  {
+   "what": "weekend on-call burden",
+   "evidence": "whoever is on call over the weekend"
+  },
+  {
+   "what": "promise made to customers",
+   "evidence": "Either keeps the promise to the carriers"
+  }
+ ],
+ "explained_why": true,
+ "trust_state": "explaining"
+}

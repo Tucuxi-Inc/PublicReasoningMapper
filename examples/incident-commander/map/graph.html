@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reasoning Map</title>
+<style>
+:root { --bg:#0e1116; --panel:rgba(20,24,31,.92); --ink:#e7e9ee; --muted:#9aa3b2; --line:#2a313d;
+        --t1:#5aa9e6; --t2:#7bd389; --t3:#f2b84b; --judged:#e07be0; --works:#f2b84b; --co:#6b7486; --warn:#ff6b6b; }
+* { box-sizing:border-box; }
+html, body { margin:0; height:100%; background:var(--bg); color:var(--ink);
+             font:14px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; overflow:hidden; }
+#graph { position:fixed; inset:0; }
+.box { position:fixed; background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:12px 14px;
+       backdrop-filter:blur(6px); }
+#controls { top:12px; left:12px; width:250px; max-height:calc(100% - 24px); overflow:auto; }
+#controls h1 { font-size:15px; margin:0 0 2px; }
+#controls .sub { color:var(--muted); font-size:12px; margin-bottom:10px; }
+#controls h2 { font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin:12px 0 6px; }
+label.row { display:flex; align-items:center; gap:8px; margin:4px 0; cursor:pointer; }
+.sw { width:12px; height:12px; border-radius:50%; display:inline-block; }
+.ln { width:18px; height:3px; border-radius:2px; display:inline-block; }
+input[type=search] { width:100%; font:inherit; color:var(--ink); background:#0b0e13; border:1px solid var(--line);
+                     border-radius:6px; padding:5px 8px; }
+button { font:inherit; color:var(--ink); background:#1b212b; border:1px solid var(--line); border-radius:6px;
+         padding:4px 10px; cursor:pointer; }
+#panel { top:12px; right:12px; width:340px; max-height:calc(100% - 24px); overflow:auto; display:none; }
+#panel h3 { margin:0 0 4px; font-size:16px; }
+#panel .tier { font-size:12px; color:var(--muted); }
+#panel h4 { font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin:12px 0 4px; }
+#panel ol, #panel ul { margin:0; padding-left:18px; }
+#panel a { color:var(--ink); text-decoration:underline dotted; cursor:pointer; }
+#panel .why { color:var(--muted); font-size:12px; }
+.flag { color:var(--warn); font-size:12px; margin-top:6px; }
+#close { float:right; }
+#nolib { position:fixed; inset:0; display:none; align-items:center; justify-content:center; color:var(--muted); }
+@media (max-width:700px) { #controls { width:calc(100% - 24px); max-height:40%; } #panel { top:auto; bottom:12px; width:calc(100% - 24px); max-height:50%; } }
+</style>
+<script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+<script src="https://unpkg.com/three-spritetext@1.8.2/dist/three-spritetext.min.js"></script>
+<script src="https://unpkg.com/3d-force-graph@1.73.0/dist/3d-force-graph.min.js"></script>
+</head>
+<body>
+<div id="graph"></div>
+<div id="nolib">The 3D libraries did not load. This page needs a network connection to fetch them.</div>
+<div id="controls" class="box">
+  <h1>Reasoning map</h1>
+  <div class="sub" id="stats"></div>
+  <input id="q" type="search" placeholder="find a pattern">
+  <h2>Tiers</h2>
+  <label class="row"><input type="checkbox" data-tier="3" checked><span class="sw" style="background:var(--t3)"></span>3 orchestration</label>
+  <label class="row"><input type="checkbox" data-tier="2" checked><span class="sw" style="background:var(--t2)"></span>2 behavioral</label>
+  <label class="row"><input type="checkbox" data-tier="1" checked><span class="sw" style="background:var(--t1)"></span>1 structural</label>
+  <h2>Links</h2>
+  <label class="row"><input type="checkbox" data-kind="orchestrates" checked><span class="ln" style="background:var(--ink)"></span>orchestrates (from episodes)</label>
+  <label class="row"><input type="checkbox" data-kind="judged" checked><span class="ln" style="background:var(--judged)"></span>orchestrates (model-proposed)</label>
+  <label class="row"><input type="checkbox" data-kind="works_with" checked><span class="ln" style="background:var(--works)"></span>works with</label>
+  <label class="row"><input type="checkbox" data-kind="co_occurs"><span class="ln" style="background:var(--co)"></span>co-occurs</label>
+  <h2>View</h2>
+  <label class="row"><input type="checkbox" id="labels" checked>labels on every pattern</label>
+  <label class="row"><input type="checkbox" id="flow" checked>show flow along links</label>
+  <label class="row"><input type="checkbox" id="orphans">only flagged patterns</label>
+  <div style="margin-top:10px"><button id="reset">Reset view</button></div>
+</div>
+<div id="panel" class="box"><button id="close">×</button><div id="pbody"></div></div>
+<script>
+const DATA = {"expert": "the incident commander", "links": [{"basis": {"lift": 1.75, "shared_episodes": 3}, "judged": false, "kind": "orchestrates", "source": "incident-commander-size-the-response-to-harm-and-reversibility", "target": "incident-commander-ask-what-changed"}, {"basis": {"lift": 1.75, "shared_episodes": 2}, "judged": false, "kind": "orchestrates", "source": "incident-commander-stabilise-first-diagnose-second", "target": "incident-commander-ask-what-changed"}, {"basis": {}, "judged": false, "kind": "orchestrates", "source": "incident-commander-size-the-response-to-harm-and-reversibility", "target": "incident-commander-find-who-carries-the-cost"}, {"basis": {}, "judged": false, "kind": "orchestrates", "source": "incident-commander-size-the-response-to-harm-and-reversibility", "target": "incident-commander-prefer-the-move-you-can-undo"}, {"basis": {}, "judged": false, "kind": "orchestrates", "source": "incident-commander-stabilise-first-diagnose-second", "target": "incident-commander-prefer-the-move-you-can-undo"}, {"basis": {"lift": 2.33, "shared_episodes": 2}, "judged": false, "kind": "orchestrates", "source": "incident-commander-stabilise-first-diagnose-second", "target": "incident-commander-promise-the-next-update-not-the-fix"}, {"basis": {}, "judged": false, "kind": "orchestrates", "source": "incident-commander-size-the-response-to-harm-and-reversibility", "target": "incident-commander-price-the-risk-offer-a-cheaper-path"}, {"basis": {}, "judged": false, "kind": "works_with", "source": "incident-commander-size-the-response-to-harm-and-reversibility", "target": "incident-commander-stabilise-first-diagnose-second"}, {"basis": {"lift": 1.17, "shared_episodes": 2}, "judged": false, "kind": "co_occurs", "source": "incident-commander-ask-what-changed", "target": "incident-commander-promise-the-next-update-not-the-fix"}, {"basis": {"lift": 1.75, "shared_episodes": 3}, "judged": false, "kind": "co_occurs", "source": "incident-commander-find-who-carries-the-cost", "target": "incident-commander-prefer-the-move-you-can-undo"}, {"basis": {"lift": 1.56, "shared_episodes": 2}, "judged": false, "kind": "co_occurs", "source": "incident-commander-find-who-carries-the-cost", "target": "incident-commander-price-the-risk-offer-a-cheaper-path"}, {"basis": {"lift": 1.17, "shared_episodes": 2}, "judged": false, "kind": "co_occurs", "source": "incident-commander-prefer-the-move-you-can-undo", "target": "incident-commander-price-the-risk-offer-a-cheaper-path"}], "nodes": [{"aligns": ["method-of-difference"], "description": "Begin diagnosis by asking what changed shortly before the problem appeared, and suspect that change first.", "episodes": 4, "id": "incident-commander-ask-what-changed", "name": "Ask what changed", "orphan": false, "steps": ["List deploys, configuration pushes, jobs and vendor changes in the window before the problem started.", "Suspect the most recent relevant change first.", "For recurring events, compare what changed before each occurrence.", "Look at what is causing the symptom, not at the symptom itself."], "tier": 1, "when": ["a sudden regression or new failure", "a resource starts behaving differently", "a small problem keeps recurring"]}, {"aligns": ["asymmetric-error-costs"], "description": "For each option, identify who would bear the cost if it goes wrong and when that cost would land, looking past the person making the request.", "episodes": 3, "id": "incident-commander-find-who-carries-the-cost", "name": "Find who carries the cost", "orphan": false, "steps": ["Name everyone who absorbs the downside of each option, including people not in the conversation.", "Note when the cost lands - now, overnight, over a weekend.", "Weigh costs to people who did not accept the risk more heavily than costs to the person asking."], "tier": 1, "when": ["choosing between mitigating now and investigating longer", "a risky launch date is proposed", "someone asks for an exception to a rule that protects others"]}, {"aligns": ["reversibility-assessment", "staged-commitment"], "description": "When choosing between actions under pressure, prefer the one that can be undone quickly, and do what is needed beforehand (capturing evidence, rehearsing the rollback) so that undoing stays cheap.", "episodes": 4, "id": "incident-commander-prefer-the-move-you-can-undo", "name": "Prefer the move you can undo", "orphan": false, "steps": ["For each candidate action, ask how quickly and completely it can be undone.", "Capture the evidence you will need later before acting.", "Take the reversible action first and watch what it tells you.", "Treat an untested rollback as the riskiest part of a plan and rehearse it."], "tier": 1, "when": ["a mitigation is available and the cause is not yet known", "a tempting action cannot be reversed, such as deleting data", "a launch relies on a rollback nobody has run"]}, {"aligns": ["trust-calibration", "credible-commitment"], "description": "During an incident, commit to when people will next hear from you rather than when the problem will be fixed, and never adopt another party's estimate as your own commitment.", "episodes": 3, "id": "incident-commander-promise-the-next-update-not-the-fix", "name": "Promise the next update, not the fix", "orphan": false, "steps": ["Tell affected people what is affected, what you are doing, and the time of the next update.", "Keep that update time even if the update is 'no change'.", "If you pass on someone else's estimate, label it as theirs and say you are not relying on it.", "Describe any workaround you control alongside the estimate you do not."], "tier": 2, "when": ["people affected by an incident are asking when it will be fixed", "a vendor or another team has given a fix estimate", "someone proposes telling customers a resolution time"]}, {"aligns": ["reversibility-assessment"], "description": "Decide how much process, escalation and review a situation deserves from how many people are being hurt and whether the harm can be undone - and look harder whenever a small problem recurs.", "episodes": 3, "id": "incident-commander-size-the-response-to-harm-and-reversibility", "name": "Size the response to harm and reversibility", "orphan": false, "steps": ["Estimate the blast radius: who is hurt now, and how many.", "Ask whether the harm can be undone; treat irreversible harm as large regardless of reach.", "Estimate how much time you have before the harm grows.", "Choose the smallest process that fits: ticket, short review, or full incident process.", "Escalate a small, repeated event: three occurrences are a pattern."], "tier": 3, "when": ["deciding whether something is an incident at all", "deciding how many people to page", "deciding how large a post-incident review should be", "a small event has happened before"]}, {"aligns": ["tail-risk-thinking", "specialization-simpler-case"], "description": "When someone wants to take a risk to meet a goal, do not simply refuse: state what the risk would cost and who would pay it, then offer ways to reach the goal at lower cost.", "episodes": 3, "id": "incident-commander-price-the-risk-offer-a-cheaper-path", "name": "Price the risk, offer a cheaper path", "orphan": false, "steps": ["Acknowledge the goal and say you want to help meet it.", "Put a concrete price on the risky plan: what goes wrong, who pays, when.", "Offer smaller versions that keep the goal - less traffic, narrower scope, a different day.", "State plainly which option you would not take, and why."], "tier": 2, "when": ["pressure to skip a safeguard to hold a date", "a request that would spend other people's trust", "a fixed external commitment conflicts with a safe plan"]}, {"aligns": ["interventionist-reasoning"], "description": "While people are being harmed, stop the harm before finding the cause; schedule diagnosis for afterwards, using evidence captured before mitigating.", "episodes": 2, "id": "incident-commander-stabilise-first-diagnose-second", "name": "Stabilise first, diagnose second", "orphan": false, "steps": ["Capture the evidence diagnosis will need.", "Apply the cheapest mitigation that stops the harm.", "Read what the mitigation's result tells you about the cause.", "Schedule the real analysis for when no one is being hurt."], "tier": 3, "when": ["customers are failing now and an engineer wants to investigate live", "a cheap mitigation exists before the cause is known"]}]};
+const C = { 1: "#5aa9e6", 2: "#7bd389", 3: "#f2b84b", judged: "#e07be0", works_with: "#f2b84b", co_occurs: "#6b7486", orchestrates: "#e7e9ee", warn: "#ff6b6b" };
+const TIER = { 1: "Tier 1 · structural", 2: "Tier 2 · behavioral", 3: "Tier 3 · orchestration" };
+const byId = Object.fromEntries(DATA.nodes.map(n => [n.id, n]));
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const kindOf = l => l.kind === "orchestrates" && l.judged ? "judged" : l.kind;
+const nid = x => typeof x === "object" ? x.id : x;
+const state = { tiers: new Set([1, 2, 3]), kinds: new Set(["orchestrates", "judged", "works_with"]), q: "", orphans: false, focus: null };
+
+const counts = DATA.links.reduce((a, l) => (a[kindOf(l)] = (a[kindOf(l)] || 0) + 1, a), {});
+document.getElementById("stats").textContent =
+  `${DATA.expert} · ${DATA.nodes.length} patterns · ${(counts.orchestrates || 0) + (counts.judged || 0)} orchestration links` +
+  (counts.judged ? ` (${counts.judged} model-proposed)` : "") +
+  ` · ${DATA.nodes.filter(n => n.orphan).length} flagged`;
+
+// on a large map every label at once is unreadable: tier 3 labels only, until asked
+if (DATA.nodes.length > 40) document.getElementById("labels").checked = false;
+if (typeof ForceGraph3D === "undefined") { document.getElementById("nolib").style.display = "flex"; throw new Error("libraries missing"); }
+
+const nbrs = {};
+DATA.links.forEach(l => { (nbrs[l.source] ||= new Set()).add(l.target); (nbrs[l.target] ||= new Set()).add(l.source); });
+
+function visible() {
+  const q = state.q.toLowerCase();
+  let nodes = DATA.nodes.filter(n => state.tiers.has(n.tier) && (!state.orphans || n.orphan));
+  const ids = new Set(nodes.map(n => n.id));
+  const links = DATA.links.filter(l => state.kinds.has(kindOf(l)) && ids.has(nid(l.source)) && ids.has(nid(l.target)));
+  return { nodes, links, match: q ? new Set(nodes.filter(n => (n.name + " " + n.id).toLowerCase().includes(q)).map(n => n.id)) : null };
+}
+
+const size = n => (n.tier === 3 ? 6 : 3) + Math.sqrt(n.episodes || 1) * 1.6;
+const dim = n => {
+  const v = cur.match;
+  if (v && !v.has(n.id)) return true;
+  if (state.focus && n.id !== state.focus && !(nbrs[state.focus] || new Set()).has(n.id)) return true;
+  return false;
+};
+let cur = visible();
+
+const Graph = ForceGraph3D()(document.getElementById("graph"))
+  .backgroundColor("#0e1116")
+  .graphData({ nodes: cur.nodes, links: cur.links })
+  .nodeId("id")
+  .nodeVal(n => size(n))
+  .nodeLabel(n => `<b>${esc(n.name)}</b><br>${TIER[n.tier]}${n.episodes ? ` · ${n.episodes} episodes` : ""}`)
+  .nodeThreeObjectExtend(true)
+  .nodeThreeObject(n => {
+    if (!(n.tier === 3 || document.getElementById("labels").checked)) return null;
+    const s = new SpriteText(n.name.length > 42 ? n.name.slice(0, 40) + "…" : n.name);
+    s.color = dim(n) ? "rgba(231,233,238,.25)" : "#e7e9ee";
+    s.textHeight = n.tier === 3 ? 5 : 3.6;
+    s.position.y = size(n) * 0.9 + 3;
+    return s;
+  })
+  .nodeColor(n => dim(n) ? "rgba(120,128,140,.25)" : n.orphan ? C.warn : C[n.tier])
+  .nodeOpacity(0.92)
+  .linkColor(l => C[kindOf(l)])
+  .linkOpacity(0.55)
+  .linkWidth(l => l.kind === "co_occurs" ? 0 : l.kind === "works_with" ? 0.6 : 1.1)
+  .linkVisibility(l => !state.focus || nid(l.source) === state.focus || nid(l.target) === state.focus)
+  .linkDirectionalArrowLength(l => l.kind === "orchestrates" ? 3.2 : 0)
+  .linkDirectionalArrowRelPos(1)
+  .linkDirectionalParticles(l => l.kind === "orchestrates" && document.getElementById("flow").checked ? 2 : 0)
+  .linkDirectionalParticleWidth(1.4)
+  .linkDirectionalParticleSpeed(0.006)
+  .onNodeClick(n => focus(n.id))
+  .onBackgroundClick(() => unfocus());
+
+Graph.d3Force("charge").strength(-160);
+Graph.d3Force("link").distance(l => l.kind === "co_occurs" ? 120 : 60);
+
+function refresh() {
+  cur = visible();
+  Graph.graphData({ nodes: cur.nodes, links: cur.links });
+}
+// re-setting an accessor (as a fresh function) is what makes the graph re-evaluate it
+function restyle() {
+  const nc = Graph.nodeColor(), no = Graph.nodeThreeObject(), lv = Graph.linkVisibility();
+  Graph.nodeColor(n => nc(n)).nodeThreeObject(n => no(n)).linkVisibility(l => lv(l));
+}
+
+function linkTo(id) { const n = byId[id]; return n ? `<a data-go="${esc(id)}">${esc(n.name)}</a>` : esc(id); }
+function why(a, b) {
+  const l = DATA.links.find(l => (nid(l.source) === a && nid(l.target) === b) || (nid(l.source) === b && nid(l.target) === a));
+  if (!l) return "";
+  const s = l.basis || {};
+  return s.judged !== undefined ? ` <span class="why">· proposed: ${esc(s.judged)}</span>`
+       : s.shared_episodes ? ` <span class="why">· ${s.shared_episodes} shared episodes, lift ${s.lift}</span>` : "";
+}
+function focus(id) {
+  const n = byId[id]; if (!n) return;
+  state.focus = id; restyle();
+  const rel = k => DATA.links.filter(l => l.kind === k);
+  const orch = rel("orchestrates"), works = rel("works_with");
+  const down = orch.filter(l => nid(l.source) === id).map(l => nid(l.target));
+  const up = orch.filter(l => nid(l.target) === id).map(l => nid(l.source));
+  const peers = works.filter(l => nid(l.source) === id || nid(l.target) === id).map(l => nid(l.source) === id ? nid(l.target) : nid(l.source));
+  const list = (title, ids) => ids.length ? `<h4>${title}</h4><ul>${ids.map(b => `<li>${linkTo(b)}${why(id, b)}</li>`).join("")}</ul>` : "";
+  const when = Array.isArray(n.when) ? `<ul>${n.when.map(w => `<li>${esc(w)}</li>`).join("")}</ul>` : esc(n.when);
+  document.getElementById("pbody").innerHTML = `
+    <h3>${esc(n.name)}</h3><div class="tier">${TIER[n.tier]}${n.episodes ? ` · seen in ${n.episodes} episodes` : ""}</div>
+    ${n.orphan ? `<div class="flag">${n.tier === 3 ? "Orchestrates nothing yet." : "Nothing orchestrates this yet."}</div>` : ""}
+    ${n.description ? `<p>${esc(n.description)}</p>` : ""}
+    ${n.when ? `<h4>When to apply</h4>${when}` : ""}
+    ${n.steps.length ? `<h4>Steps</h4><ol>${n.steps.map(s => `<li>${esc(typeof s === "string" ? s : JSON.stringify(s))}</li>`).join("")}</ol>` : ""}
+    ${list("Orchestrates", down)}${list("Orchestrated by", up)}${list("Works with", peers)}
+    ${n.aligns.length ? `<h4>Builds on</h4><div class="why">${n.aligns.map(esc).join(", ")}</div>` : ""}`;
+  document.getElementById("panel").style.display = "block";
+  document.querySelectorAll("#pbody a[data-go]").forEach(a => a.onclick = () => focus(a.dataset.go));
+  const node = cur.nodes.find(x => x.id === id);
+  if (node && node.x !== undefined) {
+    const d = 220, r = 1 + d / Math.hypot(node.x || 1, node.y || 1, node.z || 1);
+    Graph.cameraPosition({ x: node.x * r, y: node.y * r, z: node.z * r }, node, 1000);
+  }
+}
+function unfocus() { state.focus = null; document.getElementById("panel").style.display = "none"; restyle(); }
+
+document.querySelectorAll("[data-tier]").forEach(el => el.onchange = () => { el.checked ? state.tiers.add(+el.dataset.tier) : state.tiers.delete(+el.dataset.tier); refresh(); });
+document.querySelectorAll("[data-kind]").forEach(el => el.onchange = () => { el.checked ? state.kinds.add(el.dataset.kind) : state.kinds.delete(el.dataset.kind); refresh(); });
+document.getElementById("labels").onchange = restyle;
+document.getElementById("flow").onchange = () => { const p = Graph.linkDirectionalParticles(); Graph.linkDirectionalParticles(l => p(l)); };
+document.getElementById("orphans").onchange = e => { state.orphans = e.target.checked; refresh(); };
+document.getElementById("q").oninput = e => {
+  state.q = e.target.value; cur.match = visible().match; restyle();
+  if (cur.match && cur.match.size === 1) focus([...cur.match][0]);
+};
+document.getElementById("close").onclick = unfocus;
+// frame the whole graph from outside its farthest node (zoomToFit can land inside it)
+function fit(ms = 800) {
+  const r = Math.max(40, ...Graph.graphData().nodes.map(n => Math.hypot(n.x || 0, n.y || 0, n.z || 0)));
+  Graph.cameraPosition({ x: 0, y: r * 0.3, z: r * 2.6 + 60 }, { x: 0, y: 0, z: 0 }, ms);
+}
+let framed = false;
+Graph.onEngineStop(() => { if (!framed) { framed = true; fit(); } });
+document.getElementById("reset").onclick = () => { unfocus(); fit(); };
+</script>
+</body>
+</html>

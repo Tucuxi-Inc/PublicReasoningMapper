@@ -1,0 +1,22 @@
+{
+ "description": "While people are being harmed, stop the harm before finding the cause; schedule diagnosis for afterwards, using evidence captured before mitigating.",
+ "when_to_apply": [
+  "customers are failing now and an engineer wants to investigate live",
+  "a cheap mitigation exists before the cause is known"
+ ],
+ "steps": [
+  "Capture the evidence diagnosis will need.",
+  "Apply the cheapest mitigation that stops the harm.",
+  "Read what the mitigation's result tells you about the cause.",
+  "Schedule the real analysis for when no one is being hurt."
+ ],
+ "quality_indicators": [
+  "time to mitigation was short",
+  "root cause was still found afterwards from the captured evidence"
+ ],
+ "failure_modes": [
+  "investigating live while customers absorb the cost",
+  "mitigating in a way that destroys the evidence"
+ ],
+ "example": "With enterprise customers' work failing, the incident commander has a heap dump and metrics captured, rolls back the morning's change, and leaves root cause for the next day's review."
+}

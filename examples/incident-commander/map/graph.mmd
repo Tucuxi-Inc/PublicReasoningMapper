@@ -1,0 +1,22 @@
+flowchart TB
+  n4["Size the response to harm and reversibility"]
+  n6["Stabilise first, diagnose second"]
+  n3["Promise the next update, not the fix"]
+  n5["Price the risk, offer a cheaper path"]
+  n0["Ask what changed"]
+  n1["Find who carries the cost"]
+  n2["Prefer the move you can undo"]
+  n4 --> n0
+  n6 --> n0
+  n4 --> n1
+  n4 --> n2
+  n6 --> n2
+  n6 --> n3
+  n4 --> n5
+  classDef t3 fill:#f2b84b,stroke:#9a6b10,color:#1d1d1b
+  classDef t2 fill:#7bd389,stroke:#2e7d4f,color:#1d1d1b
+  classDef t1 fill:#5aa9e6,stroke:#245f8f,color:#1d1d1b
+  classDef flagged stroke:#d33,stroke-width:3px
+  class n4,n6 t3
+  class n3,n5 t2
+  class n0,n1,n2 t1

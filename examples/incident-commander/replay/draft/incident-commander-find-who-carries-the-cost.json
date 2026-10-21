@@ -1,0 +1,22 @@
+{
+ "description": "For each option, identify who would bear the cost if it goes wrong and when that cost would land, looking past the person making the request.",
+ "when_to_apply": [
+  "choosing between mitigating now and investigating longer",
+  "a risky launch date is proposed",
+  "someone asks for an exception to a rule that protects others"
+ ],
+ "steps": [
+  "Name everyone who absorbs the downside of each option, including people not in the conversation.",
+  "Note when the cost lands - now, overnight, over a weekend.",
+  "Weigh costs to people who did not accept the risk more heavily than costs to the person asking."
+ ],
+ "quality_indicators": [
+  "the cost to absent parties was stated explicitly",
+  "the timing of the cost was part of the decision"
+ ],
+ "failure_modes": [
+  "weighing only the requester's needs",
+  "treating an investigation as free when customers are paying for it"
+ ],
+ "example": "Asked to skip a maintenance notice for one partner, the incident commander first asks which other customers would carry the cost if the upgrade went badly."
+}

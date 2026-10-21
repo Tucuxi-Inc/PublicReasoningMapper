@@ -1,0 +1,13 @@
+{
+"aligns_with": [
+{
+"id": "reversibility-assessment",
+"step": "Before committing, ask how quickly the change could be reversed."
+},
+{
+"id": "reversibility-assessment",
+"step": "Prefer the option that keeps the decision reversible."
+}
+],
+"beyond_general": "The habit specifically prioritizes the speed of reversal as a primary metric for risk mitigation in a live production environment."
+}

@@ -1,0 +1,23 @@
+{
+ "description": "Begin diagnosis by asking what changed shortly before the problem appeared, and suspect that change first.",
+ "when_to_apply": [
+  "a sudden regression or new failure",
+  "a resource starts behaving differently",
+  "a small problem keeps recurring"
+ ],
+ "steps": [
+  "List deploys, configuration pushes, jobs and vendor changes in the window before the problem started.",
+  "Suspect the most recent relevant change first.",
+  "For recurring events, compare what changed before each occurrence.",
+  "Look at what is causing the symptom, not at the symptom itself."
+ ],
+ "quality_indicators": [
+  "the change log was checked before diagnostic tools were opened",
+  "a recurring problem was tested for a common preceding change"
+ ],
+ "failure_modes": [
+  "starting with deep diagnosis of the symptom while the recent change goes unexamined",
+  "assuming a reviewed change cannot be the cause"
+ ],
+ "example": "Checkout latency jumps minutes after a rate-limiter configuration deploy; the incident commander asks what changed this morning before anyone opens a profiler."
+}

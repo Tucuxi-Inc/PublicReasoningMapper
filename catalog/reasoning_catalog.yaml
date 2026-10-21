@@ -1,0 +1,3623 @@
+# ReasoningMapper reasoning catalog
+# Copyright (C) 2026 Tucuxi, Inc.
+# SPDX-License-Identifier: Apache-2.0
+#
+# A reference library of general human reasoning approaches drawn from
+# cognitive science, logic, mathematics, decision theory and metacognition
+# research. Used ONLY for post-hoc alignment of extracted expert patterns.
+# Never include this catalog (or its labels) in an extraction prompt.
+#
+# typical_tier: 1 = structural (core analytical move)
+#               2 = behavioral (applying analysis in situations / with people)
+#               3 = orchestration / meta-cognitive (choosing, monitoring, controlling)
+
+version: "1.0"
+license: Apache-2.0
+
+families:
+  - id: logical
+    name: "Logical and deductive reasoning"
+    description: "Drawing conclusions that follow necessarily from premises: conditional forms, syllogisms, elimination, proof by contradiction and exhaustive case analysis."
+  - id: mathematical
+    name: "Mathematical and quantitative reasoning"
+    description: "Heuristics from mathematical problem solving and quantitative sense-making: invariants, extremes, symmetry, estimation, units, rates and margins."
+  - id: inductive-abductive
+    name: "Inductive and abductive reasoning"
+    description: "Moving from observations to generalizations and explanations: generalizing, hypothesizing, eliminating rivals, testing and diagnosing."
+  - id: probabilistic
+    name: "Probabilistic and statistical reasoning"
+    description: "Reasoning under uncertainty with likelihoods, base rates, samples, expected values and the shape of the risk distribution."
+  - id: causal
+    name: "Causal and counterfactual reasoning"
+    description: "Establishing what produces what: comparison of cases, interventions, confounders, mechanisms, counterfactuals and root causes."
+  - id: analogical
+    name: "Analogical and case-based reasoning"
+    description: "Reasoning from similar prior situations: mapping structure, retrieving and adapting cases, following precedent and checking where analogies break."
+  - id: problem-solving
+    name: "Problem solving and search"
+    description: "General methods for moving from a problem state to a goal state: defining the problem, decomposing it, searching, testing, relaxing constraints and restructuring."
+  - id: decision
+    name: "Decision-making"
+    description: "Choosing among options under multiple objectives, uncertainty and limited resources: tradeoffs, reversibility, options, dominance, robustness and staging."
+  - id: systems-temporal
+    name: "Systems and temporal reasoning"
+    description: "Reasoning about interconnected parts over time: feedback, delays, accumulations, downstream effects, leverage, history and alternative futures."
+  - id: argumentation
+    name: "Argumentation and dialectical reasoning"
+    description: "Constructing, testing and weighing arguments: structure, charity, burden of proof, critical questions, definitions and synthesis of opposing views."
+  - id: social-strategic
+    name: "Social cognition and strategic reasoning"
+    description: "Reasoning about other minds and interdependent choices: beliefs, perspectives, incentives, moves and countermoves, signals, negotiation, trust and coalitions."
+  - id: communication
+    name: "Communication and framing"
+    description: "Shaping how reasoning is conveyed: modeling the audience, establishing common ground, framing, sequencing and expressing uncertainty."
+  - id: metacognitive-monitoring
+    name: "Metacognitive monitoring"
+    description: "Watching one's own thinking: judging understanding, knowledge, confidence, errors, sources, assumptions and the state of the situation."
+  - id: metacognitive-control
+    name: "Metacognitive control"
+    description: "Regulating one's own thinking: selecting and switching strategies, allocating effort, deciding when to stop, seek help, revise, debias, plan, reflect and transfer."
+
+entries:
+
+  # ---------------------------------------------------------------- logical
+  - id: deduction-modus-ponens
+    name: "Modus ponens (affirming the antecedent)"
+    family: logical
+    typical_tier: 1
+    description: "Applying a known conditional rule to a case that meets its condition and concluding that the consequence follows."
+    procedure:
+      - "State the governing if-then rule"
+      - "Confirm the case satisfies the 'if' condition"
+      - "Conclude the 'then' consequence applies"
+      - "Check the rule has no relevant exceptions"
+    signals:
+      - "since that condition is met"
+      - "so it follows that"
+      - "that triggers the rule"
+      - "if X then Y, and X"
+      - "which means we're required to"
+      - "by definition that applies here"
+    failure_modes:
+      - "Applying a rule whose exceptions or scope limits were not checked"
+      - "Treating a default or rule of thumb as a strict conditional"
+    sources:
+      - "Rips, L. J. (1994). The Psychology of Proof."
+      - "Braine, M. D. S., & O'Brien, D. P. (Eds.) (1998). Mental Logic."
+    related: [deduction-modus-tollens, conditional-fallacy-check, rule-criteria-application]
+
+  - id: deduction-modus-tollens
+    name: "Modus tollens (denying the consequent)"
+    family: logical
+    typical_tier: 1
+    description: "Reasoning that if a claim would necessarily produce some observable result, and that result is absent, the claim must be false."
+    procedure:
+      - "Identify what the claim would necessarily imply"
+      - "Check whether the implied result is present"
+      - "If absent, reject the claim"
+      - "Verify the implication really is necessary, not just typical"
+    signals:
+      - "if that were true we'd have seen"
+      - "that rules it out"
+      - "there's no sign of X, so"
+      - "the absence of X tells us"
+      - "that can't be right, because"
+      - "we'd expect a trail if"
+    failure_modes:
+      - "Treating a merely likely implication as necessary"
+      - "Concluding absence from failure to look properly"
+    sources:
+      - "Wason, P. C. (1968). Reasoning about a rule. Quarterly Journal of Experimental Psychology."
+      - "Johnson-Laird, P. N., & Byrne, R. M. J. (1991). Deduction."
+    related: [deduction-modus-ponens, falsification-test, proof-by-contradiction]
+
+  - id: conditional-fallacy-check
+    name: "Checking conditional direction (avoiding affirming the consequent)"
+    family: logical
+    typical_tier: 1
+    description: "Noticing that 'if A then B' does not license 'B therefore A' or 'not A therefore not B', and checking whether a rule runs both ways before relying on it."
+    procedure:
+      - "Write the conditional in its stated direction"
+      - "Ask whether the reverse direction also holds"
+      - "Look for other routes to the same consequence"
+      - "Draw only the conclusion the direction permits"
+    signals:
+      - "that doesn't work in reverse"
+      - "other things could cause that too"
+      - "doesn't follow the other direction"
+      - "just because B doesn't mean A"
+      - "the rule only runs one way"
+      - "that's the converse, not the rule"
+    failure_modes:
+      - "Over-correcting and ignoring cases where the rule is in fact biconditional"
+    sources:
+      - "Wason, P. C. (1968). Reasoning about a rule. Quarterly Journal of Experimental Psychology."
+      - "Evans, J. St. B. T. (1982). The Psychology of Deductive Reasoning."
+    related: [deduction-modus-ponens, necessary-sufficient-conditions, confounder-awareness]
+
+  - id: syllogistic-reasoning
+    name: "Syllogistic (categorical) reasoning"
+    family: logical
+    typical_tier: 1
+    description: "Combining statements about categories (all, some, none) to derive what must be true of members of those categories."
+    procedure:
+      - "Restate each premise as a relation between categories"
+      - "Identify the shared middle term"
+      - "Derive only what holds in every arrangement of the categories"
+      - "Watch quantifiers: 'some' does not become 'all'"
+    signals:
+      - "all of these fall under"
+      - "this is one of those, so"
+      - "none of them qualify, therefore"
+      - "some, but not necessarily all"
+      - "as a member of that class"
+    failure_modes:
+      - "Belief bias: accepting invalid conclusions that sound plausible"
+      - "Illicit conversion of 'all A are B' into 'all B are A'"
+    sources:
+      - "Aristotle. Prior Analytics."
+      - "Johnson-Laird, P. N. (1983). Mental Models."
+    related: [deduction-modus-ponens, mental-model-counterexample-search, rule-criteria-application]
+
+  - id: disjunctive-elimination
+    name: "Disjunctive syllogism (process of elimination)"
+    family: logical
+    typical_tier: 1
+    description: "Listing the possibilities that exhaust a situation and ruling them out one by one until only the remaining option stands."
+    procedure:
+      - "Enumerate the options that could be the case"
+      - "Confirm the list is exhaustive"
+      - "Eliminate options that conflict with known facts"
+      - "Accept the survivor, noting how sure the eliminations were"
+    signals:
+      - "it has to be one of these"
+      - "that leaves only"
+      - "we can cross that off"
+      - "by process of elimination"
+      - "it's either A or B, not A"
+    failure_modes:
+      - "False dilemma: the option list was not actually exhaustive"
+      - "Eliminating an option on weak evidence"
+    sources:
+      - "Johnson-Laird, P. N., & Byrne, R. M. J. (1991). Deduction."
+      - "Rips, L. J. (1994). The Psychology of Proof."
+    related: [case-analysis, hypothesis-elimination, differential-diagnosis]
+
+  - id: case-analysis
+    name: "Case analysis (proof by cases)"
+    family: logical
+    typical_tier: 1
+    description: "Splitting a situation into exhaustive, non-overlapping cases and working out the result in each one separately."
+    procedure:
+      - "Choose the variable or fact that divides the situation"
+      - "Define cases that are exhaustive and mutually exclusive"
+      - "Reason through each case on its own"
+      - "Combine: note what holds in all cases and where they differ"
+    signals:
+      - "there are really three scenarios"
+      - "either way we end up"
+      - "in the first case... in the second"
+      - "whichever way that goes"
+      - "let's take each possibility in turn"
+      - "if yes, then...; if no, then"
+    failure_modes:
+      - "Missing a case, so a conclusion said to hold 'either way' fails"
+      - "Explosion of cases that obscures the main line"
+    sources:
+      - "Polya, G. (1945). How to Solve It."
+      - "Zeitz, P. (1999). The Art and Craft of Problem Solving."
+    related: [disjunctive-elimination, scenario-planning, dominance-reasoning]
+
+  - id: proof-by-contradiction
+    name: "Proof by contradiction"
+    family: logical
+    typical_tier: 1
+    description: "Temporarily assuming the opposite of what one believes and showing that assumption leads to an inconsistency, which establishes the original claim."
+    procedure:
+      - "Assume the claim is false"
+      - "Reason forward from that assumption plus known facts"
+      - "Find a contradiction with something certainly true"
+      - "Conclude the assumption fails, so the claim holds"
+    signals:
+      - "suppose for a moment it weren't"
+      - "then we'd have to accept"
+      - "which contradicts what we know"
+      - "assume the opposite and see"
+      - "that can't both be true"
+    failure_modes:
+      - "The contradiction actually comes from another faulty premise"
+    sources:
+      - "Polya, G. (1945). How to Solve It."
+      - "Rips, L. J. (1994). The Psychology of Proof."
+    related: [reductio-ad-absurdum, deduction-modus-tollens, contradiction-detection]
+
+  - id: reductio-ad-absurdum
+    name: "Reductio ad absurdum (absurd consequences)"
+    family: logical
+    typical_tier: 1
+    description: "Testing a position or proposal by following it to its logical consequences and showing they are unacceptable or absurd."
+    procedure:
+      - "Take the position at face value"
+      - "Extend it consistently to further cases"
+      - "Find a consequence that even its proponent would reject"
+      - "Ask what limiting principle would avoid that result"
+    signals:
+      - "taken to its logical conclusion"
+      - "by that logic, we'd also have to"
+      - "followed all the way through"
+      - "that would mean every single"
+      - "nobody would accept where that leads"
+    failure_modes:
+      - "Straw-manning by extending a position further than its principle requires"
+    sources:
+      - "Walton, D., Reed, C., & Macagno, F. (2008). Argumentation Schemes."
+    related: [proof-by-contradiction, slippery-slope-evaluation, boundary-limit-cases]
+
+  - id: necessary-sufficient-conditions
+    name: "Necessary vs. sufficient conditions"
+    family: logical
+    typical_tier: 1
+    description: "Distinguishing what must be present for an outcome from what is enough on its own to guarantee it."
+    procedure:
+      - "List the conditions linked to the outcome"
+      - "For each, ask: can the outcome occur without it?"
+      - "Ask: does it alone guarantee the outcome?"
+      - "Identify the jointly sufficient set"
+    signals:
+      - "that's required but not enough"
+      - "on its own that would do it"
+      - "a must-have, not a guarantee"
+      - "you need all three together"
+      - "a precondition, not the cause"
+      - "necessary but not sufficient"
+    failure_modes:
+      - "Treating a necessary condition as a sufficient one"
+      - "Missing hidden background conditions"
+    sources:
+      - "Mackie, J. L. (1965). Causes and conditions. American Philosophical Quarterly."
+      - "Mill, J. S. (1843). A System of Logic."
+    related: [conditional-fallacy-check, multiple-contributing-causes, rule-criteria-application]
+
+  - id: mental-model-counterexample-search
+    name: "Counterexample search (mental models)"
+    family: logical
+    typical_tier: 1
+    description: "Testing a tentative conclusion by trying to construct a situation consistent with all the premises in which the conclusion is false."
+    procedure:
+      - "Form the initial model that suggests the conclusion"
+      - "Try to build an alternative model fitting all premises"
+      - "Check whether the conclusion fails in it"
+      - "Accept the conclusion only if no counterexample is found"
+    signals:
+      - "can I think of a case where"
+      - "what about the situation where"
+      - "that's not always true, e.g."
+      - "here's a counterexample"
+      - "is there any way that fails"
+    failure_modes:
+      - "Stopping after the first model that fits"
+      - "Searching only for confirming cases"
+    sources:
+      - "Johnson-Laird, P. N. (1983). Mental Models."
+      - "Johnson-Laird, P. N., & Byrne, R. M. J. (1991). Deduction."
+    related: [falsification-test, syllogistic-reasoning, boundary-limit-cases]
+
+  - id: rule-criteria-application
+    name: "Rule- and criteria-based classification"
+    family: logical
+    typical_tier: 1
+    description: "Deciding whether something belongs to a category by checking it, element by element, against the defining criteria of that category."
+    procedure:
+      - "State the criteria that define the category"
+      - "Map the facts to each criterion"
+      - "Note criteria that are met, unmet or uncertain"
+      - "Classify, flagging borderline elements"
+    signals:
+      - "does it meet each element"
+      - "checks every box except"
+      - "it fits the definition"
+      - "falls squarely within"
+      - "on the criteria, this qualifies"
+      - "missing one of the requirements"
+    failure_modes:
+      - "Mechanical box-checking that misses the purpose behind the criteria"
+      - "Ignoring borderline or fuzzy membership"
+    sources:
+      - "Smith, E. E., & Medin, D. L. (1981). Categories and Concepts."
+      - "Rosch, E. (1978). Principles of categorization. In Cognition and Categorization."
+    related: [deduction-modus-ponens, definitional-clarity, prototype-categorization]
+
+  # ------------------------------------------------------------ mathematical
+  - id: mathematical-induction
+    name: "Mathematical induction"
+    family: mathematical
+    typical_tier: 1
+    description: "Establishing that a property holds for all cases in a sequence by showing it holds for the first case and that each case carries it to the next."
+    procedure:
+      - "Prove the base case"
+      - "Assume the property holds for case n"
+      - "Show it then holds for case n+1"
+      - "Conclude it holds for all cases"
+    signals:
+      - "it holds for the first one"
+      - "and each step preserves it"
+      - "so by induction it holds"
+      - "works for n, so works for n+1"
+      - "it carries forward every round"
+    failure_modes:
+      - "Skipping or mis-stating the base case"
+      - "An inductive step that silently fails at small cases"
+    sources:
+      - "Polya, G. (1954). Induction and Analogy in Mathematics."
+      - "Engel, A. (1998). Problem-Solving Strategies."
+    related: [invariant-reasoning, inductive-generalization]
+
+  - id: invariant-reasoning
+    name: "Invariant reasoning"
+    family: mathematical
+    typical_tier: 1
+    description: "Finding a quantity or property that stays unchanged under every allowed move, and using it to show what states are or are not reachable."
+    procedure:
+      - "List the allowed operations or moves"
+      - "Look for a quantity no move can change"
+      - "Compare its value at start and at the target"
+      - "If they differ, the target is unreachable"
+    signals:
+      - "whatever we do, X stays the same"
+      - "that never changes, so"
+      - "whatever happens, the total is fixed"
+      - "the one constant through all of it"
+      - "no sequence of moves gets you there"
+    failure_modes:
+      - "Missing a move that does change the supposed invariant"
+    sources:
+      - "Engel, A. (1998). Problem-Solving Strategies."
+      - "Zeitz, P. (1999). The Art and Craft of Problem Solving."
+    related: [mathematical-induction, symmetry-exploitation, stocks-and-flows]
+
+  - id: extremal-principle
+    name: "Extremal principle"
+    family: mathematical
+    typical_tier: 1
+    description: "Focusing on the largest, smallest, first or last element of a set because it has special properties that unlock the problem."
+    procedure:
+      - "Identify a measure along which elements can be ordered"
+      - "Pick the extreme element (max, min, earliest, latest)"
+      - "Derive properties that the extreme element must have"
+      - "Use those properties to reach the conclusion"
+    signals:
+      - "look at the biggest one first"
+      - "consider the earliest instance"
+      - "the worst offender tells us"
+      - "start from the smallest case"
+      - "the outlier is the key"
+    failure_modes:
+      - "Generalizing from the extreme case to typical ones"
+    sources:
+      - "Engel, A. (1998). Problem-Solving Strategies."
+      - "Zeitz, P. (1999). The Art and Craft of Problem Solving."
+    related: [boundary-limit-cases, invariant-reasoning]
+
+  - id: symmetry-exploitation
+    name: "Symmetry exploitation"
+    family: mathematical
+    typical_tier: 1
+    description: "Noticing that parts of a problem are interchangeable and using that sameness to cut the work or infer that results must be the same."
+    procedure:
+      - "Identify elements that could be swapped without changing the problem"
+      - "Solve one representative case"
+      - "Transfer the result to the symmetric cases"
+      - "Check for any asymmetry that breaks the transfer"
+    signals:
+      - "the same logic applies to the other side"
+      - "it cuts both ways"
+      - "mirror image of the other case"
+      - "by symmetry, they should match"
+      - "what's true for one is true for both"
+    failure_modes:
+      - "Assuming symmetry where the parties or parts differ in a relevant way"
+    sources:
+      - "Polya, G. (1945). How to Solve It."
+      - "Zeitz, P. (1999). The Art and Craft of Problem Solving."
+    related: [invariant-reasoning, perspective-taking]
+
+  - id: working-backwards
+    name: "Working backwards"
+    family: mathematical
+    typical_tier: 1
+    description: "Starting from the desired end state and reasoning back step by step to what must already be true or done to reach it."
+    procedure:
+      - "State the goal state precisely"
+      - "Ask what immediately precedes it"
+      - "Repeat until reaching the current state or known facts"
+      - "Reverse the chain into a forward plan"
+    signals:
+      - "start from where we need to end up"
+      - "reverse-engineer from the deadline"
+      - "what has to be true the day before"
+      - "work back from the outcome"
+      - "for that to happen, first we need"
+    failure_modes:
+      - "Fixating on one backward path when several exist"
+    sources:
+      - "Polya, G. (1945). How to Solve It."
+      - "Newell, A., & Simon, H. A. (1972). Human Problem Solving."
+    related: [means-ends-analysis, subgoal-identification, task-planning]
+
+  - id: fermi-estimation
+    name: "Fermi estimation"
+    family: mathematical
+    typical_tier: 1
+    description: "Estimating an unknown quantity by breaking it into factors that can each be roughly guessed, then multiplying them out."
+    procedure:
+      - "Define the quantity to estimate"
+      - "Decompose it into estimable factors"
+      - "Guess each factor to within a factor of a few"
+      - "Combine and sanity-check the result"
+    signals:
+      - "back of the envelope"
+      - "rough math says"
+      - "ballpark it as X times Y"
+      - "call it about a thousand"
+      - "even if I'm off by double"
+      - "let's just rough it out"
+    failure_modes:
+      - "Omitting a factor so the estimate is off by orders of magnitude"
+      - "Reporting false precision"
+    sources:
+      - "Weinstein, L., & Adam, J. A. (2008). Guesstimation."
+      - "Tetlock, P. E., & Gardner, D. (2015). Superforecasting."
+    related: [order-of-magnitude-check, problem-decomposition, dimensional-analysis]
+
+  - id: order-of-magnitude-check
+    name: "Order-of-magnitude sanity check"
+    family: mathematical
+    typical_tier: 1
+    description: "Checking whether a number is in the right ballpark by comparing it to rough expectations or known reference points."
+    procedure:
+      - "Form a rough independent expectation"
+      - "Compare the stated figure to it"
+      - "Investigate if they differ by a factor of ten or more"
+    signals:
+      - "that number seems way off"
+      - "that's an order of magnitude too high"
+      - "does that pass the smell test"
+      - "can't be millions, more like thousands"
+      - "that's in the right ballpark"
+    failure_modes:
+      - "Using a stale or wrong reference point"
+      - "Accepting a figure that is wrong by less than an order of magnitude"
+    sources:
+      - "Weinstein, L., & Adam, J. A. (2008). Guesstimation."
+    related: [fermi-estimation, dimensional-analysis, error-detection]
+
+  - id: dimensional-analysis
+    name: "Dimensional and unit analysis"
+    family: mathematical
+    typical_tier: 1
+    description: "Checking that quantities being compared or combined are in consistent units and measure the same kind of thing."
+    procedure:
+      - "Write the units of each quantity"
+      - "Confirm both sides of a comparison share units"
+      - "Convert to a common basis before combining"
+      - "Reject comparisons of incommensurable quantities"
+    signals:
+      - "is that per month or per year"
+      - "apples to oranges"
+      - "the units don't line up"
+      - "annualized, that's actually"
+      - "comparing totals to rates"
+    failure_modes:
+      - "Mixing time bases, currencies or scales silently"
+    sources:
+      - "Bridgman, P. W. (1922). Dimensional Analysis."
+    related: [normalize-to-rates, order-of-magnitude-check]
+
+  - id: normalize-to-rates
+    name: "Normalizing to rates and proportions"
+    family: mathematical
+    typical_tier: 1
+    description: "Converting raw counts into rates, ratios or per-unit figures so that groups of different sizes can be fairly compared."
+    procedure:
+      - "Identify the denominator each count depends on"
+      - "Express counts as rates per common unit"
+      - "Compare the rates, not the totals"
+    signals:
+      - "as a percentage of what"
+      - "per capita it's actually lower"
+      - "what's the denominator here"
+      - "bigger number, but bigger base too"
+      - "relative to the size of"
+    failure_modes:
+      - "Choosing a misleading denominator"
+      - "Ignoring small-base volatility in rates"
+    sources:
+      - "Huff, D. (1954). How to Lie with Statistics."
+      - "Gigerenzer, G., & Hoffrage, U. (1995). How to improve Bayesian reasoning without instruction: Frequency formats. Psychological Review."
+    related: [dimensional-analysis, base-rate-use, small-sample-caution]
+
+  - id: marginal-thinking
+    name: "Marginal thinking"
+    family: mathematical
+    typical_tier: 1
+    description: "Evaluating the additional cost and benefit of one more unit or step, rather than the average or total."
+    procedure:
+      - "Identify the next increment under consideration"
+      - "Estimate its additional benefit"
+      - "Estimate its additional cost"
+      - "Proceed only while marginal benefit exceeds marginal cost"
+    signals:
+      - "what does one more get us"
+      - "the incremental cost of"
+      - "the next dollar spent here"
+      - "at the margin it's not worth it"
+      - "each extra round adds less"
+    failure_modes:
+      - "Using averages where marginal values differ sharply"
+      - "Ignoring lumpy or threshold effects"
+    sources:
+      - "Marshall, A. (1890). Principles of Economics."
+      - "Buchanan, J. M. (1969). Cost and Choice."
+    related: [opportunity-cost, stopping-rule, effort-allocation]
+
+  - id: specialization-simpler-case
+    name: "Specializing to a simpler case"
+    family: mathematical
+    typical_tier: 1
+    description: "Getting traction on a hard general problem by first solving a smaller, concrete or simplified version of it."
+    procedure:
+      - "Strip the problem to a small or concrete instance"
+      - "Solve that instance fully"
+      - "Look for the pattern or principle it reveals"
+      - "Generalize back to the full problem"
+    signals:
+      - "take the simplest version first"
+      - "let's try a concrete example"
+      - "imagine there were only two"
+      - "start with one and scale up"
+      - "toy version of the problem"
+    failure_modes:
+      - "The simplified case drops the feature that makes the real problem hard"
+    sources:
+      - "Polya, G. (1945). How to Solve It."
+      - "Mason, J., Burton, L., & Stacey, K. (1982). Thinking Mathematically."
+    related: [boundary-limit-cases, problem-decomposition, constraint-relaxation]
+
+  - id: boundary-limit-cases
+    name: "Boundary and limit-case testing"
+    family: mathematical
+    typical_tier: 1
+    description: "Testing a rule, formula or proposal at its extremes (zero, maximum, edge cases) to see whether it still behaves sensibly."
+    procedure:
+      - "Identify the parameters of the proposal"
+      - "Push each to its extreme values"
+      - "Check whether the result is still sensible"
+      - "Revise if the edge case breaks it"
+    signals:
+      - "what happens at the edges"
+      - "what if it's zero"
+      - "push it to the extreme"
+      - "the edge case is where it breaks"
+      - "in the worst imaginable version"
+    failure_modes:
+      - "Over-designing for edge cases that never occur"
+    sources:
+      - "Polya, G. (1945). How to Solve It."
+      - "Zeitz, P. (1999). The Art and Craft of Problem Solving."
+    related: [extremal-principle, mental-model-counterexample-search, reductio-ad-absurdum]
+
+  - id: sensitivity-analysis
+    name: "Sensitivity analysis"
+    family: mathematical
+    typical_tier: 1
+    description: "Varying the inputs of an estimate or model to see which assumptions the conclusion actually depends on."
+    procedure:
+      - "List the key inputs and assumptions"
+      - "Vary each across a plausible range"
+      - "Observe how much the conclusion moves"
+      - "Focus scrutiny on the inputs that drive the result"
+    signals:
+      - "what if that assumption is wrong"
+      - "the answer hinges on"
+      - "does it change if we double it"
+      - "robust to most of the inputs"
+      - "the whole thing turns on X"
+    failure_modes:
+      - "Varying inputs one at a time and missing interactions"
+    sources:
+      - "Saltelli, A., et al. (2008). Global Sensitivity Analysis: The Primer."
+    related: [robust-decision, assumption-surfacing, value-of-information]
+
+  # ---------------------------------------------------- inductive-abductive
+  - id: inductive-generalization
+    name: "Inductive generalization"
+    family: inductive-abductive
+    typical_tier: 1
+    description: "Inferring a general rule or tendency from a set of observed instances."
+    procedure:
+      - "Collect observed instances"
+      - "Identify the common pattern"
+      - "Judge sample size and variety"
+      - "State the generalization with appropriate hedging"
+    signals:
+      - "in my experience it usually"
+      - "every time we've seen this"
+      - "the pattern so far is"
+      - "this tends to happen when"
+      - "almost always goes the same way"
+    failure_modes:
+      - "Generalizing from too few or too similar cases"
+      - "Ignoring the conditions under which the instances occurred"
+    sources:
+      - "Hume, D. (1748). An Enquiry Concerning Human Understanding."
+      - "Holland, J. H., Holyoak, K. J., Nisbett, R. E., & Thagard, P. R. (1986). Induction: Processes of Inference, Learning, and Discovery."
+    related: [small-sample-caution, schema-abstraction, prototype-categorization]
+
+  - id: inference-to-best-explanation
+    name: "Inference to the best explanation"
+    family: inductive-abductive
+    typical_tier: 1
+    description: "Accepting the explanation that, compared with its rivals, best accounts for all the evidence in a simple and coherent way."
+    procedure:
+      - "List candidate explanations"
+      - "Check how much of the evidence each explains"
+      - "Weigh simplicity, coherence and fit with background knowledge"
+      - "Adopt the best one provisionally"
+    signals:
+      - "the most likely explanation is"
+      - "the only story that fits everything"
+      - "that accounts for all of it"
+      - "what best explains why"
+      - "the simplest reading of the facts"
+    failure_modes:
+      - "Choosing the best of a bad lot when the true explanation was never considered"
+    sources:
+      - "Lipton, P. (2004). Inference to the Best Explanation (2nd ed.)."
+      - "Harman, G. H. (1965). The inference to the best explanation. Philosophical Review."
+    related: [abductive-hypothesis-generation, hypothesis-elimination, differential-diagnosis]
+
+  - id: abductive-hypothesis-generation
+    name: "Abductive hypothesis generation"
+    family: inductive-abductive
+    typical_tier: 1
+    description: "Proposing a hypothesis that would, if true, make a surprising observation expected."
+    procedure:
+      - "Notice the surprising fact"
+      - "Ask what would make it unsurprising"
+      - "Generate several candidate hypotheses"
+      - "Flag each as a conjecture to be tested"
+    signals:
+      - "one possibility is that"
+      - "my working theory is"
+      - "what would explain this"
+      - "my hunch is that"
+      - "that would make sense if"
+    failure_modes:
+      - "Generating only one hypothesis and anchoring on it"
+    sources:
+      - "Peirce, C. S. (1931-1958). Collected Papers of Charles Sanders Peirce."
+      - "Josephson, J. R., & Josephson, S. G. (1994). Abductive Inference: Computation, Philosophy, Technology."
+    related: [inference-to-best-explanation, anomaly-driven-inquiry, hypothesis-elimination]
+
+  - id: hypothesis-elimination
+    name: "Hypothesis elimination (strong inference)"
+    family: inductive-abductive
+    typical_tier: 1
+    description: "Holding multiple rival hypotheses and seeking evidence or tests that discriminate between them, eliminating the ones that fail."
+    procedure:
+      - "Write down competing hypotheses"
+      - "Find an observation each predicts differently"
+      - "Gather that evidence"
+      - "Eliminate inconsistent hypotheses and repeat"
+    signals:
+      - "which theory does this rule out"
+      - "the test that separates them"
+      - "that would distinguish between"
+      - "doesn't fit theory A, fits B"
+      - "keep both possibilities open until"
+    failure_modes:
+      - "Gathering evidence that all hypotheses predict equally"
+    sources:
+      - "Platt, J. R. (1964). Strong inference. Science."
+      - "Heuer, R. J. (1999). Psychology of Intelligence Analysis."
+    related: [differential-diagnosis, evidence-diagnosticity, disjunctive-elimination]
+
+  - id: differential-diagnosis
+    name: "Differential diagnosis"
+    family: inductive-abductive
+    typical_tier: 1
+    description: "Building a ranked list of possible causes for a presenting problem and narrowing it by likelihood, seriousness and targeted checks."
+    procedure:
+      - "List plausible causes for the presenting signs"
+      - "Rank by likelihood and by cost of missing each"
+      - "Run checks that discriminate among the top candidates"
+      - "Rule out the dangerous possibilities explicitly"
+    signals:
+      - "could be one of several things"
+      - "probably X, but rule out Y"
+      - "can't-miss possibilities first"
+      - "the presentation points toward"
+      - "narrow it down to two"
+    failure_modes:
+      - "Premature closure on the first plausible diagnosis"
+    sources:
+      - "Elstein, A. S., Shulman, L. S., & Sprafka, S. A. (1978). Medical Problem Solving: An Analysis of Clinical Reasoning."
+      - "Kassirer, J. P., & Kopelman, R. I. (1991). Learning Clinical Reasoning."
+    related: [hypothesis-elimination, asymmetric-error-costs, base-rate-use]
+
+  - id: falsification-test
+    name: "Falsification testing"
+    family: inductive-abductive
+    typical_tier: 1
+    description: "Testing a belief by looking for evidence that would prove it wrong, rather than evidence that agrees with it."
+    procedure:
+      - "State what observation would refute the belief"
+      - "Look for that observation deliberately"
+      - "Treat survival of a hard test as stronger support"
+    signals:
+      - "what would prove us wrong"
+      - "try to break the theory"
+      - "if we're wrong we'd see"
+      - "look for the disconfirming evidence"
+      - "test it where it's weakest"
+    failure_modes:
+      - "Positive-test strategy: only checking cases expected to confirm"
+    sources:
+      - "Popper, K. R. (1959). The Logic of Scientific Discovery."
+      - "Wason, P. C. (1960). On the failure to eliminate hypotheses in a conceptual task. Quarterly Journal of Experimental Psychology."
+    related: [deduction-modus-tollens, mental-model-counterexample-search, consider-the-opposite]
+
+  - id: anomaly-driven-inquiry
+    name: "Anomaly-driven inquiry"
+    family: inductive-abductive
+    typical_tier: 1
+    description: "Treating an observation that does not fit expectations as a signal worth investigating rather than noise to explain away."
+    procedure:
+      - "Notice the observation that violates expectations"
+      - "Resist dismissing it"
+      - "Ask what the current model would need to change to accommodate it"
+      - "Investigate before proceeding"
+    signals:
+      - "that's odd"
+      - "something doesn't add up"
+      - "why would they do that"
+      - "that's not what I'd expect"
+      - "doesn't fit the usual pattern"
+    failure_modes:
+      - "Chasing every anomaly regardless of significance"
+    sources:
+      - "Kuhn, T. S. (1962). The Structure of Scientific Revolutions."
+      - "Klein, G. (1998). Sources of Power."
+    related: [abductive-hypothesis-generation, intuition-as-signal, contradiction-detection]
+
+  - id: prototype-categorization
+    name: "Pattern recognition by similarity to prototypes"
+    family: inductive-abductive
+    typical_tier: 1
+    description: "Recognizing a situation as an instance of a familiar type because it resembles typical examples, without checking formal criteria."
+    procedure:
+      - "Notice salient features of the situation"
+      - "Match them against familiar typical cases"
+      - "Assign the best-matching type"
+      - "Check atypical features that might signal a different type"
+    signals:
+      - "this looks like a classic"
+      - "textbook example of"
+      - "I've seen this movie before"
+      - "has all the hallmarks of"
+      - "smells like a"
+    failure_modes:
+      - "Representativeness bias: ignoring base rates for surface similarity"
+    sources:
+      - "Rosch, E. (1978). Principles of categorization. In Cognition and Categorization."
+      - "Chase, W. G., & Simon, H. A. (1973). Perception in chess. Cognitive Psychology."
+    related: [rule-criteria-application, recognition-primed-decision, base-rate-use]
+
+  - id: triangulation
+    name: "Triangulation of independent evidence"
+    family: inductive-abductive
+    typical_tier: 1
+    description: "Increasing confidence in a conclusion by checking that independent sources or methods converge on it."
+    procedure:
+      - "Identify the claim to corroborate"
+      - "Find sources or methods with independent error"
+      - "Compare their conclusions"
+      - "Investigate divergence before relying on the claim"
+    signals:
+      - "two separate sources confirm"
+      - "corroborated independently"
+      - "everything points the same way"
+      - "let me check that against"
+      - "do the other records agree"
+    failure_modes:
+      - "Counting sources that share a common origin as independent"
+    sources:
+      - "Denzin, N. K. (1970). The Research Act."
+      - "Webb, E. J., Campbell, D. T., Schwartz, R. D., & Sechrest, L. (1966). Unobtrusive Measures."
+    related: [source-monitoring, evidence-diagnosticity, confidence-calibration]
+
+  # ------------------------------------------------------------ probabilistic
+  - id: bayesian-updating
+    name: "Bayesian updating"
+    family: probabilistic
+    typical_tier: 1
+    description: "Starting from a prior estimate and adjusting it in proportion to how much more likely the new evidence is under one hypothesis than another."
+    procedure:
+      - "State a prior probability"
+      - "Judge how likely the evidence is under each hypothesis"
+      - "Shift the estimate by that likelihood ratio"
+      - "Update incrementally as further evidence arrives"
+    signals:
+      - "that moves the needle a bit"
+      - "makes it somewhat more likely"
+      - "I'd revise my estimate to"
+      - "given what we now know"
+      - "updates me toward"
+      - "doesn't change my view much"
+    failure_modes:
+      - "Conservatism: under-updating on strong evidence"
+      - "Overreacting to vivid but weak evidence"
+    sources:
+      - "Bayes, T. (1763). An essay towards solving a problem in the doctrine of chances. Philosophical Transactions of the Royal Society of London."
+      - "Edwards, W., Lindman, H., & Savage, L. J. (1963). Bayesian statistical inference for psychological research. Psychological Review."
+      - "Tetlock, P. E., & Gardner, D. (2015). Superforecasting."
+    related: [base-rate-use, evidence-diagnosticity, belief-revision]
+
+  - id: base-rate-use
+    name: "Using base rates"
+    family: probabilistic
+    typical_tier: 1
+    description: "Anchoring a judgment on how often an outcome happens in the relevant population before adjusting for the specifics of the case."
+    procedure:
+      - "Identify the relevant population"
+      - "Find how often the outcome occurs there"
+      - "Start from that frequency"
+      - "Adjust modestly for case-specific evidence"
+    signals:
+      - "how often does this happen generally"
+      - "most of these end up"
+      - "the odds are against it"
+      - "statistically, nine times out of ten"
+      - "the default expectation is"
+    failure_modes:
+      - "Base-rate neglect in favour of a vivid case description"
+      - "Using the wrong reference population"
+    sources:
+      - "Kahneman, D., & Tversky, A. (1973). On the psychology of prediction. Psychological Review."
+      - "Bar-Hillel, M. (1980). The base-rate fallacy in probability judgments. Acta Psychologica."
+    related: [bayesian-updating, reference-class-forecasting, outside-view]
+
+  - id: natural-frequency-reframing
+    name: "Reframing probabilities as natural frequencies"
+    family: probabilistic
+    typical_tier: 1
+    description: "Converting percentages and conditional probabilities into counts out of a concrete number of cases to make them easier to reason about."
+    procedure:
+      - "Pick a round number of cases"
+      - "Split them by the base rate"
+      - "Apply the hit and false-alarm rates as counts"
+      - "Read off the answer from the counts"
+    signals:
+      - "out of a hundred such cases"
+      - "think of it as 1 in 20"
+      - "of every ten deals, how many"
+      - "put it in actual numbers"
+    failure_modes:
+      - "Choosing a reference count that hides small subgroups"
+    sources:
+      - "Gigerenzer, G., & Hoffrage, U. (1995). How to improve Bayesian reasoning without instruction: Frequency formats. Psychological Review."
+    related: [bayesian-updating, base-rate-use, uncertainty-communication]
+
+  - id: regression-to-the-mean
+    name: "Regression to the mean"
+    family: probabilistic
+    typical_tier: 1
+    description: "Expecting extreme results that involve luck to be followed by less extreme ones, and not attributing that drift to any intervention."
+    procedure:
+      - "Notice that a result was unusually high or low"
+      - "Estimate how much was chance"
+      - "Predict movement back toward the average"
+      - "Discount causal stories for the drift"
+    signals:
+      - "that was probably a fluke"
+      - "it'll likely come back down"
+      - "an unusually good quarter"
+      - "don't read too much into one"
+      - "things tend to even out"
+    failure_modes:
+      - "Crediting an intervention for natural regression"
+    sources:
+      - "Galton, F. (1886). Regression towards mediocrity in hereditary stature. Journal of the Anthropological Institute."
+      - "Kahneman, D., & Tversky, A. (1973). On the psychology of prediction. Psychological Review."
+    related: [small-sample-caution, base-rate-use, confounder-awareness]
+
+  - id: small-sample-caution
+    name: "Caution with small samples"
+    family: probabilistic
+    typical_tier: 1
+    description: "Recognizing that a few observations can show patterns produced by chance and discounting conclusions accordingly."
+    procedure:
+      - "Count the observations behind the claim"
+      - "Ask how much variation chance alone would produce"
+      - "Widen uncertainty for small samples"
+    signals:
+      - "that's only two data points"
+      - "too early to call it a trend"
+      - "one bad experience doesn't mean"
+      - "anecdotal at this point"
+      - "small sample, so take it lightly"
+    failure_modes:
+      - "Dismissing a small sample that is actually highly diagnostic"
+    sources:
+      - "Tversky, A., & Kahneman, D. (1971). Belief in the law of small numbers. Psychological Bulletin."
+    related: [inductive-generalization, regression-to-the-mean, selection-bias-awareness]
+
+  - id: selection-bias-awareness
+    name: "Selection and sampling bias awareness"
+    family: probabilistic
+    typical_tier: 1
+    description: "Asking how the observed cases came to be observed, and whether that filtering distorts what they seem to show."
+    procedure:
+      - "Ask how the cases were selected or reported"
+      - "Identify what kinds of cases are missing"
+      - "Estimate how the missing cases would change the picture"
+    signals:
+      - "we only hear about the ones that"
+      - "who isn't showing up in this data"
+      - "survivorship bias"
+      - "self-selected sample"
+      - "the complaints are just the loud ones"
+    failure_modes:
+      - "Speculating about unseen cases without bounding their effect"
+    sources:
+      - "Heckman, J. J. (1979). Sample selection bias as a specification error. Econometrica."
+      - "Kahneman, D. (2011). Thinking, Fast and Slow."
+    related: [small-sample-caution, source-monitoring, confounder-awareness]
+
+  - id: expected-value-calculation
+    name: "Expected value reasoning"
+    family: probabilistic
+    typical_tier: 1
+    description: "Weighing each possible outcome by its probability and its size, and comparing options by the probability-weighted total."
+    procedure:
+      - "List the possible outcomes of each option"
+      - "Estimate probability and magnitude of each"
+      - "Multiply and sum to get expected value"
+      - "Compare options, then consider variance separately"
+    signals:
+      - "probability times impact"
+      - "small chance but huge cost"
+      - "on a risk-weighted basis"
+      - "worth it even at 20 percent odds"
+      - "the expected cost is low"
+    failure_modes:
+      - "Ignoring ruin risk that expected value averages away"
+      - "False precision on guessed probabilities"
+    sources:
+      - "Bernoulli, D. (1738/1954). Exposition of a new theory on the measurement of risk. Econometrica."
+      - "von Neumann, J., & Morgenstern, O. (1944). Theory of Games and Economic Behavior."
+    related: [tail-risk-thinking, multi-attribute-tradeoff, value-of-information]
+
+  - id: tail-risk-thinking
+    name: "Variance and tail-risk thinking"
+    family: probabilistic
+    typical_tier: 1
+    description: "Looking beyond the average outcome to the spread and especially to rare, severe outcomes that could be catastrophic or irreversible."
+    procedure:
+      - "Identify worst plausible outcomes"
+      - "Ask whether they are survivable or irreversible"
+      - "Weigh exposure to the tail separately from the mean"
+      - "Cap or hedge unacceptable tails"
+    signals:
+      - "unlikely, but if it happens"
+      - "a bet-the-company risk"
+      - "what's the downside scenario"
+      - "low probability, high severity"
+      - "we can't survive that outcome"
+    failure_modes:
+      - "Paralysis from treating every tail as likely"
+    sources:
+      - "Taleb, N. N. (2007). The Black Swan."
+      - "Kahneman, D., & Tversky, A. (1979). Prospect theory: An analysis of decision under risk. Econometrica."
+    related: [expected-value-calculation, robust-decision, reversibility-assessment]
+
+  - id: evidence-diagnosticity
+    name: "Judging evidence diagnosticity"
+    family: probabilistic
+    typical_tier: 1
+    description: "Asking whether a piece of evidence would be about as likely under the rival explanations, in which case it does not help discriminate between them."
+    procedure:
+      - "Take the piece of evidence"
+      - "Ask how likely it is under each hypothesis"
+      - "Discount evidence that is consistent with all of them"
+      - "Weight evidence that sharply favours one"
+    signals:
+      - "we'd see that either way"
+      - "that doesn't really tell us much"
+      - "consistent with both explanations"
+      - "the telling detail is"
+      - "that's the smoking gun"
+    failure_modes:
+      - "Piling up consistent but non-diagnostic evidence as support"
+    sources:
+      - "Heuer, R. J. (1999). Psychology of Intelligence Analysis."
+      - "Edwards, W., Lindman, H., & Savage, L. J. (1963). Bayesian statistical inference for psychological research. Psychological Review."
+    related: [bayesian-updating, hypothesis-elimination, triangulation]
+
+  - id: conjunctive-probability-check
+    name: "Conjunctive probability check"
+    family: probabilistic
+    typical_tier: 1
+    description: "Recognizing that a plan or story requiring many things to go right is less likely than any single step, because the probabilities multiply."
+    procedure:
+      - "List every step or condition that must hold"
+      - "Estimate the chance of each"
+      - "Multiply to get the joint probability"
+      - "Compare with intuition about the whole story"
+    signals:
+      - "a lot has to go right"
+      - "each step is likely, but all of them"
+      - "too many moving parts"
+      - "that's a chain of maybes"
+      - "the more detail, the less likely"
+    failure_modes:
+      - "Treating dependent steps as independent"
+    sources:
+      - "Tversky, A., & Kahneman, D. (1983). Extensional versus intuitive reasoning: The conjunction fallacy in probability judgment. Psychological Review."
+    related: [expected-value-calculation, premortem, planning-fallacy-correction]
+
+  # ------------------------------------------------------------------ causal
+  - id: method-of-difference
+    name: "Method of difference (contrast cases)"
+    family: causal
+    typical_tier: 1
+    description: "Comparing a case where the outcome occurred with an otherwise similar case where it did not, and attributing the outcome to the factor that differs."
+    procedure:
+      - "Find a matched case without the outcome"
+      - "List factors that differ between the cases"
+      - "Isolate the single relevant difference"
+      - "Treat it as a candidate cause"
+    signals:
+      - "the only thing that changed was"
+      - "the difference between the two was"
+      - "same setup, different result, because"
+      - "it worked last time, so what's different"
+      - "compare it to the one that went fine"
+    failure_modes:
+      - "Matched cases differ in unnoticed ways too"
+    sources:
+      - "Mill, J. S. (1843). A System of Logic."
+    related: [method-of-agreement, interventionist-reasoning, confounder-awareness]
+
+  - id: method-of-agreement
+    name: "Method of agreement (common factor)"
+    family: causal
+    typical_tier: 1
+    description: "Looking across several cases with the same outcome for the one factor they all share."
+    procedure:
+      - "Gather cases with the same outcome"
+      - "List the factors present in each"
+      - "Find the factor common to all"
+      - "Treat it as a candidate cause and test it"
+    signals:
+      - "the common thread in all of these"
+      - "every one of them had"
+      - "what do these cases share"
+      - "same factor keeps showing up"
+    failure_modes:
+      - "Common factor is ubiquitous and irrelevant"
+      - "Multiple different causes produce the same outcome"
+    sources:
+      - "Mill, J. S. (1843). A System of Logic."
+    related: [method-of-difference, inductive-generalization, multiple-contributing-causes]
+
+  - id: concomitant-variation
+    name: "Concomitant variation (dose-response)"
+    family: causal
+    typical_tier: 1
+    description: "Inferring a causal link when the outcome rises and falls in step with changes in a factor."
+    procedure:
+      - "Track the factor's level over cases or time"
+      - "Track the outcome's level"
+      - "Check whether they move together consistently"
+      - "Rule out a third factor driving both"
+    signals:
+      - "the more of X, the more Y"
+      - "it scales with"
+      - "every time we increased it, it got worse"
+      - "moves in lockstep with"
+    failure_modes:
+      - "Mistaking a shared trend over time for causation"
+    sources:
+      - "Mill, J. S. (1843). A System of Logic."
+      - "Hill, A. B. (1965). The environment and disease: Association or causation? Proceedings of the Royal Society of Medicine."
+    related: [method-of-agreement, confounder-awareness, feedback-loop-analysis]
+
+  - id: interventionist-reasoning
+    name: "Interventionist causal reasoning"
+    family: causal
+    typical_tier: 1
+    description: "Understanding a cause as something that, if deliberately changed while holding other things fixed, would change the outcome; and reasoning about what an intervention would do."
+    procedure:
+      - "Name the variable one could change"
+      - "Hold other influences fixed in thought or in test"
+      - "Predict the effect of changing it"
+      - "Where possible, actually test the change"
+    signals:
+      - "if we changed just that one thing"
+      - "pull that lever and see"
+      - "would fixing that actually move it"
+      - "let's test it on a small scale"
+      - "what happens if we turn it off"
+    failure_modes:
+      - "Interventions with side effects that change other variables too"
+    sources:
+      - "Woodward, J. (2003). Making Things Happen: A Theory of Causal Explanation."
+      - "Pearl, J. (2009). Causality (2nd ed.)."
+    related: [counterfactual-simulation, method-of-difference, leverage-points]
+
+  - id: confounder-awareness
+    name: "Confounder and reverse-causation awareness"
+    family: causal
+    typical_tier: 1
+    description: "Checking whether an apparent cause-effect link is really produced by a third factor driving both, or runs in the opposite direction."
+    procedure:
+      - "State the observed association"
+      - "Ask what could cause both factors"
+      - "Ask whether the effect could cause the supposed cause"
+      - "Adjust or compare within groups to check"
+    signals:
+      - "correlation isn't causation"
+      - "could be something else driving both"
+      - "or is it the other way around"
+      - "chicken and egg"
+      - "those deals were different to begin with"
+    failure_modes:
+      - "Naming hypothetical confounders without assessing their plausibility"
+    sources:
+      - "Pearl, J., & Mackenzie, D. (2018). The Book of Why."
+      - "Pearl, J. (2009). Causality (2nd ed.)."
+    related: [method-of-difference, selection-bias-awareness, conditional-fallacy-check]
+
+  - id: counterfactual-simulation
+    name: "Counterfactual simulation (but-for reasoning)"
+    family: causal
+    typical_tier: 1
+    description: "Mentally replaying events with one element changed to judge whether the outcome would have been different."
+    procedure:
+      - "Choose the element to alter"
+      - "Hold the rest of the history fixed"
+      - "Simulate forward to an alternative outcome"
+      - "Judge whether the element made the difference"
+    signals:
+      - "but for that, would it have happened"
+      - "if they hadn't done X"
+      - "would we be in the same place anyway"
+      - "had we caught it earlier"
+      - "play it forward without that"
+    failure_modes:
+      - "Changing one element while unrealistically holding dependent ones fixed"
+      - "Hindsight colouring the simulated alternative"
+    sources:
+      - "Lewis, D. (1973). Counterfactuals."
+      - "Kahneman, D., & Tversky, A. (1982). The simulation heuristic. In Judgment under Uncertainty: Heuristics and Biases."
+      - "Byrne, R. M. J. (2005). The Rational Imagination."
+    related: [interventionist-reasoning, premortem, regret-minimization]
+
+  - id: mechanism-tracing
+    name: "Mechanism and process tracing"
+    family: causal
+    typical_tier: 1
+    description: "Explaining or testing a causal claim by spelling out the step-by-step chain of events or parts through which the cause produces the effect."
+    procedure:
+      - "State the cause and effect"
+      - "Lay out each intermediate step"
+      - "Check evidence for each link"
+      - "Identify any link that is missing or implausible"
+    signals:
+      - "walk me through how that happens"
+      - "the chain of events was"
+      - "how exactly does X lead to Y"
+      - "step by step, what went on"
+      - "the missing link is"
+    failure_modes:
+      - "A plausible story substituted for evidence at each link"
+    sources:
+      - "Machamer, P., Darden, L., & Craver, C. F. (2000). Thinking about mechanisms. Philosophy of Science."
+      - "George, A. L., & Bennett, A. (2005). Case Studies and Theory Development in the Social Sciences."
+    related: [root-cause-analysis, interventionist-reasoning, second-order-effects]
+
+  - id: root-cause-analysis
+    name: "Root-cause analysis (5 whys)"
+    family: causal
+    typical_tier: 1
+    description: "Repeatedly asking why a problem occurred, moving past immediate causes to the underlying condition that, if fixed, prevents recurrence."
+    procedure:
+      - "State the problem concretely"
+      - "Ask why it happened"
+      - "Ask why of each answer, several times"
+      - "Stop at a cause that is actionable and systemic"
+      - "Fix that cause, not just the symptom"
+    signals:
+      - "but why did that happen"
+      - "the real issue underneath is"
+      - "we're treating the symptom"
+      - "get to the root of it"
+      - "it'll keep happening unless"
+    failure_modes:
+      - "Following a single chain when several causes contributed"
+      - "Stopping at a person to blame rather than a process"
+    sources:
+      - "Ohno, T. (1988). Toyota Production System: Beyond Large-Scale Production."
+      - "Reason, J. (1990). Human Error."
+    related: [mechanism-tracing, multiple-contributing-causes, post-task-reflection]
+
+  - id: multiple-contributing-causes
+    name: "Multiple contributing causes"
+    family: causal
+    typical_tier: 1
+    description: "Recognizing that an outcome usually results from several conditions lining up, and looking for all the contributing factors and failed safeguards."
+    procedure:
+      - "Resist naming a single cause"
+      - "List conditions that each had to be present"
+      - "Identify which safeguards failed and why"
+      - "Address several contributing factors"
+    signals:
+      - "a perfect storm"
+      - "several things lined up"
+      - "no single cause here"
+      - "any one of these alone would've been fine"
+      - "every safeguard had a hole"
+    failure_modes:
+      - "Diffusing responsibility so nothing gets fixed"
+    sources:
+      - "Reason, J. (1990). Human Error."
+      - "Mackie, J. L. (1965). Causes and conditions. American Philosophical Quarterly."
+    related: [root-cause-analysis, necessary-sufficient-conditions, method-of-agreement]
+
+  - id: premortem
+    name: "Premortem"
+    family: causal
+    typical_tier: 2
+    description: "Imagining that a plan has already failed and explaining why, to surface risks that optimism would otherwise hide."
+    procedure:
+      - "Assume the plan has failed badly"
+      - "Generate reasons it failed"
+      - "Rank the most plausible failure stories"
+      - "Mitigate or monitor those risks now"
+    signals:
+      - "imagine a year out this blew up"
+      - "if this goes wrong, it'll be because"
+      - "what's most likely to sink this"
+      - "how could this fail"
+      - "where will this come back to bite us"
+    failure_modes:
+      - "Listing generic risks rather than plan-specific ones"
+    sources:
+      - "Klein, G. (2007). Performing a project premortem. Harvard Business Review."
+      - "Mitchell, D. J., Russo, J. E., & Pennington, N. (1989). Back to the future: Temporal perspective in the explanation of events. Journal of Behavioral Decision Making."
+    related: [counterfactual-simulation, scenario-planning, consider-the-opposite]
+
+  # --------------------------------------------------------------- analogical
+  - id: structure-mapping-analogy
+    name: "Structure-mapping analogy"
+    family: analogical
+    typical_tier: 1
+    description: "Understanding a new situation by mapping the relational structure of a familiar one onto it, and carrying over inferences that the shared structure supports."
+    procedure:
+      - "Choose a familiar source situation"
+      - "Align relations, not surface features"
+      - "Project inferences from source to target"
+      - "Check the projected inferences against the target"
+    signals:
+      - "it's a lot like"
+      - "think of it as"
+      - "same dynamic as when"
+      - "structurally it's the same problem"
+      - "the analogy here is"
+    failure_modes:
+      - "Mapping on surface similarity rather than relational structure"
+    sources:
+      - "Gentner, D. (1983). Structure-mapping: A theoretical framework for analogy. Cognitive Science."
+      - "Holyoak, K. J., & Thagard, P. (1995). Mental Leaps: Analogy in Creative Thought."
+    related: [disanalogy-check, case-based-reasoning, schema-abstraction]
+
+  - id: case-based-reasoning
+    name: "Case-based reasoning"
+    family: analogical
+    typical_tier: 1
+    description: "Solving a new problem by retrieving a similar past case, reusing its solution, adapting it to the differences, and remembering the result."
+    procedure:
+      - "Retrieve the most similar past case"
+      - "Reuse its solution as a starting point"
+      - "Adapt for relevant differences"
+      - "Check the result and store the new case"
+    signals:
+      - "we handled something similar"
+      - "last time we did X, so"
+      - "start from what we did on"
+      - "same as the earlier one, but tweak"
+      - "I've dealt with this before"
+    failure_modes:
+      - "Reusing a past solution without adapting to key differences"
+    sources:
+      - "Kolodner, J. (1993). Case-Based Reasoning."
+      - "Aamodt, A., & Plaza, E. (1994). Case-based reasoning: Foundational issues, methodological variations, and system approaches. AI Communications."
+    related: [structure-mapping-analogy, precedent-reasoning, recognition-primed-decision]
+
+  - id: precedent-reasoning
+    name: "Reasoning from precedent"
+    family: analogical
+    typical_tier: 2
+    description: "Deciding a current matter consistently with how a relevantly similar earlier matter was decided, and being aware that today's decision becomes a precedent for later ones."
+    procedure:
+      - "Identify prior decisions on similar matters"
+      - "Determine what principle they rested on"
+      - "Apply or distinguish that principle"
+      - "Consider what precedent this decision sets"
+    signals:
+      - "we've always treated it this way"
+      - "consistent with what we did before"
+      - "this would set a precedent"
+      - "if we do it for them, everyone asks"
+      - "we've drawn that line before"
+    failure_modes:
+      - "Following precedent whose rationale no longer applies"
+    sources:
+      - "Schauer, F. (1987). Precedent. Stanford Law Review."
+    related: [case-based-reasoning, disanalogy-check, slippery-slope-evaluation]
+
+  - id: reference-class-forecasting
+    name: "Reference-class forecasting"
+    family: analogical
+    typical_tier: 1
+    description: "Predicting an outcome by locating a class of similar past projects or cases and using the distribution of their actual outcomes as the forecast."
+    procedure:
+      - "Choose a reference class of comparable cases"
+      - "Obtain the distribution of their outcomes"
+      - "Place the current case in that distribution"
+      - "Adjust cautiously for genuine differences"
+    signals:
+      - "projects like this typically take"
+      - "historically these run over by"
+      - "comparable deals have gone"
+      - "looking at the last ten of these"
+      - "the track record for this kind"
+    failure_modes:
+      - "Picking a flattering or too-narrow reference class"
+    sources:
+      - "Flyvbjerg, B. (2006). From Nobel Prize to project management: Getting risks right. Project Management Journal."
+      - "Kahneman, D., & Lovallo, D. (1993). Timid choices and bold forecasts: A cognitive perspective on risk taking. Management Science."
+    related: [base-rate-use, outside-view, planning-fallacy-correction]
+
+  - id: disanalogy-check
+    name: "Checking where an analogy breaks"
+    family: analogical
+    typical_tier: 1
+    description: "Testing an analogy or precedent by identifying the relevant differences between source and target and asking whether they undermine the inference."
+    procedure:
+      - "List the important differences between the cases"
+      - "Ask which differences matter to the conclusion"
+      - "Distinguish the case if a relevant difference exists"
+    signals:
+      - "the difference here is"
+      - "that case is distinguishable"
+      - "the analogy breaks down because"
+      - "not quite the same situation"
+      - "that worked there because"
+    failure_modes:
+      - "Dismissing a sound analogy over irrelevant differences"
+    sources:
+      - "Gentner, D., & Markman, A. B. (1997). Structure mapping in analogy and similarity. American Psychologist."
+      - "Walton, D., Reed, C., & Macagno, F. (2008). Argumentation Schemes."
+    related: [structure-mapping-analogy, precedent-reasoning, critical-questions-schemes]
+
+  - id: schema-abstraction
+    name: "Schema abstraction from cases"
+    family: analogical
+    typical_tier: 1
+    description: "Comparing several concrete cases to extract the general principle or pattern they share, so it can be recognized in new forms."
+    procedure:
+      - "Compare two or more cases side by side"
+      - "Identify the shared relational pattern"
+      - "State it as a general principle"
+      - "Test it on a new case"
+    signals:
+      - "the general lesson is"
+      - "the underlying principle"
+      - "the common pattern across these"
+      - "boils down to the same rule"
+      - "this is really an instance of"
+    failure_modes:
+      - "Over-abstracting until the principle is vacuous"
+    sources:
+      - "Gick, M. L., & Holyoak, K. J. (1983). Schema induction and analogical transfer. Cognitive Psychology."
+    related: [structure-mapping-analogy, inductive-generalization, transfer-of-learning]
+
+  # ---------------------------------------------------------- problem-solving
+  - id: problem-definition
+    name: "Problem finding and definition"
+    family: problem-solving
+    typical_tier: 1
+    description: "Working out what the real problem is before solving it, including whose problem it is, what a good outcome looks like and what is out of scope."
+    procedure:
+      - "Restate the problem in your own words"
+      - "Ask what outcome is actually wanted and by whom"
+      - "Separate the stated request from the underlying need"
+      - "Set the scope and success criteria"
+    signals:
+      - "what's the actual question here"
+      - "what are we really trying to solve"
+      - "what does success look like"
+      - "they asked for X, need Y"
+      - "before we jump to answers"
+    failure_modes:
+      - "Endless reframing without converging"
+      - "Solving the problem as stated rather than the one that matters"
+    sources:
+      - "Getzels, J. W., & Csikszentmihalyi, M. (1976). The Creative Vision."
+      - "Rittel, H. W. J., & Webber, M. M. (1973). Dilemmas in a general theory of planning. Policy Sciences."
+    related: [representation-change, interests-vs-positions, task-planning]
+
+  - id: means-ends-analysis
+    name: "Means-ends analysis"
+    family: problem-solving
+    typical_tier: 1
+    description: "Comparing the current state with the goal, identifying the most important difference, and choosing an action that reduces it."
+    procedure:
+      - "Describe current and goal states"
+      - "Identify the biggest difference"
+      - "Select an operator that reduces it"
+      - "If it can't be applied yet, make enabling it a subgoal"
+    signals:
+      - "the gap between where we are and"
+      - "what's standing in the way"
+      - "the main thing to close is"
+      - "what gets us closer"
+      - "biggest obstacle first"
+    failure_modes:
+      - "Detours needed early look like moving away from the goal and are avoided"
+    sources:
+      - "Newell, A., & Simon, H. A. (1972). Human Problem Solving."
+    related: [subgoal-identification, working-backwards, hill-climbing]
+
+  - id: subgoal-identification
+    name: "Subgoaling (intermediate milestones)"
+    family: problem-solving
+    typical_tier: 1
+    description: "Identifying intermediate states that must be reached on the way to the goal and treating each as a target in its own right."
+    procedure:
+      - "Identify a state that must be reached en route"
+      - "Make it the immediate target"
+      - "Solve for it"
+      - "Re-plan from the new state"
+    signals:
+      - "first we need to get to"
+      - "the immediate milestone is"
+      - "before anything else, we need"
+      - "step one is just to"
+      - "once that's in place we can"
+    failure_modes:
+      - "Losing sight of the main goal while pursuing a subgoal"
+    sources:
+      - "Newell, A., & Simon, H. A. (1972). Human Problem Solving."
+      - "Anderson, J. R. (1983). The Architecture of Cognition."
+    related: [means-ends-analysis, working-backwards, problem-decomposition]
+
+  - id: problem-decomposition
+    name: "Problem decomposition"
+    family: problem-solving
+    typical_tier: 1
+    description: "Breaking a large or complex problem into smaller, more independent parts that can be handled separately and then recombined."
+    procedure:
+      - "Identify natural seams in the problem"
+      - "Split into parts with minimal interaction"
+      - "Solve each part"
+      - "Integrate and check interactions between parts"
+    signals:
+      - "break this into pieces"
+      - "there are really three issues here"
+      - "let's separate the X question from"
+      - "take these one at a time"
+      - "unbundle the problem"
+    failure_modes:
+      - "Cutting along seams where parts strongly interact"
+    sources:
+      - "Simon, H. A. (1962). The architecture of complexity. Proceedings of the American Philosophical Society."
+      - "Polya, G. (1945). How to Solve It."
+    related: [subgoal-identification, fermi-estimation, task-planning]
+
+  - id: generate-and-test
+    name: "Generate and test"
+    family: problem-solving
+    typical_tier: 1
+    description: "Producing candidate solutions and checking each against the requirements until one passes."
+    procedure:
+      - "Define the test a solution must pass"
+      - "Generate a candidate"
+      - "Test it"
+      - "Repeat, using failures to guide the next candidate"
+    signals:
+      - "let's try a few options"
+      - "throw some ideas at it"
+      - "does this one work? no, next"
+      - "brainstorm then filter"
+      - "test each against the requirements"
+    failure_modes:
+      - "Unguided generation in a large space wastes effort"
+    sources:
+      - "Newell, A., & Simon, H. A. (1972). Human Problem Solving."
+    related: [constraint-satisfaction, iterative-prototyping, hill-climbing]
+
+  - id: constraint-satisfaction
+    name: "Constraint satisfaction"
+    family: problem-solving
+    typical_tier: 1
+    description: "Finding a solution by listing all the hard requirements that must hold together and narrowing to options that satisfy every one."
+    procedure:
+      - "List the hard constraints"
+      - "Find the most restrictive one"
+      - "Prune options that violate any constraint"
+      - "Search the remaining space"
+    signals:
+      - "whatever we do has to"
+      - "it needs to satisfy all of"
+      - "the binding constraint is"
+      - "within those parameters"
+      - "that rules out every option except"
+    failure_modes:
+      - "Treating soft preferences as hard constraints and finding no solution"
+    sources:
+      - "Mackworth, A. K. (1977). Consistency in networks of relations. Artificial Intelligence."
+      - "Tsang, E. (1993). Foundations of Constraint Satisfaction."
+    related: [constraint-relaxation, generate-and-test, satisficing]
+
+  - id: constraint-relaxation
+    name: "Constraint relaxation"
+    family: problem-solving
+    typical_tier: 1
+    description: "Getting unstuck by questioning which assumed constraints are real, and temporarily or permanently dropping ones that are self-imposed."
+    procedure:
+      - "List all constraints assumed so far"
+      - "Ask which are truly fixed"
+      - "Relax a self-imposed one"
+      - "Solve the relaxed problem and see what it suggests"
+    signals:
+      - "who says it has to be"
+      - "is that actually a requirement"
+      - "what if we didn't have to"
+      - "drop that assumption for a minute"
+      - "that's a self-imposed limit"
+    failure_modes:
+      - "Relaxing a constraint that really is binding"
+    sources:
+      - "Knoblich, G., Ohlsson, S., Haider, H., & Rhenius, D. (1999). Constraint relaxation and chunk decomposition in insight problem solving. Journal of Experimental Psychology: Learning, Memory, and Cognition."
+    related: [constraint-satisfaction, representation-change, insight-restructuring]
+
+  - id: representation-change
+    name: "Representation change (reframing)"
+    family: problem-solving
+    typical_tier: 1
+    description: "Making a problem tractable by re-describing it in different terms, as a different kind of problem, or from a different vantage point."
+    procedure:
+      - "State the current representation"
+      - "Try an alternative framing or format"
+      - "Check whether the new framing exposes a solution"
+      - "Translate the solution back"
+    signals:
+      - "another way to look at this"
+      - "if you think of it as"
+      - "it's not really an X problem"
+      - "flip it around"
+      - "reframe the question as"
+    failure_modes:
+      - "Reframing that changes the problem rather than clarifying it"
+    sources:
+      - "Kaplan, C. A., & Simon, H. A. (1990). In search of insight. Cognitive Psychology."
+      - "Duncker, K. (1945). On problem-solving. Psychological Monographs."
+    related: [insight-restructuring, problem-definition, framing-effects-awareness]
+
+  - id: insight-restructuring
+    name: "Impasse and insight restructuring"
+    family: problem-solving
+    typical_tier: 1
+    description: "Recognizing an impasse, stepping away or loosening fixed assumptions, and allowing a sudden reorganization of how the problem is understood."
+    procedure:
+      - "Recognize that progress has stalled"
+      - "Set the problem aside or change activity"
+      - "Return and question the initial interpretation"
+      - "Test the restructured view"
+    signals:
+      - "I was stuck until it hit me"
+      - "slept on it and realized"
+      - "came at it fresh"
+      - "suddenly it clicked"
+      - "I'd been looking at it wrong"
+    failure_modes:
+      - "Waiting for insight when systematic search would work"
+    sources:
+      - "Ohlsson, S. (1992). Information-processing explanations of insight and related phenomena. In Advances in the Psychology of Thinking."
+      - "Wallas, G. (1926). The Art of Thought."
+    related: [representation-change, constraint-relaxation, strategy-switching]
+
+  - id: hill-climbing
+    name: "Hill climbing (incremental improvement)"
+    family: problem-solving
+    typical_tier: 1
+    description: "Improving a solution step by step by making whichever small change most improves it, until no small change helps."
+    procedure:
+      - "Start from a workable solution"
+      - "Try small modifications"
+      - "Keep the one that improves most"
+      - "Stop at a local optimum and question whether it's global"
+    signals:
+      - "just keep improving it"
+      - "tweak and see"
+      - "a bit better each round"
+      - "incremental changes"
+      - "good enough to iterate on"
+    failure_modes:
+      - "Stuck at a local optimum when a different approach is far better"
+    sources:
+      - "Newell, A., & Simon, H. A. (1972). Human Problem Solving."
+    related: [means-ends-analysis, iterative-prototyping, generate-and-test]
+
+  - id: iterative-prototyping
+    name: "Iterative prototyping (reflection-in-action)"
+    family: problem-solving
+    typical_tier: 2
+    description: "Producing a quick draft or trial version, observing how it responds to the situation, and revising, rather than planning everything in advance."
+    procedure:
+      - "Produce a rough first version quickly"
+      - "Put it in front of the situation or stakeholders"
+      - "Observe what it reveals"
+      - "Revise and repeat"
+    signals:
+      - "let me rough out a draft"
+      - "put something on paper first"
+      - "float a version and see"
+      - "first cut, we'll refine"
+      - "react to this strawman"
+    failure_modes:
+      - "Early drafts anchor everyone on a weak approach"
+    sources:
+      - "Schön, D. A. (1983). The Reflective Practitioner."
+    related: [hill-climbing, generate-and-test, staged-commitment]
+
+  - id: bisection-search
+    name: "Bisection (divide-the-space search)"
+    family: problem-solving
+    typical_tier: 1
+    description: "Locating a fault or answer by repeatedly testing a midpoint that splits the remaining possibilities roughly in half."
+    procedure:
+      - "Define the range where the answer must lie"
+      - "Test at a point that splits it in half"
+      - "Discard the half that is ruled out"
+      - "Repeat until isolated"
+    signals:
+      - "narrow it down by halves"
+      - "it worked then, broke by now"
+      - "split the difference and test"
+      - "somewhere between these two versions"
+    failure_modes:
+      - "Assuming a single fault when there are several"
+    sources:
+      - "Zeller, A. (2009). Why Programs Fail (2nd ed.)."
+      - "Knuth, D. E. (1998). The Art of Computer Programming, Vol. 3: Sorting and Searching (2nd ed.)."
+    related: [disjunctive-elimination, hypothesis-elimination, method-of-difference]
+
+  # ----------------------------------------------------------------- decision
+  - id: multi-attribute-tradeoff
+    name: "Multi-attribute tradeoff analysis"
+    family: decision
+    typical_tier: 1
+    description: "Comparing options across several objectives that cannot all be maximized, by making the objectives explicit and weighing what is given up on one for gains on another."
+    procedure:
+      - "List the objectives that matter"
+      - "Score each option on each objective"
+      - "Weight objectives by importance"
+      - "Make explicit what is traded for what"
+    signals:
+      - "on balance"
+      - "we gain X but give up Y"
+      - "it's a tradeoff between"
+      - "weighing the pros and cons"
+      - "better on cost, worse on speed"
+      - "which matters more here"
+    failure_modes:
+      - "Hidden weights that reflect habit rather than priorities"
+    sources:
+      - "Keeney, R. L., & Raiffa, H. (1976). Decisions with Multiple Objectives."
+      - "Hammond, J. S., Keeney, R. L., & Raiffa, H. (1999). Smart Choices."
+    related: [dominance-reasoning, opportunity-cost, satisficing]
+
+  - id: dominance-reasoning
+    name: "Dominance reasoning"
+    family: decision
+    typical_tier: 1
+    description: "Eliminating any option that is no better on any dimension and worse on at least one, or that is worse in every possible state of the world."
+    procedure:
+      - "Compare options pairwise across dimensions or scenarios"
+      - "Drop any option dominated by another"
+      - "Focus remaining effort on non-dominated options"
+    signals:
+      - "better in every scenario"
+      - "no reason to choose that"
+      - "strictly worse than"
+      - "whichever way it goes, this is better"
+      - "a no-brainer compared to"
+    failure_modes:
+      - "Missing a dimension on which the 'dominated' option is better"
+    sources:
+      - "Savage, L. J. (1954). The Foundations of Statistics."
+      - "Hammond, J. S., Keeney, R. L., & Raiffa, H. (1999). Smart Choices."
+    related: [multi-attribute-tradeoff, case-analysis, robust-decision]
+
+  - id: satisficing
+    name: "Satisficing"
+    family: decision
+    typical_tier: 1
+    description: "Setting an aspiration level and taking the first option that meets it, rather than searching for the best possible option."
+    procedure:
+      - "Set the threshold for acceptable"
+      - "Evaluate options as they arise"
+      - "Accept the first that clears the threshold"
+      - "Adjust the threshold if nothing or everything clears it"
+    signals:
+      - "good enough"
+      - "that works, let's go"
+      - "doesn't need to be perfect"
+      - "meets the bar"
+      - "acceptable, move on"
+    failure_modes:
+      - "Threshold set too low on a high-stakes choice"
+    sources:
+      - "Simon, H. A. (1955). A behavioral model of rational choice. Quarterly Journal of Economics."
+      - "Simon, H. A. (1956). Rational choice and the structure of the environment. Psychological Review."
+    related: [stopping-rule, effort-allocation, constraint-satisfaction]
+
+  - id: fast-frugal-heuristics
+    name: "Fast-and-frugal heuristics (one good reason)"
+    family: decision
+    typical_tier: 1
+    description: "Deciding on the basis of one or a few highly valid cues checked in order of importance, ignoring the rest of the information."
+    procedure:
+      - "Order cues by how well they predict"
+      - "Check the best cue first"
+      - "Decide if it discriminates; otherwise check the next"
+    signals:
+      - "the one thing that matters is"
+      - "deal-breaker question first"
+      - "if it fails on X, nothing else matters"
+      - "my rule of thumb is"
+      - "first thing I check is"
+    failure_modes:
+      - "Using a cue order that does not fit the current environment"
+    sources:
+      - "Gigerenzer, G., Todd, P. M., & the ABC Research Group (1999). Simple Heuristics That Make Us Smart."
+    related: [satisficing, recognition-primed-decision, triage-prioritization]
+
+  - id: reversibility-assessment
+    name: "Reversibility assessment"
+    family: decision
+    typical_tier: 1
+    description: "Classifying a decision by how costly it would be to undo, and matching the deliberation and caution to that irreversibility."
+    procedure:
+      - "Ask whether the decision can be undone"
+      - "Estimate the cost and time of reversal"
+      - "Move quickly on reversible choices"
+      - "Deliberate and seek more information on irreversible ones"
+    signals:
+      - "can we walk this back"
+      - "hard to undo once signed"
+      - "easily reversible, just try it"
+      - "no going back after this"
+      - "a one-way door"
+    failure_modes:
+      - "Underestimating hidden switching costs of 'reversible' choices"
+    sources:
+      - "Dixit, A. K., & Pindyck, R. S. (1994). Investment under Uncertainty."
+    related: [real-options-reasoning, staged-commitment, effort-allocation]
+
+  - id: real-options-reasoning
+    name: "Real-options reasoning (preserving flexibility)"
+    family: decision
+    typical_tier: 1
+    description: "Valuing the right but not the obligation to act later, and structuring choices to keep valuable future options open under uncertainty."
+    procedure:
+      - "Identify future choices the decision opens or closes"
+      - "Estimate the value of waiting for more information"
+      - "Prefer structures that keep options open cheaply"
+      - "Exercise the option when uncertainty resolves"
+    signals:
+      - "keep our options open"
+      - "don't box ourselves in"
+      - "preserve the right to"
+      - "buys us time to decide"
+      - "a cheap way to keep that alive"
+    failure_modes:
+      - "Paying too much for flexibility that is never used"
+    sources:
+      - "Dixit, A. K., & Pindyck, R. S. (1994). Investment under Uncertainty."
+      - "Trigeorgis, L. (1996). Real Options."
+    related: [reversibility-assessment, staged-commitment, value-of-information]
+
+  - id: staged-commitment
+    name: "Staged commitment"
+    family: decision
+    typical_tier: 2
+    description: "Breaking a large commitment into sequential steps with decision points, so each later step is taken with information from earlier ones."
+    procedure:
+      - "Divide the commitment into stages"
+      - "Define what must be learned at each stage"
+      - "Set go/no-go criteria for proceeding"
+      - "Review at each gate"
+    signals:
+      - "start with a pilot"
+      - "phase it in"
+      - "commit to the first step only"
+      - "see how it goes, then expand"
+      - "a trial period before"
+    failure_modes:
+      - "Gates that become formalities and never stop anything"
+    sources:
+      - "Raiffa, H. (1968). Decision Analysis."
+      - "Dixit, A. K., & Pindyck, R. S. (1994). Investment under Uncertainty."
+    related: [real-options-reasoning, iterative-prototyping, reversibility-assessment]
+
+  - id: regret-minimization
+    name: "Anticipated regret"
+    family: decision
+    typical_tier: 1
+    description: "Choosing partly by imagining how one would feel looking back on each option if things turned out badly, and avoiding choices with intolerable regret."
+    procedure:
+      - "Imagine each option followed by a bad outcome"
+      - "Gauge the regret in each case"
+      - "Weigh regret alongside expected outcomes"
+    signals:
+      - "I'd kick myself if"
+      - "would we regret not doing it"
+      - "looking back in five years"
+      - "hard to live with if we didn't"
+      - "could I defend this afterwards"
+    failure_modes:
+      - "Regret aversion leading to inaction or status-quo bias"
+    sources:
+      - "Loomes, G., & Sugden, R. (1982). Regret theory: An alternative theory of rational choice under uncertainty. Economic Journal."
+      - "Bell, D. E. (1982). Regret in decision making under uncertainty. Operations Research."
+    related: [counterfactual-simulation, robust-decision, time-horizon-reasoning]
+
+  - id: robust-decision
+    name: "Robust and minimax decisions"
+    family: decision
+    typical_tier: 1
+    description: "Under deep uncertainty, choosing the option that performs acceptably across many possible futures or minimizes the worst-case loss, instead of optimizing for one forecast."
+    procedure:
+      - "Lay out a range of plausible futures"
+      - "Evaluate each option across all of them"
+      - "Choose the option with acceptable worst case or least maximum regret"
+    signals:
+      - "works no matter which way it goes"
+      - "protect the downside"
+      - "the safest bet across scenarios"
+      - "worst case, we're still okay"
+      - "doesn't depend on predicting"
+    failure_modes:
+      - "Excessive conservatism that forgoes large expected gains"
+    sources:
+      - "Wald, A. (1950). Statistical Decision Functions."
+      - "Lempert, R. J., Popper, S. W., & Bankes, S. C. (2003). Shaping the Next One Hundred Years."
+    related: [tail-risk-thinking, scenario-planning, dominance-reasoning]
+
+  - id: value-of-information
+    name: "Value of information"
+    family: decision
+    typical_tier: 3
+    description: "Deciding whether to gather more information by asking whether it could change the decision and whether that is worth its cost and delay."
+    procedure:
+      - "Identify what is uncertain"
+      - "Ask whether resolving it could change the choice"
+      - "Estimate cost and delay of finding out"
+      - "Gather only information whose expected value exceeds its cost"
+    signals:
+      - "would knowing that change anything"
+      - "worth finding out before we decide"
+      - "doesn't matter which way that goes"
+      - "not worth the delay to check"
+      - "the one thing I'd want to know"
+    failure_modes:
+      - "Collecting information that cannot change the decision"
+    sources:
+      - "Howard, R. A. (1966). Information value theory. IEEE Transactions on Systems Science and Cybernetics."
+      - "Raiffa, H., & Schlaifer, R. (1961). Applied Statistical Decision Theory."
+    related: [stopping-rule, sensitivity-analysis, real-options-reasoning]
+
+  - id: opportunity-cost
+    name: "Opportunity-cost reasoning"
+    family: decision
+    typical_tier: 1
+    description: "Valuing a choice against the best alternative use of the same time, money or attention that it forecloses."
+    procedure:
+      - "Identify the resource being committed"
+      - "Name the best alternative use of it"
+      - "Compare the choice with that alternative, not with nothing"
+    signals:
+      - "what else could we do with that time"
+      - "at the expense of"
+      - "that's time not spent on"
+      - "compared to the alternative"
+      - "is this the best use of"
+    failure_modes:
+      - "Ignoring opportunity costs because they are invisible on paper"
+    sources:
+      - "Buchanan, J. M. (1969). Cost and Choice."
+    related: [marginal-thinking, multi-attribute-tradeoff, triage-prioritization]
+
+  - id: sunk-cost-avoidance
+    name: "Ignoring sunk costs"
+    family: decision
+    typical_tier: 1
+    description: "Deciding on future costs and benefits only, setting aside resources already spent that cannot be recovered."
+    procedure:
+      - "Separate past, unrecoverable costs from future ones"
+      - "Evaluate continuing as if starting fresh"
+      - "Decide based on forward-looking value"
+    signals:
+      - "that money's already spent"
+      - "if we were starting today"
+      - "don't throw good money after bad"
+      - "what we've invested shouldn't decide this"
+      - "cut our losses"
+    failure_modes:
+      - "Ignoring reputational or learning value that past investment really created"
+    sources:
+      - "Arkes, H. R., & Blumer, C. (1985). The psychology of sunk cost. Organizational Behavior and Human Decision Processes."
+    related: [marginal-thinking, opportunity-cost, belief-revision]
+
+  - id: asymmetric-error-costs
+    name: "Weighing asymmetric error costs"
+    family: decision
+    typical_tier: 1
+    description: "Setting a decision threshold by comparing the cost of a false alarm with the cost of a miss, and leaning toward the cheaper error."
+    procedure:
+      - "Identify the two ways of being wrong"
+      - "Estimate the cost of each"
+      - "Shift the threshold toward avoiding the costlier error"
+    signals:
+      - "better safe than sorry"
+      - "which mistake is worse"
+      - "cheap to check, expensive to miss"
+      - "I'd rather over-flag than miss one"
+      - "the cost of being wrong here"
+    failure_modes:
+      - "Over-caution that floods the system with false alarms"
+    sources:
+      - "Green, D. M., & Swets, J. A. (1966). Signal Detection Theory and Psychophysics."
+    related: [expected-value-calculation, differential-diagnosis, tail-risk-thinking]
+
+  - id: recognition-primed-decision
+    name: "Recognition-primed decision"
+    family: decision
+    typical_tier: 2
+    description: "An experienced decision maker recognizes the situation as typical, which suggests a workable course of action, and mentally simulates it to check before acting."
+    procedure:
+      - "Recognize the situation as a familiar type"
+      - "Note the expectancies, cues and goals it implies"
+      - "Retrieve the typical action"
+      - "Mentally simulate it and adapt or reject if it fails"
+    signals:
+      - "I knew right away what to do"
+      - "I've seen this a hundred times"
+      - "the move here is obviously"
+      - "gut says do X, and it checks out"
+      - "standard play for this situation"
+    failure_modes:
+      - "Misrecognition in situations that only look familiar"
+    sources:
+      - "Klein, G. (1998). Sources of Power: How People Make Decisions."
+    related: [prototype-categorization, case-based-reasoning, intuition-as-signal]
+
+  # --------------------------------------------------------- systems-temporal
+  - id: feedback-loop-analysis
+    name: "Feedback loop analysis"
+    family: systems-temporal
+    typical_tier: 1
+    description: "Identifying circular chains of cause where an outcome feeds back on its own causes, either amplifying (reinforcing) or stabilizing (balancing) it."
+    procedure:
+      - "Trace how the outcome affects its own drivers"
+      - "Classify the loop as reinforcing or balancing"
+      - "Predict growth, decline or oscillation"
+      - "Look for where to strengthen or break the loop"
+    signals:
+      - "a vicious circle"
+      - "it feeds on itself"
+      - "it becomes self-reinforcing"
+      - "the more we do, the more needed"
+      - "it'll self-correct"
+    failure_modes:
+      - "Missing the balancing loop that will eventually limit growth"
+    sources:
+      - "Meadows, D. H. (2008). Thinking in Systems: A Primer."
+      - "Sterman, J. D. (2000). Business Dynamics."
+    related: [stocks-and-flows, delay-awareness, leverage-points]
+
+  - id: second-order-effects
+    name: "Second-order effects"
+    family: systems-temporal
+    typical_tier: 1
+    description: "Tracing the consequences of the consequences, including how other people and systems will respond to an action."
+    procedure:
+      - "State the direct effect of the action"
+      - "Ask how others will react to it"
+      - "Ask what that reaction causes in turn"
+      - "Check for effects that offset the intended one"
+    signals:
+      - "and then what"
+      - "the knock-on effect"
+      - "unintended consequences"
+      - "people will respond by"
+      - "downstream, that means"
+    failure_modes:
+      - "Speculating many orders out with compounding uncertainty"
+    sources:
+      - "Merton, R. K. (1936). The unanticipated consequences of purposive social action. American Sociological Review."
+      - "Dörner, D. (1996). The Logic of Failure."
+    related: [feedback-loop-analysis, game-theoretic-reasoning, incentive-analysis]
+
+  - id: stocks-and-flows
+    name: "Stocks and flows"
+    family: systems-temporal
+    typical_tier: 1
+    description: "Distinguishing accumulated quantities (stocks) from the rates that fill and drain them (flows), and reasoning about how stocks change only gradually."
+    procedure:
+      - "Identify the accumulated quantity"
+      - "Identify inflows and outflows"
+      - "Compare inflow and outflow rates"
+      - "Predict the stock's trajectory over time"
+    signals:
+      - "the backlog keeps growing"
+      - "more coming in than going out"
+      - "it's built up over years"
+      - "even if we stop now, it'll take time"
+      - "draining the pipeline"
+    failure_modes:
+      - "Expecting a stock to respond instantly to a change in flow"
+    sources:
+      - "Sterman, J. D. (2000). Business Dynamics."
+      - "Forrester, J. W. (1961). Industrial Dynamics."
+    related: [feedback-loop-analysis, delay-awareness, invariant-reasoning]
+
+  - id: delay-awareness
+    name: "Delay awareness"
+    family: systems-temporal
+    typical_tier: 1
+    description: "Accounting for lags between actions and their effects, to avoid overreacting before results show or misattributing late effects."
+    procedure:
+      - "Estimate the lag between action and visible effect"
+      - "Wait an appropriate time before judging"
+      - "Avoid piling on corrections during the lag"
+    signals:
+      - "it takes time to show up"
+      - "we won't see results until"
+      - "give it a quarter before judging"
+      - "lagging indicator"
+      - "the effects are still working through"
+    failure_modes:
+      - "Using delay as an excuse to ignore real failure"
+    sources:
+      - "Sterman, J. D. (2000). Business Dynamics."
+    related: [stocks-and-flows, feedback-loop-analysis, time-horizon-reasoning]
+
+  - id: leverage-points
+    name: "Leverage points"
+    family: systems-temporal
+    typical_tier: 1
+    description: "Looking for places in a system where a small change produces a large, durable effect, such as rules, goals, information flows or incentives rather than parameters."
+    procedure:
+      - "Map the system's main loops and rules"
+      - "List candidate intervention points"
+      - "Rank by likely size and durability of effect"
+      - "Prefer high-leverage over effortful low-leverage fixes"
+    signals:
+      - "the real lever here is"
+      - "small change, big effect"
+      - "fix the process, not the case"
+      - "change the default"
+      - "upstream of all of this"
+    failure_modes:
+      - "High-leverage points often push the system in counterintuitive directions"
+    sources:
+      - "Meadows, D. H. (1999). Leverage Points: Places to Intervene in a System."
+      - "Senge, P. M. (1990). The Fifth Discipline."
+    related: [feedback-loop-analysis, interventionist-reasoning, root-cause-analysis]
+
+  - id: time-horizon-reasoning
+    name: "Time-horizon reasoning"
+    family: systems-temporal
+    typical_tier: 1
+    description: "Making the time frame explicit and weighing how an option looks in the short term against the long term."
+    procedure:
+      - "State the relevant time horizons"
+      - "Evaluate the option at each horizon"
+      - "Identify short-term gains with long-term costs and vice versa"
+      - "Decide which horizon governs"
+    signals:
+      - "short-term pain, long-term gain"
+      - "in the long run"
+      - "fine for now, problem later"
+      - "what this looks like in three years"
+      - "kicking the can down the road"
+    failure_modes:
+      - "Excessive discounting of future consequences"
+    sources:
+      - "Frederick, S., Loewenstein, G., & O'Donoghue, T. (2002). Time discounting and time preference: A critical review. Journal of Economic Literature."
+    related: [second-order-effects, regret-minimization, path-dependence]
+
+  - id: path-dependence
+    name: "Path dependence"
+    family: systems-temporal
+    typical_tier: 1
+    description: "Recognizing that early choices and historical accidents constrain later options, so the current situation must be understood through its history and today's choices can lock in the future."
+    procedure:
+      - "Trace how the current state came about"
+      - "Identify early commitments that now constrain options"
+      - "Ask what today's choice will lock in"
+    signals:
+      - "we're stuck with it because"
+      - "it's historical, that's why"
+      - "once that's in place it's hard to change"
+      - "this will lock us in"
+      - "how we got here matters"
+    failure_modes:
+      - "Treating historical constraints as permanent when they can be changed"
+    sources:
+      - "David, P. A. (1985). Clio and the economics of QWERTY. American Economic Review."
+      - "Arthur, W. B. (1989). Competing technologies, increasing returns, and lock-in by historical events. Economic Journal."
+    related: [reversibility-assessment, precedent-reasoning, time-horizon-reasoning]
+
+  - id: scenario-planning
+    name: "Scenario planning"
+    family: systems-temporal
+    typical_tier: 2
+    description: "Constructing several distinct, plausible futures based on key uncertainties and testing plans against each rather than betting on one forecast."
+    procedure:
+      - "Identify the most important, uncertain drivers"
+      - "Combine them into a few distinct scenarios"
+      - "Describe how each would unfold"
+      - "Test the plan in each and identify signposts"
+    signals:
+      - "in one scenario... in another"
+      - "if the market turns, then"
+      - "best case, base case, worst case"
+      - "let's game out a few futures"
+      - "what would we watch for"
+    failure_modes:
+      - "Treating the middle scenario as the forecast"
+    sources:
+      - "Wack, P. (1985). Scenarios: Uncharted waters ahead. Harvard Business Review."
+      - "Schwartz, P. (1991). The Art of the Long View."
+    related: [case-analysis, robust-decision, premortem]
+
+  - id: timing-and-windows
+    name: "Timing and windows of opportunity"
+    family: systems-temporal
+    typical_tier: 2
+    description: "Judging when to act by recognizing that conditions favourable to an action open and close, and that the same move succeeds or fails depending on timing."
+    procedure:
+      - "Identify the conditions that make action feasible"
+      - "Judge whether they are present now"
+      - "Act while the window is open, or wait for it"
+    signals:
+      - "now's the moment to"
+      - "the window is closing"
+      - "not the right time to raise it"
+      - "wait until after"
+      - "strike while it's hot"
+    failure_modes:
+      - "Waiting for perfect timing that never arrives"
+    sources:
+      - "Kingdon, J. W. (1984). Agendas, Alternatives, and Public Policies."
+    related: [real-options-reasoning, delay-awareness, information-sequencing]
+
+  # ------------------------------------------------------------- argumentation
+  - id: toulmin-argument-structure
+    name: "Toulmin argument structure"
+    family: argumentation
+    typical_tier: 1
+    description: "Laying out an argument as a claim supported by data, linked by a warrant, with backing, qualifiers and conditions of rebuttal made explicit."
+    procedure:
+      - "State the claim"
+      - "Give the data supporting it"
+      - "Make explicit the warrant connecting data to claim"
+      - "Add qualifiers and the conditions under which it fails"
+    signals:
+      - "the basis for that is"
+      - "presumably, unless"
+      - "which supports the conclusion that"
+      - "that holds as long as"
+      - "the reason that matters is"
+    failure_modes:
+      - "Leaving the warrant implicit so it cannot be examined"
+    sources:
+      - "Toulmin, S. E. (1958). The Uses of Argument."
+    related: [critical-questions-schemes, burden-of-proof, objection-anticipation]
+
+  - id: steelmanning
+    name: "Steelmanning (principle of charity)"
+    family: argumentation
+    typical_tier: 2
+    description: "Restating an opposing view in its strongest, most reasonable form before responding to it."
+    procedure:
+      - "Restate the other view so its holder would agree"
+      - "Supply the best reasons for it"
+      - "Note what is right about it"
+      - "Only then respond"
+    signals:
+      - "to be fair to their position"
+      - "the strongest version of their argument"
+      - "they have a point that"
+      - "if I were in their shoes I'd argue"
+      - "let me make their case for them"
+    failure_modes:
+      - "Arguing against an improved view the other side does not actually hold"
+    sources:
+      - "Dennett, D. C. (2013). Intuition Pumps and Other Tools for Thinking."
+      - "Davidson, D. (1973). Radical interpretation. Dialectica."
+    related: [perspective-taking, objection-anticipation, dialectical-synthesis]
+
+  - id: burden-of-proof
+    name: "Allocating the burden of proof"
+    family: argumentation
+    typical_tier: 1
+    description: "Deciding which side must provide evidence and how much is needed, and what the default position is if neither side meets its burden."
+    procedure:
+      - "Identify the default or status quo position"
+      - "Determine who is proposing a change"
+      - "Set the standard of evidence required"
+      - "Decide on the default if the burden is not met"
+    signals:
+      - "the onus is on them"
+      - "they'd have to show that"
+      - "absent evidence, we assume"
+      - "the default position is"
+      - "it's on us to prove"
+    failure_modes:
+      - "Shifting the burden onto the other side unfairly"
+    sources:
+      - "Walton, D. N. (1988). Burden of proof. Argumentation."
+      - "Walton, D., Reed, C., & Macagno, F. (2008). Argumentation Schemes."
+    related: [toulmin-argument-structure, asymmetric-error-costs, critical-questions-schemes]
+
+  - id: critical-questions-schemes
+    name: "Critical questions for argument schemes"
+    family: argumentation
+    typical_tier: 1
+    description: "Recognizing a common type of argument (from analogy, consequences, authority, sign, etc.) and testing it with the standard questions that expose its weak points."
+    procedure:
+      - "Identify the argument scheme in use"
+      - "Recall its critical questions"
+      - "Ask each question of this argument"
+      - "Accept only if the questions are answered"
+    signals:
+      - "does that really follow"
+      - "is that a reliable sign of"
+      - "what are the other consequences"
+      - "are there exceptions here"
+      - "how strong is that link"
+    failure_modes:
+      - "Mechanical questioning that ignores the context of the argument"
+    sources:
+      - "Walton, D., Reed, C., & Macagno, F. (2008). Argumentation Schemes."
+    related: [toulmin-argument-structure, expert-opinion-evaluation, disanalogy-check]
+
+  - id: expert-opinion-evaluation
+    name: "Evaluating appeals to expertise"
+    family: argumentation
+    typical_tier: 1
+    description: "Weighing a claim based on an authority by checking the source's relevant expertise, consistency with other experts, and whether they actually said it."
+    procedure:
+      - "Check the source's expertise in this specific field"
+      - "Check whether the claim falls within it"
+      - "Check consistency with other experts"
+      - "Check the quote and its context"
+    signals:
+      - "is that really their area"
+      - "what do others in the field say"
+      - "did they actually say that"
+      - "the expert view on this is"
+      - "outside their expertise"
+    failure_modes:
+      - "Deferring to credentials outside their domain"
+    sources:
+      - "Walton, D. (1997). Appeal to Expert Opinion: Arguments from Authority."
+    related: [critical-questions-schemes, source-monitoring, trust-calibration]
+
+  - id: definitional-clarity
+    name: "Pinning down definitions (detecting equivocation)"
+    family: argumentation
+    typical_tier: 1
+    description: "Clarifying exactly what a key term means in context and noticing when a term shifts meaning within an argument or between parties."
+    procedure:
+      - "Identify the term doing the work"
+      - "State what each party means by it"
+      - "Check whether the meaning shifts mid-argument"
+      - "Agree a definition before proceeding"
+    signals:
+      - "what do we mean by"
+      - "depends how you define"
+      - "we're using that word differently"
+      - "in this context it means"
+      - "they're talking past each other"
+    failure_modes:
+      - "Debating definitions when the substance is not in dispute"
+    sources:
+      - "Walton, D. (1996). Fallacies Arising from Ambiguity."
+    related: [rule-criteria-application, common-ground-establishment, critical-questions-schemes]
+
+  - id: slippery-slope-evaluation
+    name: "Evaluating slippery-slope and precedent arguments"
+    family: argumentation
+    typical_tier: 1
+    description: "Assessing whether a first step really makes further, worse steps likely, and identifying a principled place to draw the line."
+    procedure:
+      - "Identify the first step and the feared endpoint"
+      - "Check each intermediate step's likelihood"
+      - "Look for a stable stopping point"
+      - "Decide whether a line can be held"
+    signals:
+      - "where do we draw the line"
+      - "the thin end of the wedge"
+      - "once we allow this"
+      - "is there a principled stopping point"
+      - "opening the floodgates"
+    failure_modes:
+      - "Rejecting reasonable steps for fear of improbable chains"
+    sources:
+      - "Walton, D. N. (1992). Slippery Slope Arguments."
+    related: [reductio-ad-absurdum, precedent-reasoning, second-order-effects]
+
+  - id: objection-anticipation
+    name: "Anticipating objections"
+    family: argumentation
+    typical_tier: 2
+    description: "Identifying the strongest objections a position will face and addressing them before they are raised."
+    procedure:
+      - "List likely objections from each audience"
+      - "Rank them by strength"
+      - "Prepare responses or concessions"
+      - "Address the strongest proactively"
+    signals:
+      - "they'll push back on"
+      - "the obvious objection is"
+      - "we should get ahead of"
+      - "expect them to argue"
+      - "the first question will be"
+    failure_modes:
+      - "Raising objections the audience would not have thought of"
+    sources:
+      - "Kuhn, D. (1991). The Skills of Argument."
+      - "Toulmin, S. E. (1958). The Uses of Argument."
+    related: [steelmanning, audience-modeling, toulmin-argument-structure]
+
+  - id: dialectical-synthesis
+    name: "Dialectical synthesis"
+    family: argumentation
+    typical_tier: 2
+    description: "Holding two opposing positions in tension and constructing a view that preserves what is valid in each, rather than simply choosing one."
+    procedure:
+      - "State both positions fairly"
+      - "Identify what each gets right"
+      - "Find the underlying tension"
+      - "Construct a position integrating the valid elements"
+    signals:
+      - "both are partly right"
+      - "the truth is somewhere in between"
+      - "a way to honor both concerns"
+      - "it's not either-or"
+      - "reconcile those two views"
+    failure_modes:
+      - "Splitting the difference when one view is simply correct"
+    sources:
+      - "Basseches, M. (1984). Dialectical Thinking and Adult Development."
+      - "Mason, R. O., & Mitroff, I. I. (1981). Challenging Strategic Planning Assumptions."
+    related: [steelmanning, integrative-tradeoffs, interests-vs-positions]
+
+  - id: socratic-questioning
+    name: "Socratic questioning"
+    family: argumentation
+    typical_tier: 2
+    description: "Using a sequence of probing questions to help someone examine their own reasons, assumptions and implications, rather than telling them the answer."
+    procedure:
+      - "Ask for the person's view and reasons"
+      - "Probe assumptions and evidence with questions"
+      - "Ask about implications and alternatives"
+      - "Let the person draw the conclusion"
+    signals:
+      - "what makes you think that"
+      - "how would you know if"
+      - "what would follow from that"
+      - "what are we assuming here"
+      - "walk me through your reasoning"
+    failure_modes:
+      - "Questioning that feels like interrogation and provokes defensiveness"
+    sources:
+      - "Plato. Meno."
+    related: [assumption-surfacing, perspective-taking, comprehension-monitoring]
+
+  # --------------------------------------------------------- social-strategic
+  - id: theory-of-mind
+    name: "Theory of mind (modeling beliefs and knowledge)"
+    family: social-strategic
+    typical_tier: 2
+    description: "Attributing beliefs, knowledge, intentions and desires to other people, including beliefs that differ from one's own or from the truth."
+    procedure:
+      - "Ask what the other person knows and does not know"
+      - "Ask what they believe and want"
+      - "Predict their behaviour from those states"
+    signals:
+      - "they probably don't know that"
+      - "they think we're going to"
+      - "what they're really after is"
+      - "from what they've seen so far"
+      - "they'll assume that"
+    failure_modes:
+      - "Projecting one's own knowledge onto others"
+    sources:
+      - "Premack, D., & Woodruff, G. (1978). Does the chimpanzee have a theory of mind? Behavioral and Brain Sciences."
+      - "Wimmer, H., & Perner, J. (1983). Beliefs about beliefs. Cognition."
+    related: [perspective-taking, audience-modeling, game-theoretic-reasoning]
+
+  - id: perspective-taking
+    name: "Perspective taking"
+    family: social-strategic
+    typical_tier: 2
+    description: "Deliberately viewing the situation from another party's position, including their pressures, constraints and how events look to them."
+    procedure:
+      - "Pick the stakeholder"
+      - "Describe the situation as they experience it"
+      - "Identify their pressures and constraints"
+      - "Revise your own plan in light of it"
+    signals:
+      - "from their side of the table"
+      - "put yourself in their shoes"
+      - "how this looks to them"
+      - "they're under pressure from"
+      - "if I were them I'd worry about"
+    failure_modes:
+      - "Egocentric anchoring: insufficient adjustment away from one's own view"
+    sources:
+      - "Galinsky, A. D., & Moskowitz, G. B. (2000). Perspective-taking: Decreasing stereotype expression, stereotype accessibility, and in-group favoritism. Journal of Personality and Social Psychology."
+      - "Epley, N., Keysar, B., Van Boven, L., & Gilovich, T. (2004). Perspective taking as egocentric anchoring and adjustment. Journal of Personality and Social Psychology."
+    related: [theory-of-mind, steelmanning, interests-vs-positions]
+
+  - id: incentive-analysis
+    name: "Incentive analysis"
+    family: social-strategic
+    typical_tier: 2
+    description: "Explaining or predicting behaviour by identifying what each party is rewarded or penalized for, including misalignment between agents and those they act for."
+    procedure:
+      - "Identify each party's rewards and penalties"
+      - "Check whether agents' incentives match their principals'"
+      - "Predict behaviour from the incentives"
+      - "Redesign incentives where they conflict with goals"
+    signals:
+      - "follow the incentives"
+      - "what's in it for them"
+      - "they get paid on"
+      - "no reason for them to care about"
+      - "their incentive is to"
+    failure_modes:
+      - "Ignoring non-financial motives such as reputation and identity"
+    sources:
+      - "Jensen, M. C., & Meckling, W. H. (1976). Theory of the firm: Managerial behavior, agency costs and ownership structure. Journal of Financial Economics."
+    related: [game-theoretic-reasoning, second-order-effects, interests-vs-positions]
+
+  - id: game-theoretic-reasoning
+    name: "Strategic (game-theoretic) reasoning"
+    family: social-strategic
+    typical_tier: 2
+    description: "Choosing a move by anticipating how other self-interested parties will respond, and reasoning backward from their likely responses."
+    procedure:
+      - "Identify the players and their options"
+      - "Estimate each player's payoffs"
+      - "Look ahead to their best responses"
+      - "Reason back to your best current move"
+    signals:
+      - "if we do X, they'll respond with"
+      - "their best move is"
+      - "think a few moves ahead"
+      - "they'll see that coming"
+      - "what's their counter"
+    failure_modes:
+      - "Assuming others are more rational or more hostile than they are"
+    sources:
+      - "von Neumann, J., & Morgenstern, O. (1944). Theory of Games and Economic Behavior."
+      - "Dixit, A. K., & Nalebuff, B. J. (1991). Thinking Strategically."
+    related: [theory-of-mind, credible-commitment, repeated-game-reasoning]
+
+  - id: credible-commitment
+    name: "Credible commitment and focal points"
+    family: social-strategic
+    typical_tier: 2
+    description: "Influencing others by making one's own future actions credible (binding oneself) and by identifying natural focal points on which parties can coordinate."
+    procedure:
+      - "Identify the outcome you want others to expect"
+      - "Find a way to make your stance credible or binding"
+      - "Look for salient focal points for coordination"
+    signals:
+      - "they need to believe we'll walk"
+      - "is that threat credible"
+      - "put it in writing so it sticks"
+      - "the obvious middle ground is"
+      - "tie our hands on this"
+    failure_modes:
+      - "Committing to a position that later proves costly to honour"
+    sources:
+      - "Schelling, T. C. (1960). The Strategy of Conflict."
+    related: [game-theoretic-reasoning, signaling-reasoning, anchor-setting]
+
+  - id: signaling-reasoning
+    name: "Signaling reasoning"
+    family: social-strategic
+    typical_tier: 2
+    description: "Interpreting and sending actions that convey hidden information, recognizing that costly signals are more credible than cheap talk."
+    procedure:
+      - "Ask what an action reveals about the sender"
+      - "Judge whether it was costly to send"
+      - "Consider what your own actions signal"
+      - "Avoid sending unintended signals"
+    signals:
+      - "what message does that send"
+      - "that tells us they're serious"
+      - "cheap talk"
+      - "it would signal weakness"
+      - "reading between the lines"
+    failure_modes:
+      - "Over-reading meaning into actions that were incidental"
+    sources:
+      - "Spence, M. (1973). Job market signaling. Quarterly Journal of Economics."
+    related: [credible-commitment, theory-of-mind, framing-effects-awareness]
+
+  - id: repeated-game-reasoning
+    name: "Repeated-interaction (relationship) reasoning"
+    family: social-strategic
+    typical_tier: 2
+    description: "Weighing a short-term gain against its effect on a continuing relationship, recognizing that cooperation is sustained by the shadow of future dealings."
+    procedure:
+      - "Ask whether the parties will deal again"
+      - "Estimate the value of the ongoing relationship"
+      - "Prefer reciprocity over one-off maximization when it is high"
+    signals:
+      - "we'll have to work with them again"
+      - "not worth burning the relationship"
+      - "they'll remember this"
+      - "win this battle, lose the war"
+      - "goodwill for next time"
+    failure_modes:
+      - "Conceding repeatedly to a party who does not reciprocate"
+    sources:
+      - "Axelrod, R. (1984). The Evolution of Cooperation."
+    related: [trust-calibration, game-theoretic-reasoning, time-horizon-reasoning]
+
+  - id: interests-vs-positions
+    name: "Interests behind positions"
+    family: social-strategic
+    typical_tier: 2
+    description: "Looking past what a party says it wants to the underlying needs and concerns that drive it, which often admit several satisfactory solutions."
+    procedure:
+      - "Note the stated position"
+      - "Ask why they want it"
+      - "Identify the underlying interest or fear"
+      - "Generate options that meet the interest differently"
+    signals:
+      - "what are they really worried about"
+      - "the ask behind the ask"
+      - "why do they want that"
+      - "there's another way to address their concern"
+      - "their real concern is"
+    failure_modes:
+      - "Presuming to know another's interests without checking"
+    sources:
+      - "Fisher, R., & Ury, W. (1981). Getting to Yes."
+    related: [integrative-tradeoffs, perspective-taking, problem-definition]
+
+  - id: batna-assessment
+    name: "BATNA assessment"
+    family: social-strategic
+    typical_tier: 2
+    description: "Determining one's own and the other side's best alternative to a negotiated agreement, which sets walk-away points and bargaining power."
+    procedure:
+      - "List your alternatives if no deal is reached"
+      - "Identify the best one"
+      - "Estimate the other side's best alternative"
+      - "Set the walk-away point accordingly"
+    signals:
+      - "what happens if we walk away"
+      - "our fallback is"
+      - "they don't have many alternatives"
+      - "who needs this deal more"
+      - "our leverage comes from"
+    failure_modes:
+      - "Overestimating one's own alternatives"
+    sources:
+      - "Fisher, R., & Ury, W. (1981). Getting to Yes."
+      - "Raiffa, H. (1982). The Art and Science of Negotiation."
+    related: [interests-vs-positions, credible-commitment, anchor-setting]
+
+  - id: integrative-tradeoffs
+    name: "Integrative trades across issues"
+    family: social-strategic
+    typical_tier: 2
+    description: "Creating value in a negotiation by trading concessions on issues one side values less for gains on issues it values more."
+    procedure:
+      - "List all issues on the table"
+      - "Estimate each side's priority on each"
+      - "Concede on low-priority issues for high-priority ones"
+      - "Package issues rather than negotiating them one by one"
+    signals:
+      - "we can give on that if"
+      - "that matters more to them than us"
+      - "package it together"
+      - "trade X for Y"
+      - "expand the pie"
+    failure_modes:
+      - "Revealing priorities that the other side then exploits"
+    sources:
+      - "Raiffa, H. (1982). The Art and Science of Negotiation."
+      - "Lax, D. A., & Sebenius, J. K. (1986). The Manager as Negotiator."
+    related: [interests-vs-positions, multi-attribute-tradeoff, dialectical-synthesis]
+
+  - id: anchor-setting
+    name: "Anchoring in negotiation (first offers)"
+    family: social-strategic
+    typical_tier: 2
+    description: "Using or countering the pull of an initial number or proposal on where the final agreement lands."
+    procedure:
+      - "Decide whether to make the first offer"
+      - "Set an ambitious but justifiable anchor"
+      - "When anchored by the other side, re-anchor with your own reference"
+    signals:
+      - "start high and come down"
+      - "let them name a number first"
+      - "set the starting point"
+      - "don't let that number frame it"
+      - "our opening position"
+    failure_modes:
+      - "Extreme anchors that damage credibility or the relationship"
+    sources:
+      - "Galinsky, A. D., & Mussweiler, T. (2001). First offers as anchors: The role of perspective-taking and negotiator focus. Journal of Personality and Social Psychology."
+      - "Tversky, A., & Kahneman, D. (1974). Judgment under uncertainty: Heuristics and biases. Science."
+    related: [batna-assessment, framing-effects-awareness, credible-commitment]
+
+  - id: trust-calibration
+    name: "Trust calibration"
+    family: social-strategic
+    typical_tier: 2
+    description: "Adjusting how much to rely on another party based on evidence of their ability, integrity and goodwill, and on what is at stake."
+    procedure:
+      - "Assess ability, integrity and benevolence"
+      - "Review track record"
+      - "Match reliance to evidence and stakes"
+      - "Add verification where trust is not yet earned"
+    signals:
+      - "trust but verify"
+      - "they've earned some latitude"
+      - "I'd want to double-check their work"
+      - "they've always delivered"
+      - "not sure we can rely on them"
+    failure_modes:
+      - "Trust that persists after contrary evidence"
+    sources:
+      - "Mayer, R. C., Davis, J. H., & Schoorman, F. D. (1995). An integrative model of organizational trust. Academy of Management Review."
+    related: [repeated-game-reasoning, expert-opinion-evaluation, source-monitoring]
+
+  - id: coalition-reasoning
+    name: "Coalition reasoning"
+    family: social-strategic
+    typical_tier: 2
+    description: "Mapping who supports and opposes an outcome, who decides, and which alliances could form, in order to build enough support to carry a decision."
+    procedure:
+      - "Map stakeholders by influence and stance"
+      - "Identify the decision maker and their influencers"
+      - "Find potential allies and blockers"
+      - "Sequence approaches to build a winning coalition"
+    signals:
+      - "who else do we need on board"
+      - "get them in our corner first"
+      - "who has the final say"
+      - "line up support before the meeting"
+      - "they'll block it unless"
+    failure_modes:
+      - "Neglecting a quiet stakeholder who has a veto"
+    sources:
+      - "Riker, W. H. (1962). The Theory of Political Coalitions."
+      - "Lax, D. A., & Sebenius, J. K. (1986). The Manager as Negotiator."
+    related: [perspective-taking, information-sequencing, incentive-analysis]
+
+  # ------------------------------------------------------------ communication
+  - id: audience-modeling
+    name: "Audience modeling (audience design)"
+    family: communication
+    typical_tier: 2
+    description: "Shaping content, detail and tone to what a particular audience knows, cares about and will do with the message."
+    procedure:
+      - "Identify the audience and their role"
+      - "Estimate what they already know"
+      - "Identify what they need to decide or do"
+      - "Tailor depth, vocabulary and emphasis"
+    signals:
+      - "for this audience, keep it short"
+      - "what they actually need to know"
+      - "they won't care about the details"
+      - "write it for a non-specialist"
+      - "the board will want"
+    failure_modes:
+      - "Oversimplifying for an audience that needs detail"
+    sources:
+      - "Bell, A. (1984). Language style as audience design. Language in Society."
+      - "Clark, H. H. (1996). Using Language."
+    related: [theory-of-mind, curse-of-knowledge-check, information-sequencing]
+
+  - id: common-ground-establishment
+    name: "Establishing common ground"
+    family: communication
+    typical_tier: 2
+    description: "Making sure both parties share the same understanding of facts, terms and what has been agreed before building on it."
+    procedure:
+      - "State the shared starting facts"
+      - "Confirm understanding of key terms"
+      - "Check back that the message was received as intended"
+    signals:
+      - "just so we're on the same page"
+      - "to confirm what we agreed"
+      - "my understanding is... correct me"
+      - "let me play that back"
+      - "make sure we mean the same thing"
+    failure_modes:
+      - "Assuming agreement from silence"
+    sources:
+      - "Clark, H. H., & Brennan, S. E. (1991). Grounding in communication. In Perspectives on Socially Shared Cognition."
+    related: [definitional-clarity, audience-modeling, comprehension-monitoring]
+
+  - id: framing-effects-awareness
+    name: "Framing-effects awareness"
+    family: communication
+    typical_tier: 2
+    description: "Recognizing that logically equivalent descriptions (gain vs loss, risk vs safety) shift how people decide, and choosing or neutralizing frames deliberately."
+    procedure:
+      - "Identify the frame in use"
+      - "Restate the issue in the opposite frame"
+      - "Check whether the judgment changes"
+      - "Choose a frame consciously and honestly"
+    signals:
+      - "how we frame this matters"
+      - "position it as"
+      - "present it as a savings, not a cost"
+      - "sounds different if you put it as"
+      - "the same thing, put another way"
+    failure_modes:
+      - "Manipulative framing that damages trust when noticed"
+    sources:
+      - "Tversky, A., & Kahneman, D. (1981). The framing of decisions and the psychology of choice. Science."
+    related: [representation-change, audience-modeling, anchor-setting]
+
+  - id: information-sequencing
+    name: "Information sequencing"
+    family: communication
+    typical_tier: 2
+    description: "Deciding what to say first and in what order, such as leading with the conclusion, or ordering disclosures to whom and when."
+    procedure:
+      - "Identify the key message"
+      - "Decide whether to lead with the conclusion or the reasoning"
+      - "Order points by importance to this audience"
+      - "Decide who hears what, and when"
+    signals:
+      - "bottom line up front"
+      - "lead with the answer"
+      - "tell them before they hear it elsewhere"
+      - "get the bad news out first"
+      - "save the details for later"
+    failure_modes:
+      - "Burying the key point in background"
+    sources:
+      - "Hovland, C. I., Janis, I. L., & Kelley, H. H. (1953). Communication and Persuasion."
+      - "Asch, S. E. (1946). Forming impressions of personality. Journal of Abnormal and Social Psychology."
+    related: [audience-modeling, timing-and-windows, coalition-reasoning]
+
+  - id: curse-of-knowledge-check
+    name: "Curse-of-knowledge check"
+    family: communication
+    typical_tier: 2
+    description: "Recognizing that one's own expertise makes it hard to imagine not knowing something, and deliberately checking for unexplained jargon and skipped steps."
+    procedure:
+      - "Reread from the view of a newcomer"
+      - "Flag jargon and unstated steps"
+      - "Add the missing context"
+      - "Test with someone less expert"
+    signals:
+      - "obvious to us, not to them"
+      - "spell it out more"
+      - "too much jargon"
+      - "I'm skipping steps here"
+      - "would a newcomer follow this"
+    failure_modes:
+      - "Over-explaining to an expert audience"
+    sources:
+      - "Camerer, C., Loewenstein, G., & Weber, M. (1989). The curse of knowledge in economic settings: An experimental analysis. Journal of Political Economy."
+      - "Hinds, P. J. (1999). The curse of expertise. Journal of Experimental Psychology: Applied."
+    related: [audience-modeling, theory-of-mind, common-ground-establishment]
+
+  - id: uncertainty-communication
+    name: "Communicating uncertainty"
+    family: communication
+    typical_tier: 2
+    description: "Expressing how confident one is, and in what, using calibrated words or numbers so that the audience can act on it appropriately."
+    procedure:
+      - "Decide your actual level of confidence"
+      - "Choose words or numbers matching it"
+      - "Say what would change your view"
+      - "Separate what is known from what is judgment"
+    signals:
+      - "I'm fairly confident, not certain"
+      - "more likely than not"
+      - "my best read is"
+      - "I'd put that at maybe 70 percent"
+      - "with the caveat that"
+    failure_modes:
+      - "Vague hedges that different listeners read very differently"
+    sources:
+      - "Kent, S. (1964). Words of estimative probability. Studies in Intelligence."
+    related: [confidence-calibration, uncertainty-tracking, natural-frequency-reframing]
+
+  # -------------------------------------------------- metacognitive-monitoring
+  - id: comprehension-monitoring
+    name: "Comprehension monitoring"
+    family: metacognitive-monitoring
+    typical_tier: 3
+    description: "Noticing whether one actually understands what one is reading, hearing or doing, and detecting when understanding has broken down."
+    procedure:
+      - "Pause to summarize what you understand"
+      - "Notice gaps, confusion or contradictions"
+      - "Flag what needs clarification"
+    signals:
+      - "I'm not sure I follow"
+      - "wait, that doesn't make sense to me"
+      - "let me make sure I understand"
+      - "I'm missing something"
+      - "I don't get why"
+    failure_modes:
+      - "Illusion of understanding from familiarity"
+    sources:
+      - "Markman, E. M. (1977). Realizing that you don't understand: A preliminary investigation. Child Development."
+      - "Flavell, J. H. (1979). Metacognition and cognitive monitoring: A new area of cognitive-developmental inquiry. American Psychologist."
+    related: [self-explanation-check, contradiction-detection, knowledge-boundary-awareness]
+
+  - id: self-explanation-check
+    name: "Self-explanation as a check"
+    family: metacognitive-monitoring
+    typical_tier: 3
+    description: "Testing one's understanding by trying to explain the reasoning step by step, which exposes gaps that a sense of familiarity hides."
+    procedure:
+      - "Try to explain the matter in your own words"
+      - "Explain each step and why it follows"
+      - "Note where the explanation falters"
+      - "Fill those gaps"
+    signals:
+      - "let me try to explain it back"
+      - "if I had to write it out"
+      - "I thought I knew until I tried explaining"
+      - "can I justify each step"
+    failure_modes:
+      - "Producing fluent explanations that are still wrong"
+    sources:
+      - "Chi, M. T. H., Bassok, M., Lewis, M. W., Reimann, P., & Glaser, R. (1989). Self-explanations: How students study and use examples in learning to solve problems. Cognitive Science."
+      - "Rozenblit, L., & Keil, F. (2002). The misunderstood limits of folk science: An illusion of explanatory depth. Cognitive Science."
+    related: [comprehension-monitoring, knowledge-boundary-awareness, judgment-of-learning]
+
+  - id: feeling-of-knowing
+    name: "Feeling of knowing"
+    family: metacognitive-monitoring
+    typical_tier: 3
+    description: "Judging, before or without retrieving it, whether one knows something and could find or recall it, which guides whether to keep searching memory or look it up."
+    procedure:
+      - "Notice the sense that you know or don't know"
+      - "Decide to keep searching memory or look it up"
+      - "Verify the retrieved answer"
+    signals:
+      - "it's on the tip of my tongue"
+      - "rings a bell"
+      - "I've seen this somewhere"
+      - "I should know this offhand"
+      - "I'd have to look that up"
+    failure_modes:
+      - "Familiarity mistaken for knowledge"
+    sources:
+      - "Hart, J. T. (1965). Memory and the feeling-of-knowing experience. Journal of Educational Psychology."
+      - "Koriat, A. (1993). How do we know that we know? The accessibility model of the feeling of knowing. Psychological Review."
+    related: [judgment-of-learning, knowledge-boundary-awareness, help-seeking]
+
+  - id: judgment-of-learning
+    name: "Judgment of learning (readiness assessment)"
+    family: metacognitive-monitoring
+    typical_tier: 3
+    description: "Assessing whether one has learned or prepared something well enough to perform later, and deciding whether more study or preparation is needed."
+    procedure:
+      - "Predict how well you will perform"
+      - "Test yourself rather than rereading"
+      - "Compare prediction to test result"
+      - "Allocate more preparation where weak"
+    signals:
+      - "I'm not up to speed on that yet"
+      - "need to get smarter on"
+      - "I think I've got a handle on it"
+      - "ready to walk them through it"
+      - "need more prep before the call"
+    failure_modes:
+      - "Overconfidence after rereading or immediate review"
+    sources:
+      - "Koriat, A. (1997). Monitoring one's own knowledge during study: A cue-utilization approach to judgments of learning. Journal of Experimental Psychology: General."
+      - "Dunlosky, J., & Metcalfe, J. (2009). Metacognition."
+    related: [feeling-of-knowing, self-explanation-check, effort-allocation]
+
+  - id: error-detection
+    name: "Error detection and self-checking"
+    family: metacognitive-monitoring
+    typical_tier: 3
+    description: "Monitoring one's own output for mistakes and deliberately checking work before it is relied on."
+    procedure:
+      - "Pause before finalizing"
+      - "Recheck key facts, figures and logic"
+      - "Look for the errors you typically make"
+      - "Correct and note the cause"
+    signals:
+      - "let me double-check that"
+      - "wait, I got that wrong"
+      - "on second look"
+      - "correction to my earlier note"
+      - "that doesn't look right"
+    failure_modes:
+      - "Checking only the parts you are already confident about"
+    sources:
+      - "Rabbitt, P. M. A. (1966). Errors and error correction in choice-response tasks. Journal of Experimental Psychology."
+      - "Reason, J. (1990). Human Error."
+    related: [order-of-magnitude-check, contradiction-detection, intuition-override-check]
+
+  - id: contradiction-detection
+    name: "Contradiction and inconsistency detection"
+    family: metacognitive-monitoring
+    typical_tier: 3
+    description: "Noticing when two pieces of information, statements or beliefs cannot both be true, and treating the inconsistency as something to resolve."
+    procedure:
+      - "Compare new information against prior statements"
+      - "Flag claims that cannot both be true"
+      - "Determine which is wrong or what reconciles them"
+    signals:
+      - "that contradicts what they said earlier"
+      - "those two don't square"
+      - "inconsistent with the earlier version"
+      - "which one is it"
+      - "doesn't match the record"
+    failure_modes:
+      - "Explaining away contradictions too readily"
+    sources:
+      - "Otero, J., & Kintsch, W. (1992). Failures to detect contradictions in a text: What readers believe versus what they read. Psychological Science."
+      - "Johnson-Laird, P. N. (1983). Mental Models."
+    related: [anomaly-driven-inquiry, comprehension-monitoring, proof-by-contradiction]
+
+  - id: confidence-calibration
+    name: "Confidence calibration"
+    family: metacognitive-monitoring
+    typical_tier: 3
+    description: "Keeping one's stated confidence in line with how often one is actually right, and checking it against track record."
+    procedure:
+      - "State confidence explicitly"
+      - "Track outcomes of past judgments"
+      - "Compare stated confidence with hit rate"
+      - "Adjust future confidence accordingly"
+    signals:
+      - "how sure am I really"
+      - "I've been wrong about this before"
+      - "I'm probably overconfident here"
+      - "confident, but I've been surprised"
+      - "on my track record"
+    failure_modes:
+      - "Overprecision: confidence intervals far too narrow"
+    sources:
+      - "Lichtenstein, S., Fischhoff, B., & Phillips, L. D. (1982). Calibration of probabilities: The state of the art to 1980. In Judgment under Uncertainty: Heuristics and Biases."
+      - "Moore, D. A., & Healy, P. J. (2008). The trouble with overconfidence. Psychological Review."
+    related: [uncertainty-communication, knowledge-boundary-awareness, post-task-reflection]
+
+  - id: uncertainty-tracking
+    name: "Uncertainty tracking (known vs unknown)"
+    family: metacognitive-monitoring
+    typical_tier: 3
+    description: "Keeping an explicit account of what is established, what is assumed and what is unknown, and how that is changing as work proceeds."
+    procedure:
+      - "Separate facts, assumptions and unknowns"
+      - "Note the source and confidence of each"
+      - "Update the account as information arrives"
+      - "Identify unknowns that matter most"
+    signals:
+      - "what we know versus what we're assuming"
+      - "still an open question"
+      - "we don't know yet whether"
+      - "confirmed so far"
+      - "the big unknown is"
+    failure_modes:
+      - "Assumptions silently promoted to facts over time"
+    sources:
+      - "Smithson, M. (1989). Ignorance and Uncertainty: Emerging Paradigms."
+      - "Lipshitz, R., & Strauss, O. (1997). Coping with uncertainty: A naturalistic decision-making analysis. Organizational Behavior and Human Decision Processes."
+    related: [assumption-surfacing, value-of-information, uncertainty-communication]
+
+  - id: knowledge-boundary-awareness
+    name: "Knowledge-boundary awareness"
+    family: metacognitive-monitoring
+    typical_tier: 3
+    description: "Recognizing the edges of one's own competence and noticing when a question falls outside it."
+    procedure:
+      - "Ask whether the question is within your expertise"
+      - "Identify the parts outside it"
+      - "Flag them and limit claims accordingly"
+    signals:
+      - "that's outside my lane"
+      - "not my area of expertise"
+      - "I can speak to X but not Y"
+      - "I'd be guessing on that"
+      - "beyond what I can say confidently"
+    failure_modes:
+      - "Under-recognizing incompetence in unfamiliar domains"
+    sources:
+      - "Kruger, J., & Dunning, D. (1999). Unskilled and unaware of it. Journal of Personality and Social Psychology."
+      - "Dunlosky, J., & Metcalfe, J. (2009). Metacognition."
+    related: [help-seeking, confidence-calibration, feeling-of-knowing]
+
+  - id: source-monitoring
+    name: "Source monitoring"
+    family: metacognitive-monitoring
+    typical_tier: 3
+    description: "Keeping track of where a piece of information came from (seen, told, inferred, imagined) and how reliable that source is."
+    procedure:
+      - "Ask where you learned this"
+      - "Distinguish observed, reported and inferred"
+      - "Assess the reliability of the source"
+      - "Weight the claim accordingly"
+    signals:
+      - "where did that come from"
+      - "is that confirmed or secondhand"
+      - "I think I heard that, not sure where"
+      - "that's my inference, not a fact"
+      - "who told us that"
+    failure_modes:
+      - "Treating repeated hearsay as confirmed fact"
+    sources:
+      - "Johnson, M. K., Hashtroudi, S., & Lindsay, D. S. (1993). Source monitoring. Psychological Bulletin."
+    related: [triangulation, expert-opinion-evaluation, uncertainty-tracking]
+
+  - id: assumption-surfacing
+    name: "Assumption surfacing"
+    family: metacognitive-monitoring
+    typical_tier: 3
+    description: "Making explicit the unstated assumptions a plan or conclusion depends on, and checking which are critical and vulnerable."
+    procedure:
+      - "List what must be true for the plan to work"
+      - "Mark which are unstated or untested"
+      - "Rate each by importance and certainty"
+      - "Test or hedge the critical uncertain ones"
+    signals:
+      - "we're assuming that"
+      - "this only works if"
+      - "an unstated premise here"
+      - "what are we taking for granted"
+      - "that assumption is doing a lot of work"
+    failure_modes:
+      - "Listing trivial assumptions while missing the load-bearing ones"
+    sources:
+      - "Mason, R. O., & Mitroff, I. I. (1981). Challenging Strategic Planning Assumptions."
+      - "Dewar, J. A. (2002). Assumption-Based Planning."
+    related: [uncertainty-tracking, sensitivity-analysis, socratic-questioning]
+
+  - id: situation-awareness-monitoring
+    name: "Situation awareness monitoring"
+    family: metacognitive-monitoring
+    typical_tier: 3
+    description: "Continuously perceiving the relevant elements of an evolving situation, understanding what they mean together, and projecting where things are heading."
+    procedure:
+      - "Scan for the relevant cues"
+      - "Integrate them into an overall picture"
+      - "Project the near-term trajectory"
+      - "Notice when the picture no longer fits"
+    signals:
+      - "where things stand right now"
+      - "the situation has shifted"
+      - "reading the room"
+      - "this is heading toward"
+      - "keeping an eye on"
+    failure_modes:
+      - "Holding onto a stale picture after the situation changed"
+    sources:
+      - "Endsley, M. R. (1995). Toward a theory of situation awareness in dynamic systems. Human Factors."
+    related: [progress-monitoring, anomaly-driven-inquiry, uncertainty-tracking]
+
+  - id: intuition-as-signal
+    name: "Treating intuition as a signal"
+    family: metacognitive-monitoring
+    typical_tier: 3
+    description: "Noticing a gut sense that something is wrong or right and treating it as information worth investigating, with trust proportioned to one's experience in that environment."
+    procedure:
+      - "Notice the feeling of unease or rightness"
+      - "Ask whether this is a domain with valid, practised cues"
+      - "Try to articulate what triggered it"
+      - "Investigate before acting on it"
+    signals:
+      - "something feels off"
+      - "my gut says"
+      - "I can't put my finger on it"
+      - "this doesn't sit right"
+      - "I have a bad feeling about"
+    failure_modes:
+      - "Trusting intuition in domains without feedback or regular cues"
+    sources:
+      - "Kahneman, D., & Klein, G. (2009). Conditions for intuitive expertise: A failure to disagree. American Psychologist."
+      - "Klein, G. (1998). Sources of Power."
+    related: [anomaly-driven-inquiry, intuition-override-check, recognition-primed-decision]
+
+  - id: intuition-override-check
+    name: "Reflective override of the first answer"
+    family: metacognitive-monitoring
+    typical_tier: 3
+    description: "Pausing to check a quick, intuitive answer with deliberate reasoning before accepting it, especially when the question may be a trap or the stakes are high."
+    procedure:
+      - "Notice that an answer came immediately"
+      - "Ask whether it could be a surface-level trap"
+      - "Work it through deliberately"
+      - "Keep or override the first answer"
+    signals:
+      - "my first instinct was, but"
+      - "on reflection"
+      - "too easy, let me think again"
+      - "the obvious answer isn't right"
+      - "slow down on this one"
+    failure_modes:
+      - "Overthinking simple questions and talking oneself out of correct intuitions"
+    sources:
+      - "Frederick, S. (2005). Cognitive reflection and decision making. Journal of Economic Perspectives."
+      - "Stanovich, K. E. (2009). What Intelligence Tests Miss."
+      - "Kahneman, D. (2011). Thinking, Fast and Slow."
+    related: [intuition-as-signal, error-detection, consider-the-opposite]
+
+  # ----------------------------------------------------- metacognitive-control
+  - id: strategy-selection
+    name: "Strategy selection"
+    family: metacognitive-control
+    typical_tier: 3
+    description: "Choosing which reasoning approach or method fits a given problem, based on its features, stakes and available resources."
+    procedure:
+      - "Characterize the problem type and stakes"
+      - "Recall approaches that fit this type"
+      - "Choose the one with the best accuracy-effort balance"
+    signals:
+      - "the right approach here is"
+      - "this calls for a different method"
+      - "this isn't a numbers problem"
+      - "best way to tackle this"
+      - "treat it as a judgment call"
+    failure_modes:
+      - "Defaulting to a habitual method regardless of fit"
+    sources:
+      - "Siegler, R. S. (1996). Emerging Minds: The Process of Change in Children's Thinking."
+      - "Payne, J. W., Bettman, J. R., & Johnson, E. J. (1993). The Adaptive Decision Maker."
+    related: [strategy-switching, effort-allocation, triage-prioritization]
+
+  - id: strategy-switching
+    name: "Strategy switching at impasse"
+    family: metacognitive-control
+    typical_tier: 3
+    description: "Recognizing that the current approach is not working and deliberately abandoning it for a different one."
+    procedure:
+      - "Monitor progress against expectations"
+      - "Recognize a stall or diminishing progress"
+      - "Diagnose why the approach is failing"
+      - "Switch to a different approach"
+    signals:
+      - "this isn't working, let's try"
+      - "change of tack"
+      - "we're going in circles"
+      - "time to come at it differently"
+      - "plan B"
+    failure_modes:
+      - "Switching too early before an approach has had a fair trial"
+    sources:
+      - "Siegler, R. S. (1996). Emerging Minds: The Process of Change in Children's Thinking."
+      - "Newell, A., & Simon, H. A. (1972). Human Problem Solving."
+    related: [strategy-selection, insight-restructuring, progress-monitoring]
+
+  - id: effort-allocation
+    name: "Effort and depth allocation"
+    family: metacognitive-control
+    typical_tier: 3
+    description: "Matching the depth of analysis and time spent to the stakes, novelty and difficulty of the matter."
+    procedure:
+      - "Assess stakes and reversibility"
+      - "Assess novelty and difficulty"
+      - "Choose a depth of analysis"
+      - "Budget time accordingly"
+    signals:
+      - "this deserves a closer look"
+      - "not worth a deep dive"
+      - "quick answer is fine here"
+      - "too important to rush"
+      - "a five-minute question"
+    failure_modes:
+      - "Uniform depth across matters of very different stakes"
+    sources:
+      - "Payne, J. W., Bettman, J. R., & Johnson, E. J. (1993). The Adaptive Decision Maker."
+      - "Shah, A. K., & Oppenheimer, D. M. (2008). Heuristics made easy: An effort-reduction framework. Psychological Bulletin."
+    related: [strategy-selection, stopping-rule, reversibility-assessment]
+
+  - id: triage-prioritization
+    name: "Triage and prioritization"
+    family: metacognitive-control
+    typical_tier: 3
+    description: "Ordering multiple competing tasks or issues by importance and urgency, and deciding which to handle now, later or not at all."
+    procedure:
+      - "List the competing items"
+      - "Rate each on importance and urgency"
+      - "Handle critical items first"
+      - "Defer, delegate or drop the rest explicitly"
+    signals:
+      - "first things first"
+      - "this can wait"
+      - "the urgent one is"
+      - "not a priority right now"
+      - "focus on the big issues"
+    failure_modes:
+      - "Urgent but unimportant items crowding out important ones"
+    sources:
+      - "Covey, S. R. (1989). The 7 Habits of Highly Effective People."
+    related: [effort-allocation, opportunity-cost, fast-frugal-heuristics]
+
+  - id: stopping-rule
+    name: "Stopping rules (diminishing returns)"
+    family: metacognitive-control
+    typical_tier: 3
+    description: "Deciding when enough information has been gathered or enough analysis done, because further effort is unlikely to change the outcome."
+    procedure:
+      - "Set a criterion for 'enough' in advance"
+      - "Monitor whether new effort is changing the answer"
+      - "Stop when returns diminish or the criterion is met"
+    signals:
+      - "we've done enough on this"
+      - "more analysis won't change the answer"
+      - "diminishing returns at this point"
+      - "time to make a call"
+      - "good enough to act on"
+    failure_modes:
+      - "Stopping too early on high-stakes or novel matters"
+    sources:
+      - "Gigerenzer, G., Todd, P. M., & the ABC Research Group (1999). Simple Heuristics That Make Us Smart."
+      - "Simon, H. A. (1956). Rational choice and the structure of the environment. Psychological Review."
+    related: [satisficing, value-of-information, marginal-thinking]
+
+  - id: help-seeking
+    name: "Help-seeking"
+    family: metacognitive-control
+    typical_tier: 3
+    description: "Recognizing when a problem exceeds one's own knowledge or authority and deciding whom to consult or escalate to, and when."
+    procedure:
+      - "Recognize the gap in knowledge or authority"
+      - "Identify who can fill it"
+      - "Frame a specific question"
+      - "Consult at the right time"
+    signals:
+      - "I'll check with someone who knows"
+      - "let me run this by"
+      - "need a second opinion"
+      - "should escalate this"
+      - "worth getting an expert on"
+    failure_modes:
+      - "Waiting too long to ask because of pride or cost concerns"
+    sources:
+      - "Nelson-Le Gall, S. (1981). Help-seeking: An understudied problem-solving skill in children. Developmental Review."
+    related: [knowledge-boundary-awareness, expert-opinion-evaluation, feeling-of-knowing]
+
+  - id: belief-revision
+    name: "Belief revision"
+    family: metacognitive-control
+    typical_tier: 3
+    description: "Changing one's view when evidence warrants, making the minimum necessary change to restore consistency, and acknowledging the change."
+    procedure:
+      - "Identify the belief challenged by new evidence"
+      - "Assess the strength of the evidence"
+      - "Revise the belief and the beliefs depending on it"
+      - "State the revised position openly"
+    signals:
+      - "I've changed my mind"
+      - "in light of this, I was wrong"
+      - "that changes my view"
+      - "I'd revise what I said"
+      - "new facts, new answer"
+    failure_modes:
+      - "Belief perseverance after the evidence is discredited"
+    sources:
+      - "Harman, G. (1986). Change in View: Principles of Reasoning."
+      - "Gärdenfors, P. (1988). Knowledge in Flux."
+    related: [bayesian-updating, sunk-cost-avoidance, consider-the-opposite]
+
+  - id: consider-the-opposite
+    name: "Considering the opposite"
+    family: metacognitive-control
+    typical_tier: 3
+    description: "Deliberately generating reasons why one's initial judgment might be wrong, as a strategy to counter confirmation bias and anchoring."
+    procedure:
+      - "State the initial judgment"
+      - "Ask how the opposite could be true"
+      - "Generate specific reasons for the opposite"
+      - "Revise the judgment if those reasons are strong"
+    signals:
+      - "let me argue the other side"
+      - "what if I'm wrong about this"
+      - "playing devil's advocate"
+      - "the case against my own view"
+      - "is there a reason it's not"
+    failure_modes:
+      - "Token consideration that never changes the conclusion"
+    sources:
+      - "Lord, C. G., Lepper, M. R., & Preston, E. (1984). Considering the opposite: A corrective strategy for social judgment. Journal of Personality and Social Psychology."
+      - "Mussweiler, T., Strack, F., & Pfeiffer, T. (2000). Overcoming the inevitable anchoring effect: Considering the opposite compensates for selective accessibility. Personality and Social Psychology Bulletin."
+    related: [falsification-test, devils-advocacy, intuition-override-check]
+
+  - id: devils-advocacy
+    name: "Structured dissent (devil's advocacy)"
+    family: metacognitive-control
+    typical_tier: 3
+    description: "Deliberately assigning someone, or a dedicated session, to critique a plan or recommendation, to counter group conformity and overconfidence."
+    procedure:
+      - "Draft the recommendation"
+      - "Assign a critic or red team"
+      - "Have them attack its assumptions and evidence"
+      - "Revise or confirm with the critique in hand"
+    signals:
+      - "poke holes in this"
+      - "red-team the proposal"
+      - "who's going to challenge this"
+      - "pressure-test it before it goes out"
+      - "I want someone to push back"
+    failure_modes:
+      - "Ritual dissent that everyone discounts"
+    sources:
+      - "Schweiger, D. M., Sandberg, W. R., & Ragan, J. W. (1986). Group approaches for improving strategic decision making. Academy of Management Journal."
+      - "Janis, I. L. (1972). Victims of Groupthink."
+    related: [consider-the-opposite, premortem, steelmanning]
+
+  - id: outside-view
+    name: "Taking the outside view"
+    family: metacognitive-control
+    typical_tier: 3
+    description: "Deliberately stepping back from the details of the current case to ask how cases like it usually turn out, before trusting case-specific judgment."
+    procedure:
+      - "Notice you are reasoning only from the specifics"
+      - "Ask how this type of case usually goes"
+      - "Compare the inside estimate with that"
+      - "Adjust toward the outside view"
+    signals:
+      - "step back for a second"
+      - "how do these usually go"
+      - "every case feels special from inside"
+      - "zoom out"
+      - "we always think ours is different"
+    failure_modes:
+      - "Discarding genuinely relevant case specifics"
+    sources:
+      - "Kahneman, D., & Lovallo, D. (1993). Timid choices and bold forecasts: A cognitive perspective on risk taking. Management Science."
+      - "Kahneman, D. (2011). Thinking, Fast and Slow."
+    related: [reference-class-forecasting, base-rate-use, planning-fallacy-correction]
+
+  - id: planning-fallacy-correction
+    name: "Correcting for the planning fallacy"
+    family: metacognitive-control
+    typical_tier: 3
+    description: "Recognizing that one's own estimates of time, cost and effort tend to be optimistic, and padding or recalibrating them from past experience."
+    procedure:
+      - "Make the initial estimate"
+      - "Recall how similar past estimates turned out"
+      - "Adjust for typical overrun"
+      - "Build in buffers for unknowns"
+    signals:
+      - "it always takes longer than we think"
+      - "add a buffer"
+      - "pad the timeline"
+      - "last time we said two weeks"
+      - "be realistic about the schedule"
+    failure_modes:
+      - "Padding that becomes a new anchor and is consumed anyway"
+    sources:
+      - "Buehler, R., Griffin, D., & Ross, M. (1994). Exploring the 'planning fallacy': Why people underestimate their task completion times. Journal of Personality and Social Psychology."
+      - "Lovallo, D., & Kahneman, D. (2003). Delusions of success. Harvard Business Review."
+    related: [outside-view, reference-class-forecasting, conjunctive-probability-check]
+
+  - id: task-planning
+    name: "Planning and goal decomposition"
+    family: metacognitive-control
+    typical_tier: 3
+    description: "Before starting, laying out the goal, the sequence of steps, dependencies, resources and checkpoints for a piece of work."
+    procedure:
+      - "Clarify the goal and deliverable"
+      - "Break it into ordered steps"
+      - "Identify dependencies and resources"
+      - "Set checkpoints"
+    signals:
+      - "here's the plan of attack"
+      - "next steps are"
+      - "who does what by when"
+      - "sequence the workstreams"
+      - "map it out before we start"
+    failure_modes:
+      - "Over-planning in fast-changing situations"
+    sources:
+      - "Hayes-Roth, B., & Hayes-Roth, F. (1979). A cognitive model of planning. Cognitive Science."
+      - "Schraw, G., & Dennison, R. S. (1994). Assessing metacognitive awareness. Contemporary Educational Psychology."
+    related: [problem-decomposition, working-backwards, progress-monitoring]
+
+  - id: progress-monitoring
+    name: "Progress monitoring"
+    family: metacognitive-control
+    typical_tier: 3
+    description: "Checking, during the work, whether progress toward the goal is on track and adjusting the plan when it is not."
+    procedure:
+      - "Compare current state to plan and goal"
+      - "Detect slippage or drift"
+      - "Diagnose the cause"
+      - "Adjust plan, resources or goal"
+    signals:
+      - "where are we on this"
+      - "are we still on track"
+      - "we've drifted from the original goal"
+      - "behind where we should be"
+      - "quick status check"
+    failure_modes:
+      - "Monitoring activity rather than progress toward the goal"
+    sources:
+      - "Carver, C. S., & Scheier, M. F. (1998). On the Self-Regulation of Behavior."
+      - "Zimmerman, B. J. (2002). Becoming a self-regulated learner: An overview. Theory Into Practice."
+    related: [task-planning, strategy-switching, situation-awareness-monitoring]
+
+  - id: post-task-reflection
+    name: "Post-task reflection (lessons learned)"
+    family: metacognitive-control
+    typical_tier: 3
+    description: "Reviewing a completed piece of work to identify what went well, what did not, why, and what to do differently next time, guarding against hindsight bias."
+    procedure:
+      - "Compare what was intended with what happened"
+      - "Identify causes of the differences"
+      - "Separate decision quality from outcome luck"
+      - "Record the lesson for next time"
+    signals:
+      - "lessons learned"
+      - "next time I'd"
+      - "in hindsight"
+      - "what would I do differently"
+      - "good decision, bad outcome"
+    failure_modes:
+      - "Hindsight bias: judging decisions by outcomes alone"
+    sources:
+      - "Schön, D. A. (1983). The Reflective Practitioner."
+      - "Ellis, S., & Davidi, I. (2005). After-event reviews: Drawing lessons from successful and failed experience. Journal of Applied Psychology."
+      - "Fischhoff, B. (1975). Hindsight is not equal to foresight: The effect of outcome knowledge on judgment under uncertainty. Journal of Experimental Psychology: Human Perception and Performance."
+    related: [transfer-of-learning, confidence-calibration, root-cause-analysis]
+
+  - id: double-loop-learning
+    name: "Double-loop learning (questioning the governing assumptions)"
+    family: metacognitive-control
+    typical_tier: 3
+    description: "When results disappoint, questioning not just the actions taken but the goals, norms and assumptions that led to choosing them."
+    procedure:
+      - "Notice repeated failure of corrective actions"
+      - "Identify the governing goals and assumptions"
+      - "Question whether they still hold"
+      - "Revise them, not just the tactics"
+    signals:
+      - "we're solving the wrong problem"
+      - "maybe the goal itself is wrong"
+      - "rethink how we approach these"
+      - "the way we've always done it"
+      - "question the whole premise"
+    failure_modes:
+      - "Constant re-examination that prevents execution"
+    sources:
+      - "Argyris, C., & Schön, D. A. (1978). Organizational Learning: A Theory of Action Perspective."
+    related: [post-task-reflection, assumption-surfacing, problem-definition]
+
+  - id: transfer-of-learning
+    name: "Deliberate transfer"
+    family: metacognitive-control
+    typical_tier: 3
+    description: "Actively asking where else a lesson, solution or principle applies, and carrying it into new situations that look different on the surface."
+    procedure:
+      - "State the lesson in general terms"
+      - "Ask what other situations share its structure"
+      - "Apply and adapt it there"
+    signals:
+      - "this applies more broadly"
+      - "same lesson as"
+      - "we should do this elsewhere too"
+      - "where else could we use this"
+      - "a template for future ones"
+    failure_modes:
+      - "Transferring a lesson into a context where its conditions do not hold"
+    sources:
+      - "Perkins, D. N., & Salomon, G. (1988). Teaching for transfer. Educational Leadership."
+      - "Gick, M. L., & Holyoak, K. J. (1980). Analogical problem solving. Cognitive Psychology."
+    related: [schema-abstraction, post-task-reflection, structure-mapping-analogy]
+
+  - id: deliberation-trigger
+    name: "Deciding whether to deliberate at all"
+    family: metacognitive-control
+    typical_tier: 3
+    description: "Judging, before any analysis begins, whether a situation calls for deliberate reasoning or can be handled by the first answer that comes to mind - usually from how right that first answer feels and how much rides on it."
+    procedure:
+      - "Notice the first answer and how confident it feels"
+      - "Ask what it would cost if that answer were wrong"
+      - "Look for cues that this case differs from the familiar ones"
+      - "Engage deliberate reasoning only where feeling and stakes call for it"
+    signals:
+      - "is this worth thinking about"
+      - "something about this feels off"
+      - "normally I'd just say yes"
+      - "this one needs a proper look"
+      - "no need to overthink it"
+    failure_modes:
+      - "Accepting a fluent first answer in an unfamiliar case"
+      - "Deliberating at length over trivial, reversible matters"
+    sources:
+      - "Thompson, V. A., Prowse Turner, J. A., & Pennycook, G. (2011). Intuition, reason, and metacognition. Cognitive Psychology."
+      - "Ackerman, R., & Thompson, V. A. (2017). Meta-reasoning: Monitoring and control of thinking and reasoning. Trends in Cognitive Sciences."
+    related: [intuition-override-check, intuition-as-signal, effort-allocation, stopping-rule]
+
+  - id: affect-regulation
+    name: "Regulating one's own emotional response"
+    family: metacognitive-control
+    typical_tier: 2
+    description: "Noticing how one feels about a situation, asking whether that feeling is tracking something real, and adjusting it - by reappraisal, distance or delay - so that it informs the judgement rather than steering it."
+    procedure:
+      - "Name the feeling the situation is producing"
+      - "Ask what the feeling is responding to"
+      - "Separate the signal it carries from its pressure"
+      - "Reappraise, take distance or delay before committing"
+    signals:
+      - "I'm annoyed, so let me wait"
+      - "let me sleep on it"
+      - "I don't want to react to that"
+      - "my gut is reacting to the tone"
+      - "set the frustration aside"
+    failure_modes:
+      - "Deciding while angry or anxious and calling it judgement"
+      - "Suppressing a feeling that was carrying real information"
+    sources:
+      - "Gross, J. J. (1998). The emerging field of emotion regulation: An integrative review. Review of General Psychology."
+      - "Lerner, J. S., Li, Y., Valdesolo, P., & Kassam, K. S. (2015). Emotion and decision making. Annual Review of Psychology."
+    related: [intuition-as-signal, perspective-taking, deliberation-trigger]
+
+  - id: attentional-reallocation
+    name: "Reallocating attention"
+    family: metacognitive-control
+    typical_tier: 3
+    description: "Noticing what one's attention is fixed on, asking whether that is where it should be, and deliberately shifting it to what matters more now."
+    procedure:
+      - "Notice what currently holds your attention"
+      - "Ask whether it is the most important thing now"
+      - "Name what is being neglected"
+      - "Shift focus deliberately and check again later"
+    signals:
+      - "we're focusing on the wrong thing"
+      - "step back from the details"
+      - "what are we not looking at"
+      - "park that, the real issue is"
+      - "that's a distraction right now"
+    failure_modes:
+      - "Staying locked on the vivid detail while the larger risk grows"
+      - "Shifting so often that nothing gets finished"
+    sources:
+      - "Kahneman, D. (1973). Attention and Effort."
+      - "Posner, M. I., & Petersen, S. E. (1990). The attention system of the human brain. Annual Review of Neuroscience."
+    related: [triage-prioritization, situation-awareness-monitoring, effort-allocation]

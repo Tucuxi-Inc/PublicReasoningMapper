@@ -1,0 +1,9 @@
+{
+"aligns_with": [
+    {
+        "id": "interventionist-reasoning",
+        "step": "Apply the cheapest mitigation that stops the harm."
+    }
+],
+"beyond_general": "The habit prioritizes the temporal separation of mitigation and diagnosis to manage immediate risk, a domain-specific heuristic for high-stakes environments."
+}

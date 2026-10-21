@@ -1,0 +1,13 @@
+{
+ "aligns_with": [
+  {
+   "id": "reversibility-assessment",
+   "step": "For each candidate action, ask how quickly and completely it can be undone."
+  },
+  {
+   "id": "staged-commitment",
+   "step": "Take the reversible action first and watch what it tells you."
+  }
+ ],
+ "beyond_general": "The habit adds specific operational safety protocols, such as pre-emptive evidence capture and rehearsing rollbacks, to ensure that the 'undo' mechanism is technically viable before it is needed."
+}

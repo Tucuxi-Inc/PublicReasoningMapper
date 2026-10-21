@@ -1,0 +1,24 @@
+{
+ "description": "When someone wants to take a risk to meet a goal, do not simply refuse: state what the risk would cost and who would pay it, then offer ways to reach the goal at lower cost.",
+ "when_to_apply": [
+  "pressure to skip a safeguard to hold a date",
+  "a request that would spend other people's trust",
+  "a fixed external commitment conflicts with a safe plan"
+ ],
+ "steps": [
+  "Acknowledge the goal and say you want to help meet it.",
+  "Put a concrete price on the risky plan: what goes wrong, who pays, when.",
+  "Offer smaller versions that keep the goal - less traffic, narrower scope, a different day.",
+  "State plainly which option you would not take, and why."
+ ],
+ "quality_indicators": [
+  "the other side chose among options rather than being refused",
+  "the original goal was still met",
+  "the reasoning was clear enough to be passed on"
+ ],
+ "failure_modes": [
+  "saying no without a price, which turns a trade-off into a turf fight",
+  "offering alternatives that do not actually meet the goal"
+ ],
+ "example": "Asked to ship on a Friday without rehearsing the rollback, the incident commander explains that an unrehearsed rollback lands on the weekend on-call and on the customers, then offers shipping Friday at 5% of traffic or at 100% the following Tuesday."
+}

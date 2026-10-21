@@ -1,0 +1,359 @@
+# Pattern map. Edit freely: `rmap draft` and `rmap link` only fill empty fields.
+# expert_label is how skills refer to the person; keep it a role, not a name.
+expert_label: the incident commander
+patterns:
+- id: incident-commander-ask-what-changed
+  tier: 1
+  name: Ask what changed
+  description: Begin diagnosis by asking what changed shortly before the problem appeared, and suspect
+    that change first.
+  when_to_apply:
+  - a sudden regression or new failure
+  - a resource starts behaving differently
+  - a small problem keeps recurring
+  steps:
+  - List deploys, configuration pushes, jobs and vendor changes in the window before the problem started.
+  - Suspect the most recent relevant change first.
+  - For recurring events, compare what changed before each occurrence.
+  - Look at what is causing the symptom, not at the symptom itself.
+  quality_indicators:
+  - the change log was checked before diagnostic tools were opened
+  - a recurring problem was tested for a common preceding change
+  failure_modes:
+  - starting with deep diagnosis of the symptom while the recent change goes unexamined
+  - assuming a reviewed change cannot be the cause
+  example: Checkout latency jumps minutes after a rate-limiter configuration deploy; the incident commander
+    asks what changed this morning before anyone opens a profiler.
+  notes: Comparing what changed before each recurrence is the same habit applied across events.
+  orchestrated_by:
+  - incident-commander-size-the-response-to-harm-and-reversibility
+  - incident-commander-stabilise-first-diagnose-second
+  co_occurs_with:
+  - incident-commander-size-the-response-to-harm-and-reversibility
+  - incident-commander-stabilise-first-diagnose-second
+  - incident-commander-promise-the-next-update-not-the-fix
+  aligns_with:
+  - method-of-difference
+  beyond_general: The habit incorporates specific domain-specific heuristics, such as prioritizing 'recent'
+    changes and distinguishing between 'symptoms' and 'causes' to narrow the search space in high-pressure
+    environments.
+  clusters:
+  - m01
+  support:
+    episodes: 4
+    sources:
+      document: 1
+      adjustment: 2
+      think_aloud: 1
+  link_basis:
+    incident-commander-size-the-response-to-harm-and-reversibility:
+      shared_episodes: 3
+      lift: 1.75
+    incident-commander-stabilise-first-diagnose-second:
+      shared_episodes: 2
+      lift: 1.75
+    incident-commander-promise-the-next-update-not-the-fix:
+      shared_episodes: 2
+      lift: 1.17
+- id: incident-commander-find-who-carries-the-cost
+  tier: 1
+  name: Find who carries the cost
+  description: For each option, identify who would bear the cost if it goes wrong and when that cost would
+    land, looking past the person making the request.
+  when_to_apply:
+  - choosing between mitigating now and investigating longer
+  - a risky launch date is proposed
+  - someone asks for an exception to a rule that protects others
+  steps:
+  - Name everyone who absorbs the downside of each option, including people not in the conversation.
+  - Note when the cost lands - now, overnight, over a weekend.
+  - Weigh costs to people who did not accept the risk more heavily than costs to the person asking.
+  quality_indicators:
+  - the cost to absent parties was stated explicitly
+  - the timing of the cost was part of the decision
+  failure_modes:
+  - weighing only the requester's needs
+  - treating an investigation as free when customers are paying for it
+  example: Asked to skip a maintenance notice for one partner, the incident commander first asks which
+    other customers would carry the cost if the upgrade went badly.
+  orchestrated_by:
+  - incident-commander-size-the-response-to-harm-and-reversibility
+  co_occurs_with:
+  - incident-commander-prefer-the-move-you-can-undo
+  - incident-commander-price-the-risk-offer-a-cheaper-path
+  aligns_with:
+  - asymmetric-error-costs
+  beyond_general: The habit adds a specific focus on the temporal dimension of risk (when the cost lands)
+    and the distinction between the requester and the ultimate stakeholder.
+  clusters:
+  - m02
+  support:
+    episodes: 3
+    sources:
+      think_aloud: 1
+      adjustment: 2
+  link_basis:
+    incident-commander-prefer-the-move-you-can-undo:
+      shared_episodes: 3
+      lift: 1.75
+    incident-commander-price-the-risk-offer-a-cheaper-path:
+      shared_episodes: 2
+      lift: 1.56
+- id: incident-commander-prefer-the-move-you-can-undo
+  tier: 1
+  name: Prefer the move you can undo
+  description: When choosing between actions under pressure, prefer the one that can be undone quickly,
+    and do what is needed beforehand (capturing evidence, rehearsing the rollback) so that undoing stays
+    cheap.
+  when_to_apply:
+  - a mitigation is available and the cause is not yet known
+  - a tempting action cannot be reversed, such as deleting data
+  - a launch relies on a rollback nobody has run
+  steps:
+  - For each candidate action, ask how quickly and completely it can be undone.
+  - Capture the evidence you will need later before acting.
+  - Take the reversible action first and watch what it tells you.
+  - Treat an untested rollback as the riskiest part of a plan and rehearse it.
+  quality_indicators:
+  - the first action taken could have been reversed within minutes
+  - evidence survived the mitigation
+  - the rollback had been exercised before it was needed
+  failure_modes:
+  - making an irreversible change when tired or rushed
+  - rolling back without capturing the state needed for diagnosis
+  example: Paged at night for a disk filling up, the incident commander lowers a log level or pauses a
+    batch job - both undoable - and refuses to delete files on the primary to buy space.
+  notes: Capturing evidence first and rehearsing the rollback are what keep the undo cheap.
+  orchestrated_by:
+  - incident-commander-size-the-response-to-harm-and-reversibility
+  - incident-commander-stabilise-first-diagnose-second
+  co_occurs_with:
+  - incident-commander-find-who-carries-the-cost
+  - incident-commander-price-the-risk-offer-a-cheaper-path
+  aligns_with:
+  - reversibility-assessment
+  - staged-commitment
+  beyond_general: The habit adds specific operational safety protocols, such as pre-emptive evidence capture
+    and rehearsing rollbacks, to ensure that the 'undo' mechanism is technically viable before it is needed.
+  clusters:
+  - m03
+  - m10
+  - m13
+  support:
+    episodes: 4
+    sources:
+      think_aloud: 2
+      adjustment: 3
+  link_basis:
+    incident-commander-find-who-carries-the-cost:
+      shared_episodes: 3
+      lift: 1.75
+    incident-commander-price-the-risk-offer-a-cheaper-path:
+      shared_episodes: 2
+      lift: 1.17
+- id: incident-commander-promise-the-next-update-not-the-fix
+  tier: 2
+  name: Promise the next update, not the fix
+  description: During an incident, commit to when people will next hear from you rather than when the
+    problem will be fixed, and never adopt another party's estimate as your own commitment.
+  when_to_apply:
+  - people affected by an incident are asking when it will be fixed
+  - a vendor or another team has given a fix estimate
+  - someone proposes telling customers a resolution time
+  steps:
+  - Tell affected people what is affected, what you are doing, and the time of the next update.
+  - Keep that update time even if the update is 'no change'.
+  - If you pass on someone else's estimate, label it as theirs and say you are not relying on it.
+  - Describe any workaround you control alongside the estimate you do not.
+  quality_indicators:
+  - every promised update time was met
+  - no resolution time was given that the team did not control
+  - later updates were believed rather than discounted
+  failure_modes:
+  - relaying a vendor ETA as your own and missing it, which discounts every later update
+  - giving no time at all, which reads as not knowing what you are doing
+  example: A storage provider says its fix will land within the hour. Rather than telling customers it
+    will be resolved by a specific time, the incident commander has them told that downloads are degraded,
+    a workaround is rolling out, and the next update will come at the top of the hour whether or not it
+    is fixed.
+  notes: The update time is a promise I control; the fix time is not. Never pass on someone else's estimate
+    as ours.
+  orchestrated_by:
+  - incident-commander-stabilise-first-diagnose-second
+  co_occurs_with:
+  - incident-commander-stabilise-first-diagnose-second
+  - incident-commander-ask-what-changed
+  aligns_with:
+  - trust-calibration
+  - credible-commitment
+  beyond_general: The habit incorporates specific domain knowledge regarding the psychological impact
+    of 'no change' updates on stakeholder anxiety during high-pressure incidents.
+  clusters:
+  - m04
+  - m09
+  support:
+    episodes: 3
+    sources:
+      adjustment: 4
+      document: 1
+  link_basis:
+    incident-commander-stabilise-first-diagnose-second:
+      shared_episodes: 2
+      lift: 2.33
+    incident-commander-ask-what-changed:
+      shared_episodes: 2
+      lift: 1.17
+- id: incident-commander-size-the-response-to-harm-and-reversibility
+  tier: 3
+  name: Size the response to harm and reversibility
+  description: Decide how much process, escalation and review a situation deserves from how many people
+    are being hurt and whether the harm can be undone - and look harder whenever a small problem recurs.
+  when_to_apply:
+  - deciding whether something is an incident at all
+  - deciding how many people to page
+  - deciding how large a post-incident review should be
+  - a small event has happened before
+  steps:
+  - 'Estimate the blast radius: who is hurt now, and how many.'
+  - Ask whether the harm can be undone; treat irreversible harm as large regardless of reach.
+  - Estimate how much time you have before the harm grows.
+  - 'Choose the smallest process that fits: ticket, short review, or full incident process.'
+  - 'Escalate a small, repeated event: three occurrences are a pattern.'
+  quality_indicators:
+  - the effort spent was proportionate to the harm
+  - irreversible harm always got the full process
+  - recurring small events were investigated
+  failure_modes:
+  - running the full process for everything, which costs more than the incidents
+  - dismissing each recurrence as small on its own
+  example: A three-minute authentication blip gets a half-page review instead of a full postmortem - but
+    because it is the third since spring, the half page must answer what changed before each one.
+  notes: 'Repetition overrides size: three small events are a pattern and get a proper look. Knowing how
+    much time you have is part of the sizing.'
+  source_skills:
+  - incident-commander-ask-what-changed
+  - incident-commander-prefer-the-move-you-can-undo
+  - incident-commander-find-who-carries-the-cost
+  - incident-commander-price-the-risk-offer-a-cheaper-path
+  works_with:
+  - incident-commander-stabilise-first-diagnose-second
+  co_occurs_with:
+  - incident-commander-ask-what-changed
+  aligns_with:
+  - reversibility-assessment
+  beyond_general: The habit incorporates specific domain-specific heuristics for incident management,
+    such as identifying patterns in recurring small events and calculating the 'blast radius' to determine
+    the appropriate level of organizational process.
+  clusters:
+  - m05
+  - m11
+  - m14
+  support:
+    episodes: 3
+    sources:
+      document: 1
+      adjustment: 2
+      think_aloud: 2
+  link_basis:
+    incident-commander-ask-what-changed:
+      shared_episodes: 3
+      lift: 1.75
+- id: incident-commander-price-the-risk-offer-a-cheaper-path
+  tier: 2
+  name: Price the risk, offer a cheaper path
+  description: 'When someone wants to take a risk to meet a goal, do not simply refuse: state what the
+    risk would cost and who would pay it, then offer ways to reach the goal at lower cost.'
+  when_to_apply:
+  - pressure to skip a safeguard to hold a date
+  - a request that would spend other people's trust
+  - a fixed external commitment conflicts with a safe plan
+  steps:
+  - Acknowledge the goal and say you want to help meet it.
+  - 'Put a concrete price on the risky plan: what goes wrong, who pays, when.'
+  - Offer smaller versions that keep the goal - less traffic, narrower scope, a different day.
+  - State plainly which option you would not take, and why.
+  quality_indicators:
+  - the other side chose among options rather than being refused
+  - the original goal was still met
+  - the reasoning was clear enough to be passed on
+  failure_modes:
+  - saying no without a price, which turns a trade-off into a turf fight
+  - offering alternatives that do not actually meet the goal
+  example: Asked to ship on a Friday without rehearsing the rollback, the incident commander explains
+    that an unrehearsed rollback lands on the weekend on-call and on the customers, then offers shipping
+    Friday at 5% of traffic or at 100% the following Tuesday.
+  notes: Offering the smaller version is the second half of pricing the risk, not a separate habit.
+  orchestrated_by:
+  - incident-commander-size-the-response-to-harm-and-reversibility
+  co_occurs_with:
+  - incident-commander-find-who-carries-the-cost
+  - incident-commander-prefer-the-move-you-can-undo
+  aligns_with:
+  - tail-risk-thinking
+  - specialization-simpler-case
+  beyond_general: The habit adds a specific interpersonal communication layer by reframing a 'no' as a
+    collaborative negotiation to maintain the relationship while mitigating risk.
+  clusters:
+  - m07
+  - m06
+  support:
+    episodes: 3
+    sources:
+      adjustment: 2
+      document: 1
+      think_aloud: 1
+  link_basis:
+    incident-commander-find-who-carries-the-cost:
+      shared_episodes: 2
+      lift: 1.56
+    incident-commander-prefer-the-move-you-can-undo:
+      shared_episodes: 2
+      lift: 1.17
+- id: incident-commander-stabilise-first-diagnose-second
+  tier: 3
+  name: Stabilise first, diagnose second
+  description: While people are being harmed, stop the harm before finding the cause; schedule diagnosis
+    for afterwards, using evidence captured before mitigating.
+  when_to_apply:
+  - customers are failing now and an engineer wants to investigate live
+  - a cheap mitigation exists before the cause is known
+  steps:
+  - Capture the evidence diagnosis will need.
+  - Apply the cheapest mitigation that stops the harm.
+  - Read what the mitigation's result tells you about the cause.
+  - Schedule the real analysis for when no one is being hurt.
+  quality_indicators:
+  - time to mitigation was short
+  - root cause was still found afterwards from the captured evidence
+  failure_modes:
+  - investigating live while customers absorb the cost
+  - mitigating in a way that destroys the evidence
+  example: With enterprise customers' work failing, the incident commander has a heap dump and metrics
+    captured, rolls back the morning's change, and leaves root cause for the next day's review.
+  source_skills:
+  - incident-commander-promise-the-next-update-not-the-fix
+  - incident-commander-ask-what-changed
+  - incident-commander-prefer-the-move-you-can-undo
+  works_with:
+  - incident-commander-size-the-response-to-harm-and-reversibility
+  co_occurs_with:
+  - incident-commander-promise-the-next-update-not-the-fix
+  - incident-commander-ask-what-changed
+  aligns_with:
+  - interventionist-reasoning
+  beyond_general: The habit prioritizes the temporal separation of mitigation and diagnosis to manage
+    immediate risk, a domain-specific heuristic for high-stakes environments.
+  clusters:
+  - m08
+  support:
+    episodes: 2
+    sources:
+      adjustment: 1
+      document: 1
+  link_basis:
+    incident-commander-promise-the-next-update-not-the-fix:
+      shared_episodes: 2
+      lift: 2.33
+    incident-commander-ask-what-changed:
+      shared_episodes: 2
+      lift: 1.75

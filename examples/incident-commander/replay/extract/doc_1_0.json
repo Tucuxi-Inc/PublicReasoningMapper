@@ -1,0 +1,50 @@
+{
+ "no_reasoning": false,
+ "situation": "Guidance written for new incident commanders.",
+ "decision": null,
+ "moves": [
+  {
+   "name": "ask what changed before digging",
+   "step": "Pull up the change log before opening diagnostic tools.",
+   "cue": "the start of any incident",
+   "evidence": "The first question is not \"what is broken\" but \"what changed\".",
+   "ref": "The first five minutes"
+  },
+  {
+   "name": "stabilise now, diagnose tomorrow",
+   "step": "Mitigate first; schedule diagnosis for when customers are no longer hurting.",
+   "cue": "customers hurting during an incident",
+   "evidence": "Diagnosis can happen tomorrow; the customer's failed label run cannot be un-failed.",
+   "ref": "The first five minutes"
+  },
+  {
+   "name": "match process size to harm and reversibility",
+   "step": "Choose ticket, short review or full process from blast radius and reversibility.",
+   "cue": "deciding how much incident machinery to use",
+   "evidence": "I size the response on two things: how many people are being hurt right now (blast radius), and whether what is happening can be undone",
+   "ref": "How big is this?"
+  },
+  {
+   "name": "give next update time instead of ETA",
+   "step": "Promise the time of the next update and keep it even if nothing changed.",
+   "cue": "communicating during an incident",
+   "evidence": "Give a time for the next update instead, and keep it even if the update is \"no change\".",
+   "ref": "Talking to people"
+  },
+  {
+   "name": "price the risk and offer a lower-cost path",
+   "step": "State who carries the cost of a risky date and offer a way to keep it more cheaply.",
+   "cue": "a request to ship on a risky date",
+   "evidence": "Put a price on it: who carries the cost if it goes wrong, and when.",
+   "ref": "Launches"
+  }
+ ],
+ "considerations": [
+  {
+   "what": "irreversible customer harm",
+   "evidence": "anything a customer cannot redo, gets the full process"
+  }
+ ],
+ "explained_why": true,
+ "trust_state": "explaining"
+}

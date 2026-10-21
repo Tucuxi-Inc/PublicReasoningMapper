@@ -1,0 +1,9 @@
+{
+"aligns_with": [
+    {
+        "id": "method-of-difference",
+        "step": "For recurring events, compare what changed before each occurrence."
+    }
+],
+"beyond_general": "The habit incorporates specific domain-specific heuristics, such as prioritizing 'recent' changes and distinguishing between 'symptoms' and 'causes' to narrow the search space in high-pressure environments."
+}

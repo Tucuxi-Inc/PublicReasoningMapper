@@ -1,0 +1,402 @@
+# Review sheet. For each cluster set:
+#   decision:   keep | drop | merge      (undecided clusters are ignored)
+#   merge_into: <cluster id>             (when decision is merge)
+#   name:       what YOU call this habit, in your own words
+#   tier:       1 structural   - a core way of analysing (framing, weighing, testing)
+#               2 behavioral   - how you apply it in a kind of situation or with people
+#               3 orchestration - how you decide WHICH approach a situation needs
+#   notes:      anything an apprentice should know that the evidence misses
+# Similarities compress: rank by `episodes`, do not threshold coherence into a verdict.
+kind: move
+embedder: hashing shortlist + model judge
+k: 14
+distinct_names: 29
+mentions: 29
+warning: null
+clusters:
+- id: m01
+  decision: keep
+  merge_into: null
+  name: Ask what changed
+  tier: 1
+  notes: Comparing what changed before each recurrence is the same habit applied across events.
+  episodes: 4
+  mentions: 4
+  coherence: 0.71
+  sources:
+    document: 1
+    adjustment: 2
+    think_aloud: 1
+  core:
+  - ask what changed recently
+  - ask what changed before digging
+  - check what changed before each event
+  - look at what changed, not the symptom
+  sample:
+  - look at what changed, not the symptom
+  - ask what changed recently
+  - ask what changed before digging
+  - check what changed before each event
+  evidence:
+  - move: ask what changed before digging
+    step: Pull up the change log before opening diagnostic tools.
+    cue: the start of any incident
+    quote: The first question is not "what is broken" but "what changed".
+  - move: ask what changed recently
+    step: Before investigating symptoms, list what changed in the last hour and suspect it first.
+    cue: a sudden regression shortly after a deploy
+    quote: 'before anyone opens a profiler: what changed this morning?'
+  - move: check what changed before each event
+    step: Compare the changes that preceded each occurrence to find a common cause.
+    cue: recurring incidents
+    quote: what changed before each of the three?
+  - move: look at what changed, not the symptom
+    step: Ask what started writing rather than examining the full disk.
+    cue: a growing resource at an odd hour
+    quote: I'd look at what's writing, not at the disk.
+- id: m02
+  decision: keep
+  merge_into: null
+  name: Find who carries the cost
+  tier: 1
+  notes: ''
+  episodes: 3
+  mentions: 3
+  coherence: 0.803
+  sources:
+    think_aloud: 1
+    adjustment: 2
+  core:
+  - identify who carries the cost
+  - ask who carries the cost of saying yes
+  - who carries the cost if it fails
+  sample:
+  - ask who carries the cost of saying yes
+  - who carries the cost if it fails
+  - identify who carries the cost
+  evidence:
+  - move: ask who carries the cost of saying yes
+    step: Look past the requester to everyone else who bears the risk of an exception.
+    cue: a request for an exception to a protective rule
+    quote: who else carries the cost if I say yes
+  - move: identify who carries the cost
+    step: Name who bears the cost of each option, especially of delay.
+    cue: a proposal to keep the fault live while investigating
+    quote: they are the ones carrying the cost of our investigation, not us
+  - move: who carries the cost if it fails
+    step: For a risky launch, trace who absorbs the failure and when it lands.
+    cue: a launch scheduled before a weekend
+    quote: those hours land on whoever is on call over the weekend, and the carriers ... absorb the failed
+      routes
+- id: m03
+  decision: keep
+  merge_into: null
+  name: Prefer the move you can undo
+  tier: 1
+  notes: Capturing evidence first and rehearsing the rollback are what keep the undo cheap.
+  episodes: 3
+  mentions: 3
+  coherence: 0.724
+  sources:
+    think_aloud: 2
+    adjustment: 1
+  core:
+  - choose the reversible action first
+  - avoid the irreversible move at 2am
+  - check whether the change is reversible
+  sample:
+  - avoid the irreversible move at 2am
+  - choose the reversible action first
+  - check whether the change is reversible
+  evidence:
+  - move: avoid the irreversible move at 2am
+    step: Refuse actions you cannot undo when tired and under pressure; pause rather than kill.
+    cue: temptation to delete files to buy space
+    quote: What I would not do at 2am is start deleting files on the primary
+  - move: check whether the change is reversible
+    step: Let reversibility decide how much risk an exception can carry.
+    cue: a change requested on short notice
+    quote: If we can roll the database back in minutes, the risk to everyone else is small
+  - move: choose the reversible action first
+    step: Prefer the action you can undo in minutes over the one you cannot.
+    cue: a candidate fix that is a small config rollback
+    quote: The rollback is a two-minute change we can undo, so it costs us almost nothing to try it first.
+- id: m04
+  decision: keep
+  merge_into: null
+  name: Promise the next update, not the fix
+  tier: 2
+  notes: The update time is a promise I control; the fix time is not. Never pass on someone else's estimate
+    as ours.
+  episodes: 3
+  mentions: 3
+  coherence: 0.793
+  sources:
+    adjustment: 2
+    document: 1
+  core:
+  - promise next update time, not an eta
+  - commit to next update time
+  - give next update time instead of eta
+  sample:
+  - commit to next update time
+  - give next update time instead of eta
+  - promise next update time, not an eta
+  evidence:
+  - move: commit to next update time
+    step: Tell affected customers when they will next hear from you, regardless of progress.
+    cue: customers calling support during an incident
+    quote: they will hear from us again at 09:40 whether or not it is fixed
+  - move: give next update time instead of ETA
+    step: Promise the time of the next update and keep it even if nothing changed.
+    cue: communicating during an incident
+    quote: Give a time for the next update instead, and keep it even if the update is "no change".
+  - move: promise next update time, not an ETA
+    step: Commit to when customers will next hear from you rather than when it will be fixed.
+    cue: pressure to give customers an ETA
+    quote: we will update them by 12:00 whether or not it is fixed
+- id: m05
+  decision: keep
+  merge_into: null
+  name: Size the response to harm and reversibility
+  tier: 3
+  notes: 'Repetition overrides size: three small events are a pattern and get a proper look. Knowing how
+    much time you have is part of the sizing.'
+  episodes: 3
+  mentions: 3
+  coherence: 0.733
+  sources:
+    document: 1
+    adjustment: 1
+    think_aloud: 1
+  core:
+  - size review to blast radius and reversibility
+  - match process size to harm and reversibility
+  - size the escalation to who is affected
+  sample:
+  - match process size to harm and reversibility
+  - size review to blast radius and reversibility
+  - size the escalation to who is affected
+  evidence:
+  - move: match process size to harm and reversibility
+    step: Choose ticket, short review or full process from blast radius and reversibility.
+    cue: deciding how much incident machinery to use
+    quote: 'I size the response on two things: how many people are being hurt right now (blast radius),
+      and whether what is happening can be undone'
+  - move: size review to blast radius and reversibility
+    step: Scale the review effort to how many were hurt and whether the harm could be undone.
+    cue: a small, fully recoverable incident
+    quote: not every incident gets the same size of review
+  - move: size the escalation to who is affected
+    step: Page more people only as the number affected or the threshold rises.
+    cue: no users affected yet
+    quote: So this is not a wake-everyone-up incident.
+- id: m06
+  decision: merge
+  merge_into: m07
+  name: ''
+  tier: null
+  notes: ''
+  episodes: 2
+  mentions: 2
+  coherence: 0.842
+  sources:
+    think_aloud: 1
+    adjustment: 1
+  core:
+  - offer a smaller version that keeps the date
+  - offer a smaller version of the request
+  sample:
+  - offer a smaller version of the request
+  - offer a smaller version that keeps the date
+  evidence:
+  - move: offer a smaller version of the request
+    step: Find a narrower action that gives the requester most of what they need.
+    cue: a request that would spend others' trust
+    quote: Can we hotfix just the bug for them
+  - move: offer a smaller version that keeps the date
+    step: Shrink the change (percentage, scope) so the promise is kept at lower risk.
+    cue: a fixed external commitment
+    quote: ship Friday at 5% of traffic behind the flag
+- id: m07
+  decision: keep
+  merge_into: null
+  name: Price the risk, offer a cheaper path
+  tier: 2
+  notes: Offering the smaller version is the second half of pricing the risk, not a separate habit.
+  episodes: 2
+  mentions: 2
+  coherence: 0.917
+  sources:
+    adjustment: 1
+    document: 1
+  core:
+  - price the risk and offer a cheaper path
+  - price the risk and offer a lower-cost path
+  sample:
+  - price the risk and offer a lower-cost path
+  - price the risk and offer a cheaper path
+  evidence:
+  - move: price the risk and offer a cheaper path
+    step: Instead of refusing, state the cost of the risky plan and offer lower-cost alternatives that
+      keep the goal.
+    cue: pressure to skip a safeguard to hold a date
+    quote: let me put a price on it instead of just saying no
+  - move: price the risk and offer a lower-cost path
+    step: State who carries the cost of a risky date and offer a way to keep it more cheaply.
+    cue: a request to ship on a risky date
+    quote: 'Put a price on it: who carries the cost if it goes wrong, and when.'
+- id: m08
+  decision: keep
+  merge_into: null
+  name: Stabilise first, diagnose second
+  tier: 3
+  notes: ''
+  episodes: 2
+  mentions: 2
+  coherence: 0.802
+  sources:
+    adjustment: 1
+    document: 1
+  core:
+  - stabilise now, diagnose tomorrow
+  - stabilise first, diagnose second
+  sample:
+  - stabilise now, diagnose tomorrow
+  - stabilise first, diagnose second
+  evidence:
+  - move: stabilise first, diagnose second
+    step: Stop the customer harm with a cheap mitigation before spending time on root cause.
+    cue: customers failing while engineers want to investigate
+    quote: Stabilise first, diagnose second.
+  - move: stabilise now, diagnose tomorrow
+    step: Mitigate first; schedule diagnosis for when customers are no longer hurting.
+    cue: customers hurting during an incident
+    quote: Diagnosis can happen tomorrow; the customer's failed label run cannot be un-failed.
+- id: m09
+  decision: merge
+  merge_into: m04
+  name: ''
+  tier: null
+  notes: ''
+  episodes: 1
+  mentions: 2
+  coherence: 0.761
+  sources:
+    adjustment: 2
+  core:
+  - never relay another party's eta as ours
+  - protect credibility of future updates
+  sample:
+  - protect credibility of future updates
+  - never relay another party's eta as ours
+  evidence:
+  - move: never relay another party's ETA as ours
+    step: Do not adopt an estimate you do not control as your own commitment.
+    cue: a vendor-supplied fix estimate
+    quote: if we pass it on as ours and they miss it, we're the ones who missed it
+  - move: protect credibility of future updates
+    step: Prefer commitments you can keep, because a missed one discounts every later update.
+    cue: an update that might be broken
+    quote: every update after that is discounted
+- id: m10
+  decision: merge
+  merge_into: m03
+  name: ''
+  tier: null
+  notes: ''
+  episodes: 1
+  mentions: 1
+  coherence: 1.0
+  sources:
+    adjustment: 1
+  core:
+  - capture evidence before the rollback
+  sample:
+  - capture evidence before the rollback
+  evidence:
+  - move: capture evidence before the rollback
+    step: Snapshot dumps, metrics and diffs before mitigating so diagnosis can happen later.
+    cue: fear of losing the state needed for root cause
+    quote: grab a heap dump and the limiter metrics ... that is your evidence and it will still be there
+      this afternoon
+- id: m11
+  decision: merge
+  merge_into: m05
+  name: ''
+  tier: null
+  notes: ''
+  episodes: 1
+  mentions: 1
+  coherence: 1.0
+  sources:
+    think_aloud: 1
+  core:
+  - estimate time available before acting
+  sample:
+  - estimate time available before acting
+  evidence:
+  - move: estimate time available before acting
+    step: Work out how long until the failure lands to decide how fast you must move.
+    cue: a resource filling at a steady rate
+    quote: I have roughly an hour and a half before it's full
+- id: m12
+  decision: drop
+  merge_into: null
+  name: ''
+  tier: null
+  notes: Real, but one instance is too thin to teach from.
+  episodes: 1
+  mentions: 1
+  coherence: 1.0
+  sources:
+    think_aloud: 1
+  core:
+  - explain the why so it travels
+  sample:
+  - explain the why so it travels
+  evidence:
+  - move: explain the why so it travels
+    step: Give the reason with the answer so an intermediary can carry it.
+    cue: a decision relayed through an account manager
+    quote: I'd say why, so the account manager can take that back to the partner
+- id: m13
+  decision: merge
+  merge_into: m03
+  name: ''
+  tier: null
+  notes: ''
+  episodes: 1
+  mentions: 1
+  coherence: 1.0
+  sources:
+    adjustment: 1
+  core:
+  - make the rollback the tested part
+  sample:
+  - make the rollback the tested part
+  evidence:
+  - move: make the rollback the tested part
+    step: Rehearse the undo path before relying on it; treat an untested rollback as the real risk.
+    cue: a rollback nobody has run
+    quote: the rollback is the untested part - that is where the hours go
+- id: m14
+  decision: merge
+  merge_into: m05
+  name: ''
+  tier: null
+  notes: ''
+  episodes: 1
+  mentions: 1
+  coherence: 1.0
+  sources:
+    adjustment: 1
+  core:
+  - treat three small events as a pattern
+  sample:
+  - treat three small events as a pattern
+  evidence:
+  - move: treat three small events as a pattern
+    step: Look harder at a trivial event when it has recurred.
+    cue: the third occurrence of a similar blip
+    quote: One small blip is noise; three is a pattern.

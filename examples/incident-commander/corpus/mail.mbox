@@ -1,0 +1,479 @@
+From MAILER-DAEMON Tue Oct 20 03:14:09 2026
+Message-ID: <t1.1@kestrelrow.example>
+From: Lee Brannigan <lee.brannigan@kestrelrow.example>
+To: Morgan Vale <morgan.vale@kestrelrow.example>, Sam Oyelaran <sam.oyelaran@kestrelrow.example>
+Subject: Checkout latency spike - customers timing out
+Date: Tue, 04 Mar 2025 09:02:00 -0700
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+
+Morgan, Sam - support queue is filling up. Checkout p95 went from ~400ms to 6s around 08:40. Three enterprise shippers have called already, one of them mid-way through their morning label run. Can someone look?
+
+From MAILER-DAEMON Tue Oct 20 03:14:09 2026
+Message-ID: <t1.2@kestrelrow.example>
+From: Morgan Vale <morgan.vale@kestrelrow.example>
+To: Lee Brannigan <lee.brannigan@kestrelrow.example>, Sam Oyelaran <sam.oyelaran@kestrelrow.example>
+Subject: RE: Checkout latency spike - customers timing out
+Date: Tue, 04 Mar 2025 09:09:00 -0700
+In-Reply-To: <t1.1@kestrelrow.example>
+References: <t1.1@kestrelrow.example>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+
+Taking incident command. Sam, before anyone opens a profiler: what changed this morning? I see the rate-limiter config deploy went out at 08:31. Roll it back now. Lee, tell the three shippers we have a mitigation in progress and they will hear from us again at 09:40 whether or not it is fixed.
+
+Thanks,
+Morgan
+
+On Tue, Mar 4, 2025 at 9:02 AM Lee Brannigan <lee.brannigan@kestrelrow.example> wrote:
+> Morgan, Sam - support queue is filling up. Checkout p95 went from ~400ms to 6s around 08:40. Three enterprise shippers have called already, one of them mid-way through their morning label run. Can someone look?
+
+From MAILER-DAEMON Tue Oct 20 03:14:09 2026
+Message-ID: <t1.3@kestrelrow.example>
+From: Sam Oyelaran <sam.oyelaran@kestrelrow.example>
+To: Morgan Vale <morgan.vale@kestrelrow.example>, Lee Brannigan <lee.brannigan@kestrelrow.example>
+Subject: RE: Checkout latency spike - customers timing out
+Date: Tue, 04 Mar 2025 09:14:00 -0700
+In-Reply-To: <t1.2@kestrelrow.example>
+References: <t1.2@kestrelrow.example>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+
+Morgan, if we roll back now we lose the state we need to understand this. The limiter change was reviewed and it looked safe. I'd rather spend 20 minutes root-causing while it's live, otherwise we'll just hit it again next deploy.
+
+On Tue, Mar 4, 2025 at 9:09 AM Morgan Vale <morgan.vale@kestrelrow.example> wrote:
+> Taking incident command. Sam, before anyone opens a profiler: what changed this morning? I see the rate-limiter config deploy went out at 08:31. Roll it back now. Lee, tell the three shippers we have a mitigation in progress and they will hear from us again at 09:40 whether or not it is fixed.
+> 
+> Thanks,
+> Morgan
+> 
+> On Tue, Mar 4, 2025 at 9:02 AM Lee Brannigan <lee.brannigan@kestrelrow.example> wrote:
+> > Morgan, Sam - support queue is filling up. Checkout p95 went from ~400ms to 6s around 08:40. Three enterprise shippers have called already, one of them mid-way through their morning label run. Can someone look?
+
+From MAILER-DAEMON Tue Oct 20 03:14:09 2026
+Message-ID: <t1.4@kestrelrow.example>
+From: Morgan Vale <morgan.vale@kestrelrow.example>
+To: Sam Oyelaran <sam.oyelaran@kestrelrow.example>, Lee Brannigan <lee.brannigan@kestrelrow.example>
+Subject: RE: Checkout latency spike - customers timing out
+Date: Tue, 04 Mar 2025 09:18:00 -0700
+In-Reply-To: <t1.3@kestrelrow.example>
+References: <t1.3@kestrelrow.example>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+
+I hear you, and you are right that we need the root cause - just not at the shippers' expense. Twenty more minutes is twenty minutes of three enterprise label runs failing, and they are the ones carrying the cost of our investigation, not us. The rollback is a two-minute change we can undo, so it costs us almost nothing to try it first.
+
+So: grab a heap dump and the limiter metrics for 08:31-09:15 right now, that is your evidence and it will still be there this afternoon. Then roll back. If latency recovers we have also learned it was the deploy, which narrows your root cause more than twenty minutes in a profiler would. If it does not recover, we have lost nothing and we keep digging.
+
+Stabilise first, diagnose second. We'll do the real analysis in the review tomorrow, with the dump.
+
+Morgan
+
+On Tue, Mar 4, 2025 at 9:14 AM Sam Oyelaran <sam.oyelaran@kestrelrow.example> wrote:
+> Morgan, if we roll back now we lose the state we need to understand this. The limiter change was reviewed and it looked safe. I'd rather spend 20 minutes root-causing while it's live, otherwise we'll just hit it again next deploy.
+> 
+> On Tue, Mar 4, 2025 at 9:09 AM Morgan Vale <morgan.vale@kestrelrow.example> wrote:
+> > Taking incident command. Sam, before anyone opens a profiler: what changed this morning? I see the rate-limiter config deploy went out at 08:31. Roll it back now. Lee, tell the three shippers we have a mitigation in progress and they will hear from us again at 09:40 whether or not it is fixed.
+> > 
+> > Thanks,
+> > Morgan
+> > 
+> > On Tue, Mar 4, 2025 at 9:02 AM Lee Brannigan <lee.brannigan@kestrelrow.example> wrote:
+> > > Morgan, Sam - support queue is filling up. Checkout p95 went from ~400ms to 6s around 08:40. Three enterprise shippers have called already, one of them mid-way through their morning label run. Can someone look?
+
+From MAILER-DAEMON Tue Oct 20 03:14:09 2026
+Message-ID: <t1.5@kestrelrow.example>
+From: Sam Oyelaran <sam.oyelaran@kestrelrow.example>
+To: Morgan Vale <morgan.vale@kestrelrow.example>, Lee Brannigan <lee.brannigan@kestrelrow.example>
+Subject: RE: Checkout latency spike - customers timing out
+Date: Tue, 04 Mar 2025 09:31:00 -0700
+In-Reply-To: <t1.4@kestrelrow.example>
+References: <t1.4@kestrelrow.example>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+
+Fair. Dump captured, rolled back at 09:24, p95 back to 410ms. It was the limiter: the new burst setting was per-node instead of per-cluster.
+
+On Tue, Mar 4, 2025 at 9:18 AM Morgan Vale <morgan.vale@kestrelrow.example> wrote:
+> I hear you, and you are right that we need the root cause - just not at the shippers' expense. Twenty more minutes is twenty minutes of three enterprise label runs failing, and they are the ones carrying the cost of our investigation, not us. The rollback is a two-minute change we can undo, so it costs us almost nothing to try it first.
+> 
+> So: grab a heap dump and the limiter metrics for 08:31-09:15 right now, that is your evidence and it will still be there this afternoon. Then roll back. If latency recovers we have also learned it was the deploy, which narrows your root cause more than twenty minutes in a profiler would. If it does not recover, we have lost nothing and we keep digging.
+> 
+> Stabilise first, diagnose second. We'll do the real analysis in the review tomorrow, with the dump.
+> 
+> Morgan
+> 
+> On Tue, Mar 4, 2025 at 9:14 AM Sam Oyelaran <sam.oyelaran@kestrelrow.example> wrote:
+> > Morgan, if we roll back now we lose the state we need to understand this. The limiter change was reviewed and it looked safe. I'd rather spend 20 minutes root-causing while it's live, otherwise we'll just hit it again next deploy.
+> > 
+> > On Tue, Mar 4, 2025 at 9:09 AM Morgan Vale <morgan.vale@kestrelrow.example> wrote:
+> > > Taking incident command. Sam, before anyone opens a profiler: what changed this morning? I see the rate-limiter config deploy went out at 08:31. Roll it back now. Lee, tell the three shippers we have a mitigation in progress and they will hear from us again at 09:40 whether or not it is fixed.
+> > > 
+> > > Thanks,
+> > > Morgan
+> > > 
+> > > On Tue, Mar 4, 2025 at 9:02 AM Lee Brannigan <lee.brannigan@kestrelrow.example> wrote:
+> > > > Morgan, Sam - support queue is filling up. Checkout p95 went from ~400ms to 6s around 08:40. Three enterprise shippers have called already, one of them mid-way through their morning label run. Can someone look?
+
+From MAILER-DAEMON Tue Oct 20 03:14:09 2026
+Message-ID: <t2.1@kestrelrow.example>
+From: Dana Whitlock <dana.whitlock@kestrelrow.example>
+To: Morgan Vale <morgan.vale@kestrelrow.example>
+Cc: Sam Oyelaran <sam.oyelaran@kestrelrow.example>
+Subject: Routing engine v2 - shipping Friday
+Date: Wed, 09 Apr 2025 16:05:00 -0700
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+
+Morgan - we're going to ship routing engine v2 this Friday. Sales has promised it to two carriers for their Q2 kickoff. Anything you need from me?
+
+From MAILER-DAEMON Tue Oct 20 03:14:09 2026
+Message-ID: <t2.2@kestrelrow.example>
+From: Morgan Vale <morgan.vale@kestrelrow.example>
+To: Dana Whitlock <dana.whitlock@kestrelrow.example>
+Cc: Sam Oyelaran <sam.oyelaran@kestrelrow.example>
+Subject: RE: Routing engine v2 - shipping Friday
+Date: Wed, 09 Apr 2025 16:40:00 -0700
+In-Reply-To: <t2.1@kestrelrow.example>
+References: <t2.1@kestrelrow.example>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+
+Friday works if it goes out behind the feature flag and we rehearse the rollback once in staging before it ships. Can you get me 2 hours of Sam's team on Thursday for that?
+
+Morgan
+
+On Wed, Apr 9, 2025 at 4:05 PM Dana Whitlock <dana.whitlock@kestrelrow.example> wrote:
+> Morgan - we're going to ship routing engine v2 this Friday. Sales has promised it to two carriers for their Q2 kickoff. Anything you need from me?
+
+From MAILER-DAEMON Tue Oct 20 03:14:09 2026
+Message-ID: <t2.3@kestrelrow.example>
+From: Dana Whitlock <dana.whitlock@kestrelrow.example>
+To: Morgan Vale <morgan.vale@kestrelrow.example>
+Cc: Sam Oyelaran <sam.oyelaran@kestrelrow.example>
+Subject: RE: Routing engine v2 - shipping Friday
+Date: Wed, 09 Apr 2025 17:02:00 -0700
+In-Reply-To: <t2.2@kestrelrow.example>
+References: <t2.2@kestrelrow.example>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+
+Honestly we don't have the 2 hours - the team is heads-down finishing it. The code is tested. Can we skip the rehearsal this once? I really don't want to slip on these carriers.
+
+On Wed, Apr 9, 2025 at 4:40 PM Morgan Vale <morgan.vale@kestrelrow.example> wrote:
+> Friday works if it goes out behind the feature flag and we rehearse the rollback once in staging before it ships. Can you get me 2 hours of Sam's team on Thursday for that?
+> 
+> Morgan
+> 
+> On Wed, Apr 9, 2025 at 4:05 PM Dana Whitlock <dana.whitlock@kestrelrow.example> wrote:
+> > Morgan - we're going to ship routing engine v2 this Friday. Sales has promised it to two carriers for their Q2 kickoff. Anything you need from me?
+
+From MAILER-DAEMON Tue Oct 20 03:14:09 2026
+Message-ID: <t2.4@kestrelrow.example>
+From: Morgan Vale <morgan.vale@kestrelrow.example>
+To: Dana Whitlock <dana.whitlock@kestrelrow.example>
+Cc: Sam Oyelaran <sam.oyelaran@kestrelrow.example>
+Subject: RE: Routing engine v2 - shipping Friday
+Date: Wed, 09 Apr 2025 17:35:00 -0700
+In-Reply-To: <t2.3@kestrelrow.example>
+References: <t2.3@kestrelrow.example>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+
+I don't want you to slip either, so let me put a price on it instead of just saying no.
+
+If v2 misbehaves and we have never rolled it back, the rollback is the untested part - that is where the hours go. On a Friday evening those hours land on whoever is on call over the weekend, and the carriers it was promised to absorb the failed routes Saturday morning. A rehearsed rollback is ten minutes; an unrehearsed one, in my experience, is an evening.
+
+Two ways to keep the date: (1) ship Friday at 5% of traffic behind the flag, so a bad rollback hurts 5% of routes and we rehearse for real in production; or (2) keep 100% but move it to Tuesday, when the whole team is around. Either keeps the promise to the carriers - their kickoff is the 22nd. What I would not do is 100% on a Friday with a rollback nobody has run.
+
+Morgan
+
+On Wed, Apr 9, 2025 at 5:02 PM Dana Whitlock <dana.whitlock@kestrelrow.example> wrote:
+> Honestly we don't have the 2 hours - the team is heads-down finishing it. The code is tested. Can we skip the rehearsal this once? I really don't want to slip on these carriers.
+> 
+> On Wed, Apr 9, 2025 at 4:40 PM Morgan Vale <morgan.vale@kestrelrow.example> wrote:
+> > Friday works if it goes out behind the feature flag and we rehearse the rollback once in staging before it ships. Can you get me 2 hours of Sam's team on Thursday for that?
+> > 
+> > Morgan
+> > 
+> > On Wed, Apr 9, 2025 at 4:05 PM Dana Whitlock <dana.whitlock@kestrelrow.example> wrote:
+> > > Morgan - we're going to ship routing engine v2 this Friday. Sales has promised it to two carriers for their Q2 kickoff. Anything you need from me?
+
+From MAILER-DAEMON Tue Oct 20 03:14:09 2026
+Message-ID: <t2.5@kestrelrow.example>
+From: Dana Whitlock <dana.whitlock@kestrelrow.example>
+To: Morgan Vale <morgan.vale@kestrelrow.example>
+Cc: Sam Oyelaran <sam.oyelaran@kestrelrow.example>
+Subject: RE: Routing engine v2 - shipping Friday
+Date: Wed, 09 Apr 2025 17:50:00 -0700
+In-Reply-To: <t2.4@kestrelrow.example>
+References: <t2.4@kestrelrow.example>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+
+Option 1. Friday at 5%, we ramp Tuesday. Thanks for framing it that way - that I can take to sales.
+
+On Wed, Apr 9, 2025 at 5:35 PM Morgan Vale <morgan.vale@kestrelrow.example> wrote:
+> I don't want you to slip either, so let me put a price on it instead of just saying no.
+> 
+> If v2 misbehaves and we have never rolled it back, the rollback is the untested part - that is where the hours go. On a Friday evening those hours land on whoever is on call over the weekend, and the carriers it was promised to absorb the failed routes Saturday morning. A rehearsed rollback is ten minutes; an unrehearsed one, in my experience, is an evening.
+> 
+> Two ways to keep the date: (1) ship Friday at 5% of traffic behind the flag, so a bad rollback hurts 5% of routes and we rehearse for real in production; or (2) keep 100% but move it to Tuesday, when the whole team is around. Either keeps the promise to the carriers - their kickoff is the 22nd. What I would not do is 100% on a Friday with a rollback nobody has run.
+> 
+> Morgan
+> 
+> On Wed, Apr 9, 2025 at 5:02 PM Dana Whitlock <dana.whitlock@kestrelrow.example> wrote:
+> > Honestly we don't have the 2 hours - the team is heads-down finishing it. The code is tested. Can we skip the rehearsal this once? I really don't want to slip on these carriers.
+> > 
+> > On Wed, Apr 9, 2025 at 4:40 PM Morgan Vale <morgan.vale@kestrelrow.example> wrote:
+> > > Friday works if it goes out behind the feature flag and we rehearse the rollback once in staging before it ships. Can you get me 2 hours of Sam's team on Thursday for that?
+> > > 
+> > > Morgan
+> > > 
+> > > On Wed, Apr 9, 2025 at 4:05 PM Dana Whitlock <dana.whitlock@kestrelrow.example> wrote:
+> > > > Morgan - we're going to ship routing engine v2 this Friday. Sales has promised it to two carriers for their Q2 kickoff. Anything you need from me?
+
+From MAILER-DAEMON Tue Oct 20 03:14:09 2026
+Message-ID: <t3v.1@kestrelrow.example>
+From: Rafa Quell <rafa.quell@ferrolume.example>
+To: Morgan Vale <morgan.vale@kestrelrow.example>
+Subject: Ferrolume incident 4471 - degraded object storage, us-east
+Date: Tue, 20 May 2025 11:15:00 -0700
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+
+Hi Morgan, we are seeing elevated error rates on object storage in us-east. Engineering expects resolution within the hour.
+
+From MAILER-DAEMON Tue Oct 20 03:14:09 2026
+Message-ID: <t3.1@kestrelrow.example>
+From: Dana Whitlock <dana.whitlock@kestrelrow.example>
+To: Morgan Vale <morgan.vale@kestrelrow.example>
+Subject: Customers asking about label PDFs
+Date: Tue, 20 May 2025 11:30:00 -0700
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+
+Morgan, customers can't download label PDFs. Ferrolume says it'll be fixed within the hour - ok if I tell customers it'll be resolved by 12:30?
+
+From MAILER-DAEMON Tue Oct 20 03:14:09 2026
+Message-ID: <t3.2@kestrelrow.example>
+From: Morgan Vale <morgan.vale@kestrelrow.example>
+To: Dana Whitlock <dana.whitlock@kestrelrow.example>
+Subject: RE: Customers asking about label PDFs
+Date: Tue, 20 May 2025 11:38:00 -0700
+In-Reply-To: <t3.1@kestrelrow.example>
+References: <t3.1@kestrelrow.example>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+
+Please don't give them 12:30. Tell them label downloads are degraded because of a storage provider issue, we are working around it, and we will update them by 12:00 whether or not it is fixed.
+
+Morgan
+
+On Tue, May 20, 2025 at 11:30 AM Dana Whitlock <dana.whitlock@kestrelrow.example> wrote:
+> Morgan, customers can't download label PDFs. Ferrolume says it'll be fixed within the hour - ok if I tell customers it'll be resolved by 12:30?
+
+From MAILER-DAEMON Tue Oct 20 03:14:09 2026
+Message-ID: <t3.3@kestrelrow.example>
+From: Dana Whitlock <dana.whitlock@kestrelrow.example>
+To: Morgan Vale <morgan.vale@kestrelrow.example>
+Subject: RE: Customers asking about label PDFs
+Date: Tue, 20 May 2025 11:44:00 -0700
+In-Reply-To: <t3.2@kestrelrow.example>
+References: <t3.2@kestrelrow.example>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+
+They're going to push for an ETA though. "We'll update you at 12" sounds like we don't know what we're doing.
+
+On Tue, May 20, 2025 at 11:38 AM Morgan Vale <morgan.vale@kestrelrow.example> wrote:
+> Please don't give them 12:30. Tell them label downloads are degraded because of a storage provider issue, we are working around it, and we will update them by 12:00 whether or not it is fixed.
+> 
+> Morgan
+> 
+> On Tue, May 20, 2025 at 11:30 AM Dana Whitlock <dana.whitlock@kestrelrow.example> wrote:
+> > Morgan, customers can't download label PDFs. Ferrolume says it'll be fixed within the hour - ok if I tell customers it'll be resolved by 12:30?
+
+From MAILER-DAEMON Tue Oct 20 03:14:09 2026
+Message-ID: <t3.4@kestrelrow.example>
+From: Morgan Vale <morgan.vale@kestrelrow.example>
+To: Dana Whitlock <dana.whitlock@kestrelrow.example>
+Subject: RE: Customers asking about label PDFs
+Date: Tue, 20 May 2025 11:55:00 -0700
+In-Reply-To: <t3.3@kestrelrow.example>
+References: <t3.3@kestrelrow.example>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+
+It sounds like we know exactly what we're doing - we're telling them when they'll hear from us, and then we will keep that promise. The vendor's "within the hour" is their estimate of their own fix; if we pass it on as ours and they miss it, we're the ones who missed it, and every update after that is discounted. A next-update time is a promise we fully control.
+
+If they push, give them the honest version: the provider estimates within the hour, we are not relying on that, and the workaround (regenerating labels from our cache) is rolling out now. Then update at 12:00 like we said.
+
+Morgan
+
+On Tue, May 20, 2025 at 11:44 AM Dana Whitlock <dana.whitlock@kestrelrow.example> wrote:
+> They're going to push for an ETA though. "We'll update you at 12" sounds like we don't know what we're doing.
+> 
+> On Tue, May 20, 2025 at 11:38 AM Morgan Vale <morgan.vale@kestrelrow.example> wrote:
+> > Please don't give them 12:30. Tell them label downloads are degraded because of a storage provider issue, we are working around it, and we will update them by 12:00 whether or not it is fixed.
+> > 
+> > Morgan
+> > 
+> > On Tue, May 20, 2025 at 11:30 AM Dana Whitlock <dana.whitlock@kestrelrow.example> wrote:
+> > > Morgan, customers can't download label PDFs. Ferrolume says it'll be fixed within the hour - ok if I tell customers it'll be resolved by 12:30?
+
+From MAILER-DAEMON Tue Oct 20 03:14:09 2026
+Message-ID: <t4.1@kestrelrow.example>
+From: Sam Oyelaran <sam.oyelaran@kestrelrow.example>
+To: Morgan Vale <morgan.vale@kestrelrow.example>
+Subject: Grafana panel showing negative queue depth
+Date: Mon, 02 Jun 2025 15:20:00 -0700
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+
+The warehouse queue panel is showing -40 for queue depth since this morning. Pretty sure it's the panel query, not the queue. Do you want me to open an incident?
+
+From MAILER-DAEMON Tue Oct 20 03:14:09 2026
+Message-ID: <t4.2@kestrelrow.example>
+From: Morgan Vale <morgan.vale@kestrelrow.example>
+To: Sam Oyelaran <sam.oyelaran@kestrelrow.example>
+Subject: RE: Grafana panel showing negative queue depth
+Date: Mon, 02 Jun 2025 15:26:00 -0700
+In-Reply-To: <t4.1@kestrelrow.example>
+References: <t4.1@kestrelrow.example>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+
+No incident. Ticket it, fix Monday.
+
+On Mon, Jun 2, 2025 at 3:20 PM Sam Oyelaran <sam.oyelaran@kestrelrow.example> wrote:
+> The warehouse queue panel is showing -40 for queue depth since this morning. Pretty sure it's the panel query, not the queue. Do you want me to open an incident?
+
+From MAILER-DAEMON Tue Oct 20 03:14:09 2026
+Message-ID: <t5.1@kestrelrow.example>
+From: Sam Oyelaran <sam.oyelaran@kestrelrow.example>
+To: Morgan Vale <morgan.vale@kestrelrow.example>
+Subject: Postmortem for Saturday's 3-minute auth blip?
+Date: Mon, 16 Jun 2025 10:00:00 -0700
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+
+Auth returned 503s for about 3 minutes on Saturday, maybe 200 failed logins. I've started a full postmortem doc with timeline, five whys, the works. Should I schedule the review meeting for the whole team?
+
+From MAILER-DAEMON Tue Oct 20 03:14:09 2026
+Message-ID: <t5.2@kestrelrow.example>
+From: Morgan Vale <morgan.vale@kestrelrow.example>
+To: Sam Oyelaran <sam.oyelaran@kestrelrow.example>
+Subject: RE: Postmortem for Saturday's 3-minute auth blip?
+Date: Mon, 16 Jun 2025 10:20:00 -0700
+In-Reply-To: <t5.1@kestrelrow.example>
+References: <t5.1@kestrelrow.example>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+
+Skip the full postmortem - write a half page and let's talk for 15 minutes.
+
+Morgan
+
+On Mon, Jun 16, 2025 at 10:00 AM Sam Oyelaran <sam.oyelaran@kestrelrow.example> wrote:
+> Auth returned 503s for about 3 minutes on Saturday, maybe 200 failed logins. I've started a full postmortem doc with timeline, five whys, the works. Should I schedule the review meeting for the whole team?
+
+From MAILER-DAEMON Tue Oct 20 03:14:09 2026
+Message-ID: <t5.3@kestrelrow.example>
+From: Sam Oyelaran <sam.oyelaran@kestrelrow.example>
+To: Morgan Vale <morgan.vale@kestrelrow.example>
+Subject: RE: Postmortem for Saturday's 3-minute auth blip?
+Date: Mon, 16 Jun 2025 10:31:00 -0700
+In-Reply-To: <t5.2@kestrelrow.example>
+References: <t5.2@kestrelrow.example>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+
+Really? We say every incident gets a blameless postmortem. It feels like we're cutting corners.
+
+On Mon, Jun 16, 2025 at 10:20 AM Morgan Vale <morgan.vale@kestrelrow.example> wrote:
+> Skip the full postmortem - write a half page and let's talk for 15 minutes.
+> 
+> Morgan
+> 
+> On Mon, Jun 16, 2025 at 10:00 AM Sam Oyelaran <sam.oyelaran@kestrelrow.example> wrote:
+> > Auth returned 503s for about 3 minutes on Saturday, maybe 200 failed logins. I've started a full postmortem doc with timeline, five whys, the works. Should I schedule the review meeting for the whole team?
+
+From MAILER-DAEMON Tue Oct 20 03:14:09 2026
+Message-ID: <t5.4@kestrelrow.example>
+From: Morgan Vale <morgan.vale@kestrelrow.example>
+To: Sam Oyelaran <sam.oyelaran@kestrelrow.example>
+Subject: RE: Postmortem for Saturday's 3-minute auth blip?
+Date: Mon, 16 Jun 2025 10:55:00 -0700
+In-Reply-To: <t5.3@kestrelrow.example>
+References: <t5.3@kestrelrow.example>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+
+Every incident gets a review; not every incident gets the same size of review. Three minutes, a couple of hundred retried logins, nothing lost and nothing that couldn't be undone - a full postmortem would cost the team more than the incident did.
+
+What does make me want to look harder: this is the third auth blip since April. One small blip is noise; three is a pattern. So the half page should answer one question - what changed before each of the three? If there is a common change, that is worth a proper review and I'll ask for one. If not, we close it.
+
+Morgan
+
+On Mon, Jun 16, 2025 at 10:31 AM Sam Oyelaran <sam.oyelaran@kestrelrow.example> wrote:
+> Really? We say every incident gets a blameless postmortem. It feels like we're cutting corners.
+> 
+> On Mon, Jun 16, 2025 at 10:20 AM Morgan Vale <morgan.vale@kestrelrow.example> wrote:
+> > Skip the full postmortem - write a half page and let's talk for 15 minutes.
+> > 
+> > Morgan
+> > 
+> > On Mon, Jun 16, 2025 at 10:00 AM Sam Oyelaran <sam.oyelaran@kestrelrow.example> wrote:
+> > > Auth returned 503s for about 3 minutes on Saturday, maybe 200 failed logins. I've started a full postmortem doc with timeline, five whys, the works. Should I schedule the review meeting for the whole team?
+
+From MAILER-DAEMON Tue Oct 20 03:14:09 2026
+Message-ID: <t6.1@kestrelrow.example>
+From: Lee Brannigan <lee.brannigan@kestrelrow.example>
+To: Morgan Vale <morgan.vale@kestrelrow.example>
+Subject: Move our 1:1?
+Date: Wed, 18 Jun 2025 09:00:00 -0700
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+
+Can we move Thursday's 1:1 to Friday at 10?
+
+From MAILER-DAEMON Tue Oct 20 03:14:09 2026
+Message-ID: <t6.2@kestrelrow.example>
+From: Morgan Vale <morgan.vale@kestrelrow.example>
+To: Lee Brannigan <lee.brannigan@kestrelrow.example>
+Subject: RE: Move our 1:1?
+Date: Wed, 18 Jun 2025 09:05:00 -0700
+In-Reply-To: <t6.1@kestrelrow.example>
+References: <t6.1@kestrelrow.example>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+
+Friday at 10 works.
+
+On Wed, Jun 18, 2025 at 9:00 AM Lee Brannigan <lee.brannigan@kestrelrow.example> wrote:
+> Can we move Thursday's 1:1 to Friday at 10?
+

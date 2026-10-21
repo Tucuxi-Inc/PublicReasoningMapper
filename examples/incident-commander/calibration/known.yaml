@@ -1,0 +1,70 @@
+# Known-answer cases for the synthetic example. In a real project, write these
+# from your own material and keep the file private.
+
+authored:
+  - body: |
+      Friday at 10 works.
+
+      On Wed, Jun 18, 2025 at 9:00 AM Lee Brannigan <lee.brannigan@kestrelrow.example> wrote:
+      > Can we move Thursday's 1:1 to Friday at 10?
+    keep: ["Friday at 10 works."]
+    drop: ["Can we move"]
+  - body: |
+      Please don't give them 12:30.
+
+      Thanks,
+      Morgan
+    keep: ["don't give them 12:30"]
+    drop: ["Morgan"]
+
+redaction:
+  - text: "Dana Whitlock asked whether Kestrel Row can tell customers Ferrolume will fix it by 12:30."
+    must_remove: ["Dana", "Whitlock", "Kestrel Row", "Ferrolume"]
+    must_keep: ["12:30"]
+
+embedding:
+  same:
+    - ["stabilise first, diagnose second", "stop the bleeding before finding the cause"]
+    - ["find who carries the cost", "ask who pays if this goes wrong"]
+    - ["ask what changed", "check the recent deploys first"]
+  different:
+    # near misses: shared words, different meaning
+    - ["find who carries the cost", "find what the change costs"]
+    - ["ask what changed", "ask what customers need"]
+    - ["stabilise first, diagnose second", "promise the next update time"]
+  opposite:
+    - ["stabilise first, diagnose second", "diagnose first, stabilise second"]
+
+grouping:
+  # Recorded judgments come from gemma4:12b, which grouped this case exactly as
+  # expected on two runs; every embedder tested alone failed it.
+  - moves:
+      - {name: "stabilise first, diagnose second", step: "Stop the customer harm with a cheap mitigation before spending time on root cause."}
+      - {name: "stop the bleeding before finding the cause", step: "Mitigate first; schedule diagnosis for when customers are no longer hurting."}
+      - {name: "diagnose first, stabilise second", step: "Find the root cause before applying any mitigation."}
+      - {name: "find who carries the cost", step: "Name who bears the cost of each option, especially of delay."}
+      - {name: "ask who pays if this goes wrong", step: "Look past the requester to everyone else who bears the risk."}
+      - {name: "find what the change costs", step: "Estimate how much the proposed change will cost to build."}
+      - {name: "ask what changed", step: "Before investigating symptoms, list what changed recently and suspect it first."}
+      - {name: "check the recent deploys first", step: "Pull up the change log before opening diagnostic tools."}
+      - {name: "ask what customers need", step: "Ask affected customers what they need from the next hour."}
+    groups:
+      - ["stabilise first, diagnose second", "stop the bleeding before finding the cause"]
+      - ["diagnose first, stabilise second"]
+      - ["find who carries the cost", "ask who pays if this goes wrong"]
+      - ["find what the change costs"]
+      - ["ask what changed", "check the recent deploys first"]
+      - ["ask what customers need"]
+
+alignment:           # optional: only needed for `rmap align`
+  - name: "Check whether we could undo it"
+    steps: ["Before committing, ask how quickly the change could be reversed.",
+            "Prefer the option that keeps the decision reversible."]
+    expect: [reversibility-assessment]
+    forbid: [mathematical-induction]
+  - name: "Compare the failing server with a healthy twin"
+    steps: ["Pick a healthy server with the same role.",
+            "List every difference in configuration and version between the two.",
+            "Test the differences one at a time."]
+    expect: [method-of-difference]
+    forbid: [symmetry-exploitation, mathematical-induction]

@@ -1,0 +1,13 @@
+{
+"aligns_with": [
+    {
+        "id": "method-of-difference",
+        "step": "List every difference in configuration and version between the two."
+    },
+    {
+        "id": "generate-and-test",
+        "step": "Test the differences one at a time."
+    }
+],
+"beyond_general": "The habit encodes specific domain knowledge regarding the 'healthy twin' as a reliable baseline for isolating environmental variables in distributed systems."
+}

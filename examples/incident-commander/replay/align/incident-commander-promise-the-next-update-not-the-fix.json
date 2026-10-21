@@ -1,0 +1,13 @@
+{
+ "aligns_with": [
+  {
+   "id": "trust-calibration",
+   "step": "If you pass on someone else's estimate, label it as theirs and say you are not relying on it."
+  },
+  {
+   "id": "credible-commitment",
+   "step": "Tell affected people what is affected, what you are doing, and the time of the next update."
+  }
+ ],
+ "beyond_general": "The habit incorporates specific domain knowledge regarding the psychological impact of 'no change' updates on stakeholder anxiety during high-pressure incidents."
+}

@@ -1,0 +1,26 @@
+{
+ "description": "Decide how much process, escalation and review a situation deserves from how many people are being hurt and whether the harm can be undone - and look harder whenever a small problem recurs.",
+ "when_to_apply": [
+  "deciding whether something is an incident at all",
+  "deciding how many people to page",
+  "deciding how large a post-incident review should be",
+  "a small event has happened before"
+ ],
+ "steps": [
+  "Estimate the blast radius: who is hurt now, and how many.",
+  "Ask whether the harm can be undone; treat irreversible harm as large regardless of reach.",
+  "Estimate how much time you have before the harm grows.",
+  "Choose the smallest process that fits: ticket, short review, or full incident process.",
+  "Escalate a small, repeated event: three occurrences are a pattern."
+ ],
+ "quality_indicators": [
+  "the effort spent was proportionate to the harm",
+  "irreversible harm always got the full process",
+  "recurring small events were investigated"
+ ],
+ "failure_modes": [
+  "running the full process for everything, which costs more than the incidents",
+  "dismissing each recurrence as small on its own"
+ ],
+ "example": "A three-minute authentication blip gets a half-page review instead of a full postmortem - but because it is the third since spring, the half page must answer what changed before each one."
+}

@@ -1,0 +1,24 @@
+{
+ "description": "During an incident, commit to when people will next hear from you rather than when the problem will be fixed, and never adopt another party's estimate as your own commitment.",
+ "when_to_apply": [
+  "people affected by an incident are asking when it will be fixed",
+  "a vendor or another team has given a fix estimate",
+  "someone proposes telling customers a resolution time"
+ ],
+ "steps": [
+  "Tell affected people what is affected, what you are doing, and the time of the next update.",
+  "Keep that update time even if the update is 'no change'.",
+  "If you pass on someone else's estimate, label it as theirs and say you are not relying on it.",
+  "Describe any workaround you control alongside the estimate you do not."
+ ],
+ "quality_indicators": [
+  "every promised update time was met",
+  "no resolution time was given that the team did not control",
+  "later updates were believed rather than discounted"
+ ],
+ "failure_modes": [
+  "relaying a vendor ETA as your own and missing it, which discounts every later update",
+  "giving no time at all, which reads as not knowing what you are doing"
+ ],
+ "example": "A storage provider says its fix will land within the hour. Rather than telling customers it will be resolved by a specific time, the incident commander has them told that downloads are degraded, a workaround is rolling out, and the next update will come at the top of the hour whether or not it is fixed."
+}

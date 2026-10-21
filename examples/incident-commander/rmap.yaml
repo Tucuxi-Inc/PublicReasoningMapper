@@ -1,0 +1,33 @@
+# Worked example: a fictional incident commander. Everything in corpus/ is synthetic.
+#
+# This project runs offline: backend `replay` answers model calls from the
+# recorded responses in replay/, and `hashing` embeds without a model. To run it
+# against real models instead, switch backend to ollama, set the model names, set
+# embed_backend to ollama, and run every stage from `prepare` on.
+
+expert:
+  name: "Morgan Vale"
+  addresses: [morgan.vale@kestrelrow.example]
+  display_names: ["Morgan Vale"]
+
+domain: "site reliability and incident command"
+expert_label: the incident commander
+skill_prefix: incident-commander
+
+sources:
+  - {type: mbox,        path: corpus/mail.mbox}
+  - {type: documents,   path: corpus/docs, authored_by_expert: true}
+  - {type: transcripts, path: corpus/think_aloud}
+
+privacy:
+  allow_cloud: false
+  extra_identifiers: ["Kestrel Row", "Ferrolume"]
+  keep_terms: [Grafana]
+
+threading:
+  generic_subjects: [incident, outage]
+
+models:
+  backend: replay
+  replay_dir: replay
+  embed_backend: hashing
