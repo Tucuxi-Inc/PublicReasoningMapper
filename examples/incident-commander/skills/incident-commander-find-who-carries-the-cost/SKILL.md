@@ -3,11 +3,27 @@ name: incident-commander-find-who-carries-the-cost
 description: For each option, identify who would bear the cost if it goes wrong and when that cost would land, looking past the person making the request. Use when choosing between mitigating now and investigating longer; a risky launch date is proposed; someone asks for an exception to a rule that protects others.
 pattern_tier: 1
 skill_tier: foundational
+category: structural
+tags:
+- structural
+- site-reliability-and-incident-command
+- asymmetric-error-costs
+- find
+- carries
+- cost
+when_to_apply:
+- choosing between mitigating now and investigating longer
+- a risky launch date is proposed
+- someone asks for an exception to a rule that protects others
+source_skills: []
+orchestrates: []
 orchestrated_by:
 - incident-commander-size-the-response-to-harm-and-reversibility
+works_with: []
 co_occurs_with:
 - incident-commander-prefer-the-move-you-can-undo
 - incident-commander-price-the-risk-offer-a-cheaper-path
+cross_references: []
 aligns_with:
 - asymmetric-error-costs
 version: '1.0'

@@ -22,7 +22,7 @@ from pathlib import Path
 
 import yaml
 
-FIELDS = ["id", "tier", "name", "description", "when_to_apply", "steps",
+FIELDS = ["id", "tier", "name", "description", "tags", "when_to_apply", "steps",
           "quality_indicators", "failure_modes", "example", "notes",
           "source_skills", "orchestrated_by", "works_with", "co_occurs_with",
           "cross_references", "aligns_with", "beyond_general", "clusters", "support"]

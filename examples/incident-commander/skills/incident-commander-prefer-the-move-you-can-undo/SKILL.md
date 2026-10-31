@@ -3,12 +3,29 @@ name: incident-commander-prefer-the-move-you-can-undo
 description: When choosing between actions under pressure, prefer the one that can be undone quickly, and do what is needed beforehand (capturing evidence, rehearsing the rollback) so that undoing stays cheap. Use when a mitigation is available and the cause is not yet known; a tempting action cannot be reversed, such as deleting data; a launch relies on a rollback nobody has run.
 pattern_tier: 1
 skill_tier: foundational
+category: structural
+tags:
+- structural
+- site-reliability-and-incident-command
+- reversibility-assessment
+- staged-commitment
+- prefer
+- move
+- undo
+when_to_apply:
+- a mitigation is available and the cause is not yet known
+- a tempting action cannot be reversed, such as deleting data
+- a launch relies on a rollback nobody has run
+source_skills: []
+orchestrates: []
 orchestrated_by:
 - incident-commander-size-the-response-to-harm-and-reversibility
 - incident-commander-stabilise-first-diagnose-second
+works_with: []
 co_occurs_with:
 - incident-commander-find-who-carries-the-cost
 - incident-commander-price-the-risk-offer-a-cheaper-path
+cross_references: []
 aligns_with:
 - reversibility-assessment
 - staged-commitment

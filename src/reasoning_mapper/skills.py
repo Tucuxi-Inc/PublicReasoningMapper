@@ -12,6 +12,14 @@ Two frontmatter styles:
               only the core Agent Skills keys.
 
 Both read back identically through `validate.check_skills_dir`.
+
+Every generated skill carries the full orchestration and trigger set, so a loader that builds
+a graph from the frontmatter (for example Mentee's) sees every skill and every link:
+`category`, `tags`, `when_to_apply`, `source_skills`, `orchestrates`, `orchestrated_by`,
+`works_with`, `co_occurs_with`, `cross_references`. A key is an empty list only where the
+format rules it out (tier 1/2: `source_skills`, `orchestrates`, `works_with`; tier 3:
+`orchestrated_by`) or the map has no data (`co_occurs_with`, `cross_references`).
+References are always exact skill names.
 """
 
 from __future__ import annotations
@@ -21,34 +29,79 @@ from pathlib import Path
 
 import yaml
 
-from .mapping import SKILL_TIER, load_map
+from .mapping import SKILL_TIER, load_map, slug
 from .validate import check_patterns
 
 TIER_LABEL = {1: "Tier 1 - structural", 2: "Tier 2 - behavioral", 3: "Tier 3 - orchestration"}
-REL = ("source_skills", "orchestrated_by", "works_with", "co_occurs_with", "cross_references")
+TIER_CATEGORY = {1: "structural", 2: "behavioral", 3: "orchestration"}
 GENERATED = ".rmap-generated"
+_TAG_STOP = {"the", "and", "for", "not", "but", "with", "from", "into", "that", "this", "what",
+             "who", "how", "when", "first", "second", "then", "than", "you", "your", "can", "its"}
 
 
-def _desc(p: dict) -> str:
+def when_to_apply(p: dict, pats: dict | None = None) -> list[str]:
+    """The pattern's cues; never empty. Without recorded cues, a fallback built from the
+    orchestrating patterns (tier 1/2) or the pattern's own name (tier 3). `rmap validate`
+    still warns about a pattern with no recorded cues."""
+    w = [str(x).strip() for x in p.get("when_to_apply") or [] if str(x).strip()]
+    if w:
+        return w
+    pats = pats or {}
+    what = (p.get("name") or p["id"]).strip().rstrip(".")
+    orch = [pats[o]["name"] for o in p.get("orchestrated_by") or [] if o in pats]
+    if orch:
+        return [f"{o} calls for it: {what[0].lower() + what[1:]}" for o in orch]
+    return [f"a situation calls for this: {what[0].lower() + what[1:]}"]
+
+
+def tags(p: dict, domain: str = "") -> list[str]:
+    """Hand-written `tags` from the map if any, else: tier category, the domain, the
+    catalog approaches it aligns with, and the distinctive words of its name. Never empty."""
+    if p.get("tags"):
+        return [str(t) for t in p["tags"]]
+    out = [TIER_CATEGORY[p["tier"]]]
+    if domain:
+        out.append(slug(domain, 40))
+    out += list(p.get("aligns_with") or [])
+    out += [w for w in slug(p.get("name") or p["id"], 200).split("-")
+            if len(w) > 2 and w not in _TAG_STOP]
+    return list(dict.fromkeys(out))
+
+
+def relations(p: dict) -> dict:
+    """Every orchestration key, always present. The tier rules decide which can be non-empty."""
+    t3 = p["tier"] == 3
+    src = list(p.get("source_skills") or []) if t3 else []
+    return {"source_skills": src,
+            "orchestrates": list(src),
+            "orchestrated_by": [] if t3 else list(p.get("orchestrated_by") or []),
+            "works_with": list(p.get("works_with") or []) if t3 else [],
+            "co_occurs_with": list(p.get("co_occurs_with") or []),
+            "cross_references": list(p.get("cross_references") or [])}
+
+
+def _desc(p: dict, pats: dict | None = None) -> str:
     d = (p.get("description") or "").strip()
-    w = p.get("when_to_apply") or []
+    w = when_to_apply(p, pats)
     if w:
         d += " Use when " + "; ".join(x.rstrip(".") for x in w[:4]) + "."
     return d[:1024]
 
 
-def frontmatter(p: dict, style: str, version: str) -> dict:
-    rel = {k: list(p.get(k) or []) for k in REL}
-    rel = {k: v for k, v in rel.items() if v or k in (("source_skills", "works_with")
-                                                     if p["tier"] == 3 else ("orchestrated_by",))}
-    core = {"pattern_tier": p["tier"], "skill_tier": SKILL_TIER[p["tier"]], **rel}
+def frontmatter(p: dict, style: str, version: str, pats: dict | None = None,
+                domain: str = "") -> dict:
+    core = {"pattern_tier": p["tier"], "skill_tier": SKILL_TIER[p["tier"]],
+            "category": TIER_CATEGORY[p["tier"]], "tags": tags(p, domain),
+            "when_to_apply": when_to_apply(p, pats), **relations(p)}
     if p.get("aligns_with"):
         core["aligns_with"] = list(p["aligns_with"])    # catalog ids, not skills
     core["version"] = version
     if style == "portable":
-        meta = {k: (", ".join(v) if isinstance(v, list) else str(v)) for k, v in core.items()}
-        return {"name": p["id"], "description": _desc(p), "metadata": meta}
-    return {"name": p["id"], "description": _desc(p), **core}
+        # cues can contain commas, so they are joined with semicolons
+        meta = {k: ("; " if k == "when_to_apply" else ", ").join(v) if isinstance(v, list) else str(v)
+                for k, v in core.items()}
+        return {"name": p["id"], "description": _desc(p, pats), "metadata": meta}
+    return {"name": p["id"], "description": _desc(p, pats), **core}
 
 
 def _bullets(xs) -> str:
@@ -63,8 +116,7 @@ def body(p: dict, pats: dict, label: str, include_evidence: bool, evidence: list
 
     out = [f"# {p['name']}", "", f"*{TIER_LABEL[p['tier']]} pattern in how {label} reasons.*", "",
            "## Overview", "", (p.get("description") or "").strip(), ""]
-    if p.get("when_to_apply"):
-        out += ["## When to apply", "", _bullets(p["when_to_apply"]), ""]
+    out += ["## When to apply", "", _bullets(when_to_apply(p, pats)), ""]
     if p.get("steps"):
         out += ["## Core procedure", ""]
         out += [f"{n}. {s}" for n, s in enumerate(p["steps"], 1)] + [""]
@@ -129,7 +181,7 @@ def router(m: dict, pats: dict, prefix: str, domain: str, style: str, version: s
              f"how {label} has reasoned, not every case; do not stretch a pattern to fit.", "",
              "## Activation cues (tier 3)", ""]
     for p in sorted(t3, key=lambda x: x["id"]):
-        cues = "; ".join(p.get("when_to_apply") or []) or "(no cues recorded)"
+        cues = "; ".join(when_to_apply(p, pats))
         lines += [f"- `{p['id']}` - **{p['name']}**: {cues}"]
     lines += ["", "## Orchestration map", ""]
     for p in sorted(t3, key=lambda x: x["id"]):
@@ -169,12 +221,11 @@ def write(project, map_path: Path, out_dir: Path, style: str = "native",
     for p in patterns:
         d = out_dir / p["id"]
         d.mkdir(parents=True, exist_ok=True)
-        fm = frontmatter(p, style, version)
+        fm = frontmatter(p, style, version, pats, project["domain"] or "")
         (d / "SKILL.md").write_text(
             "---\n" + yaml.safe_dump(fm, sort_keys=False, allow_unicode=True, width=1000) + "---\n\n"
             + body(p, pats, label, include_evidence, ev.get(p["id"], []), catalog))
         (d / GENERATED).write_text("")
-    from .mapping import slug
     name, text = router(m, pats, slug(project["skill_prefix"], 20), project["domain"], style, version)
     (out_dir / name).mkdir(exist_ok=True)
     (out_dir / name / "SKILL.md").write_text(text)

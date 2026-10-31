@@ -3,11 +3,30 @@ name: incident-commander-price-the-risk-offer-a-cheaper-path
 description: 'When someone wants to take a risk to meet a goal, do not simply refuse: state what the risk would cost and who would pay it, then offer ways to reach the goal at lower cost. Use when pressure to skip a safeguard to hold a date; a request that would spend other people''s trust; a fixed external commitment conflicts with a safe plan.'
 pattern_tier: 2
 skill_tier: applied
+category: behavioral
+tags:
+- behavioral
+- site-reliability-and-incident-command
+- tail-risk-thinking
+- specialization-simpler-case
+- price
+- risk
+- offer
+- cheaper
+- path
+when_to_apply:
+- pressure to skip a safeguard to hold a date
+- a request that would spend other people's trust
+- a fixed external commitment conflicts with a safe plan
+source_skills: []
+orchestrates: []
 orchestrated_by:
 - incident-commander-size-the-response-to-harm-and-reversibility
+works_with: []
 co_occurs_with:
 - incident-commander-find-who-carries-the-cost
 - incident-commander-prefer-the-move-you-can-undo
+cross_references: []
 aligns_with:
 - tail-risk-thinking
 - specialization-simpler-case
