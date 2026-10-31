@@ -35,10 +35,21 @@ name: incident-commander-size-the-response-to-harm-and-reversibility   # = folde
 description: Decide how much process ... Use when deciding whether something is an incident at all; ...
 pattern_tier: 3                     # 1 structural, 2 behavioral, 3 orchestration
 skill_tier: strategic               # foundational (1), applied (2), strategic (3)
-source_skills:                      # tier 3 only: the tier 1/2 skills it orchestrates
+category: orchestration             # structural (1), behavioral (2), orchestration (3)
+tags:                               # hand-written `tags` in the map, else derived (never empty)
+- orchestration
+- site-reliability-and-incident-command
+- size
+when_to_apply:                      # activation cues (never empty, see below)
+- deciding whether something is an incident at all
+source_skills:                      # tier 3: the tier 1/2 skills it orchestrates
 - incident-commander-ask-what-changed
 - incident-commander-prefer-the-move-you-can-undo
-works_with:                         # tier 3 only: peer tier 3s (must be reciprocal)
+orchestrates:                       # tier 3: same list as source_skills (URP convention)
+- incident-commander-ask-what-changed
+- incident-commander-prefer-the-move-you-can-undo
+orchestrated_by: []                 # tier 1/2: the tier 3s that activate them
+works_with:                         # tier 3: peer tier 3s (must be reciprocal)
 - incident-commander-stabilise-first-diagnose-second
 co_occurs_with:                     # data-derived: appear in the same episodes
 - incident-commander-ask-what-changed
@@ -47,9 +58,21 @@ version: '1.0'
 ---
 ```
 
-Tier 1 and 2 skills carry `orchestrated_by` (the tier 3s that activate them) instead of `source_skills`/`works_with`.
+**Every key is always written.** A key is an empty list only where the tier rules forbid it, or where the map has no data:
 
-**Portable style** (`--style portable`) keeps only `name` and `description` at the top level, and puts everything else under `metadata` as comma-separated strings. Use it with loaders that accept only the core Agent Skills keys. Both styles read back identically through `rmap validate --skills`.
+| key | tier 1/2 | tier 3 |
+|---|---|---|
+| `source_skills`, `orchestrates` | always `[]` | what it orchestrates |
+| `orchestrated_by` | the tier 3s that activate it | always `[]` |
+| `works_with` | always `[]` | peer tier 3s |
+| `co_occurs_with` | `[]` if it shares no episodes with another pattern | same |
+| `cross_references` | `[]` unless written by hand in the map | same |
+
+All references are exact skill names, so loaders that build a graph from the frontmatter resolve every one of them. **Mentee** is an example: it reads `when_to_apply`, `tags`, `category`, `orchestrated_by`, `works_with`, `source_skills` and the router's `role: router`. With the native style, every skill sits in at least one orchestration link and nothing is left unresolved.
+
+**Fallback cues.** If a pattern has no `when_to_apply` in the map, the cues are built from its orchestrators ("*Choose how deep to go* calls for it: list the options") or, for tier 3, from its name. `rmap validate` still warns about the pattern, because recorded cues are better.
+
+**Portable style** (`--style portable`) keeps only `name` and `description` at the top level, and puts everything else under `metadata` as comma-separated strings. Use it with loaders that accept only the core Agent Skills keys. In `metadata`, `when_to_apply` is joined with `; ` because cues can contain commas. Both styles read back identically through `rmap validate --skills`. Loaders that read top-level keys only, Mentee among them, need the native style.
 
 ## Body
 
@@ -57,7 +80,7 @@ Tier 1 and 2 skills carry `orchestrated_by` (the tier 3s that activate them) ins
 # <name>
 *Tier N - <tier> pattern in how <expert_label> reasons.*
 ## Overview
-## When to apply              -> also folded into `description`, which is what triggers the skill
+## When to apply              -> also in frontmatter `when_to_apply` and folded into `description`
 ## Core procedure
 ## What this orchestrates     (tier 3)
 ## Orchestrated by            (tier 1/2)

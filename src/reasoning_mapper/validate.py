@@ -98,9 +98,12 @@ def skill_to_pattern(fm: dict) -> dict:
 
     get = (lambda k: fm.get(k, meta.get(k)))
     tier = get("pattern_tier")
+    cues = get("when_to_apply")
+    if isinstance(cues, str):
+        cues = [x.strip() for x in cues.split(";") if x.strip()]
     return {"id": fm.get("name"), "tier": int(tier) if tier is not None else None,
             "description": fm.get("description"), "steps": ["(in body)"],
-            "when_to_apply": ["(in body)"],
+            "when_to_apply": list(cues) if cues else ["(in body)"],
             **{k: lst(get(k)) for k in ("source_skills", "orchestrated_by", "works_with",
                                          "co_occurs_with", "cross_references")},
             "_router": get("role") == "router"}

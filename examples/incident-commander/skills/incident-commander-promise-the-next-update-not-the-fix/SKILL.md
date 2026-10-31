@@ -3,11 +3,29 @@ name: incident-commander-promise-the-next-update-not-the-fix
 description: During an incident, commit to when people will next hear from you rather than when the problem will be fixed, and never adopt another party's estimate as your own commitment. Use when people affected by an incident are asking when it will be fixed; a vendor or another team has given a fix estimate; someone proposes telling customers a resolution time.
 pattern_tier: 2
 skill_tier: applied
+category: behavioral
+tags:
+- behavioral
+- site-reliability-and-incident-command
+- trust-calibration
+- credible-commitment
+- promise
+- next
+- update
+- fix
+when_to_apply:
+- people affected by an incident are asking when it will be fixed
+- a vendor or another team has given a fix estimate
+- someone proposes telling customers a resolution time
+source_skills: []
+orchestrates: []
 orchestrated_by:
 - incident-commander-stabilise-first-diagnose-second
+works_with: []
 co_occurs_with:
 - incident-commander-stabilise-first-diagnose-second
 - incident-commander-ask-what-changed
+cross_references: []
 aligns_with:
 - trust-calibration
 - credible-commitment

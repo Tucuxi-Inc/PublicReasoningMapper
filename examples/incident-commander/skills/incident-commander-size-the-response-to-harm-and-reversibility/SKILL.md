@@ -3,15 +3,36 @@ name: incident-commander-size-the-response-to-harm-and-reversibility
 description: Decide how much process, escalation and review a situation deserves from how many people are being hurt and whether the harm can be undone - and look harder whenever a small problem recurs. Use when deciding whether something is an incident at all; deciding how many people to page; deciding how large a post-incident review should be; a small event has happened before.
 pattern_tier: 3
 skill_tier: strategic
+category: orchestration
+tags:
+- orchestration
+- site-reliability-and-incident-command
+- reversibility-assessment
+- size
+- response
+- harm
+- reversibility
+when_to_apply:
+- deciding whether something is an incident at all
+- deciding how many people to page
+- deciding how large a post-incident review should be
+- a small event has happened before
 source_skills:
 - incident-commander-ask-what-changed
 - incident-commander-prefer-the-move-you-can-undo
 - incident-commander-find-who-carries-the-cost
 - incident-commander-price-the-risk-offer-a-cheaper-path
+orchestrates:
+- incident-commander-ask-what-changed
+- incident-commander-prefer-the-move-you-can-undo
+- incident-commander-find-who-carries-the-cost
+- incident-commander-price-the-risk-offer-a-cheaper-path
+orchestrated_by: []
 works_with:
 - incident-commander-stabilise-first-diagnose-second
 co_occurs_with:
 - incident-commander-ask-what-changed
+cross_references: []
 aligns_with:
 - reversibility-assessment
 version: '1.0'

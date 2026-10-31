@@ -3,15 +3,31 @@ name: incident-commander-stabilise-first-diagnose-second
 description: While people are being harmed, stop the harm before finding the cause; schedule diagnosis for afterwards, using evidence captured before mitigating. Use when customers are failing now and an engineer wants to investigate live; a cheap mitigation exists before the cause is known.
 pattern_tier: 3
 skill_tier: strategic
+category: orchestration
+tags:
+- orchestration
+- site-reliability-and-incident-command
+- interventionist-reasoning
+- stabilise
+- diagnose
+when_to_apply:
+- customers are failing now and an engineer wants to investigate live
+- a cheap mitigation exists before the cause is known
 source_skills:
 - incident-commander-promise-the-next-update-not-the-fix
 - incident-commander-ask-what-changed
 - incident-commander-prefer-the-move-you-can-undo
+orchestrates:
+- incident-commander-promise-the-next-update-not-the-fix
+- incident-commander-ask-what-changed
+- incident-commander-prefer-the-move-you-can-undo
+orchestrated_by: []
 works_with:
 - incident-commander-size-the-response-to-harm-and-reversibility
 co_occurs_with:
 - incident-commander-promise-the-next-update-not-the-fix
 - incident-commander-ask-what-changed
+cross_references: []
 aligns_with:
 - interventionist-reasoning
 version: '1.0'

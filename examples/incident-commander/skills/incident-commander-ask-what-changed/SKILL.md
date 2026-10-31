@@ -3,13 +3,28 @@ name: incident-commander-ask-what-changed
 description: Begin diagnosis by asking what changed shortly before the problem appeared, and suspect that change first. Use when a sudden regression or new failure; a resource starts behaving differently; a small problem keeps recurring.
 pattern_tier: 1
 skill_tier: foundational
+category: structural
+tags:
+- structural
+- site-reliability-and-incident-command
+- method-of-difference
+- ask
+- changed
+when_to_apply:
+- a sudden regression or new failure
+- a resource starts behaving differently
+- a small problem keeps recurring
+source_skills: []
+orchestrates: []
 orchestrated_by:
 - incident-commander-size-the-response-to-harm-and-reversibility
 - incident-commander-stabilise-first-diagnose-second
+works_with: []
 co_occurs_with:
 - incident-commander-size-the-response-to-harm-and-reversibility
 - incident-commander-stabilise-first-diagnose-second
 - incident-commander-promise-the-next-update-not-the-fix
+cross_references: []
 aligns_with:
 - method-of-difference
 version: '1.0'
